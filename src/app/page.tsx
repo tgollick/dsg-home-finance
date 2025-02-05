@@ -3,6 +3,7 @@ import Hero from "./_sections/Hero";
 import Products from "./_sections/Products";
 import Testimonials from "./_sections/Testimonials";
 import PopularProducts from "./_sections/PopularProducts";
+import OtherServices from "./_sections/OtherServices";
 
 export default async function Home() {
   return (
@@ -12,6 +13,7 @@ export default async function Home() {
       <Products />
       <Testimonials />
       <PopularProducts />
+      <OtherServices />
     </main>
   );
 }

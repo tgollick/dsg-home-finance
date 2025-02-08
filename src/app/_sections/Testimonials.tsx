@@ -2,6 +2,8 @@ import { ssrTrpc } from "@/backend/trpc/ssr-caller";
 import Review from "./components/Review";
 import { Button } from "@/components/ui/button";
 import { LucidePhoneCall } from "lucide-react";
+import { Marquee } from "@/components/magicui/marquee";
+import { MarqueeDemo } from "./components/Marquee";
 
 type ReviewType = {
   author_name: string;
@@ -26,18 +28,13 @@ const Testimonials = async () => {
             hundreds of reviews from happy customers.
           </p>
         </div>
-        <div className="flex lg:flex-row flex-col gap-6 items-center">
-          {reviews.slice(0, 2).map((review, index) => (
-            <Review
-              key={index}
-              name={review.author_name}
-              review_text={review.text}
-              profile_photo={review.profile_photo_url}
-              rating={review.rating}
-              date={review.relative_time_description}
-            />
-          ))}
-        </div>
+
+        {/* New Reviews component */}
+
+        <MarqueeDemo
+          reviews={reviews}
+          googleReviewsUrl="https://www.google.com/search?sca_esv=47cd9fb8f57accb3&biw=1528&bih=834&si=APYL9btvhO6SAb8jF9HqTZMMa7vs_teLnZaEVrJZwRKFIIKjoTIiwRFYjnV_BQgHwzcwYTZqIlee2Wo5RKBDt2XsOU0bCVzxLM7aAMwymDJdeuiv10hLrFPUct6ezpgTVgb_MMrdEPRY&q=DSG+Home+Finance+Reviews&sa=X&ved=2ahUKEwiyubj3_7SLAxUoQ0EAHQOMHUwQ0bkNegQILRAE"
+        />
 
         <Button className="font-sans w-full md:w-auto bg-[#F49FB7] text-black hover:bg-[#f281a4] transition text-sm md:text-base">
           Book a call with David

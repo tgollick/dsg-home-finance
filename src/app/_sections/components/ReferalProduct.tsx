@@ -11,7 +11,7 @@ type Props = {
 
 const ReferalProduct = (props: Props) => {
   return (
-    <Card className="p-6 bg-white text-black border-gray-200 hover:scale-105 hover:shadow-lg  transition ease-in-out duration-200 w-full max-w-[550px]">
+    <Card className="p-6 bg-white text-black border-gray-200 hover:shadow-lg  transition ease-in-out duration-200 w-full max-w-[550px]">
       <Image
         src={props.img}
         width="1000"

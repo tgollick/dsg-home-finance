@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
-import ProductImages from "./components/ProductImages";
 import { LucideShieldQuestion } from "lucide-react";
+import { LogoCarousel } from "@/components/ui/logo-carousel";
 
 const Products = () => {
   return (
@@ -18,7 +18,13 @@ const Products = () => {
             confident you are getting the right deal for you.
           </p>
         </div>
-        <ProductImages />
+        <div className="hidden sm:block">
+          <LogoCarousel columns={3} />
+        </div>
+        <div className="block sm:hidden">
+          <LogoCarousel columns={2} />
+        </div>
+        {/* New component to show off products  */}
         <Button className="w-full md:w-auto text-black bg-white hover:bg-gray-200 transition text-sm md:text-base font-sans">
           How much can I borrow?
           <LucideShieldQuestion />

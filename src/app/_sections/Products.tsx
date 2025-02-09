@@ -5,7 +5,7 @@ import { LogoCarousel } from "@/components/ui/logo-carousel";
 
 const Products = () => {
   return (
-    <div className="w-full flex items-center justify-center bg-[#1e1e1e] border-none">
+    <div className="w-full flex items-center justify-center bg-[#1e1e1e] border-none mt-[-1px]">
       <section className="w-full max-w-[1400px] py-20 px-6 flex flex-col items-center text-center md:gap-10 gap-8">
         <div className="w-full max-w-[800px] text-white">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif leading-tight mb-6">

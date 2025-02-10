@@ -1,4 +1,3 @@
-import React from "react";
 import Product from "./components/Product";
 import FirstTimeBuyer from "../../../public/FirstTimeBuyer.jpg";
 import Remortgage from "../../../public/Remortgage.jpg";
@@ -8,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 const PopularProducts = () => {
   return (
-    <div className="w-full flex items-center justify-center bg-white text-black">
+    <div className="border-none w-full flex items-center justify-center bg-white text-black">
       <section className="py-14 px-6 w-full max-w-[1400px] flex flex-col items-center gap-8">
         <div className="text-black text-center w-full max-w-[800px]">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif leading-tight mb-4">
@@ -17,13 +16,13 @@ const PopularProducts = () => {
           <p className="text-sm sm:text-base font-sans">
             We offer a comprehensive range of products designed to suit
             virtually any need or situation. However, some options stand out as
-            favorites among our clients. Below, you’ll find an overview of the
+            favorites among our clients. Below, you'll find an overview of the
             most popular products we provide, tailored to meet diverse
             requirements.
           </p>
         </div>
 
-        <div className="w-full flex lg:flex-row flex-col items-center gap-6">
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
           <Product
             title={"Buy-To-Let"}
             img={BuyToLet}
@@ -51,7 +50,7 @@ const PopularProducts = () => {
         </div>
         <Button className="w-full md:w-auto bg-[#F49FB7] text-black hover:bg-[#f281a4] transition text-sm md:text-base">
           Book a call with David
-          <LucidePhoneCall />
+          <LucidePhoneCall className="ml-2 h-4 w-4" />
         </Button>
       </section>
     </div>

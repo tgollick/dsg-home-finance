@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
-import Image, { StaticImageData } from "next/image";
-import React from "react";
+import Image, { type StaticImageData } from "next/image";
 
 type Props = {
   title: string;
@@ -11,18 +10,28 @@ type Props = {
 
 const Product = (props: Props) => {
   return (
-    <Card className="p-6 bg-white text-black border-gray-200 hover:scale-105 hover:shadow-lg  transition ease-in-out duration-200 md:w-[60%] w-full">
-      <Image
-        src={props.img}
-        width="1000"
-        height="1000"
-        alt={props.alt}
-        className="aspect-auto w-full mb-4 rounded-sm sm:block hidden"
-      />
-      <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif leading-tight mb-2">
-        {props.title}
-      </h3>
-      <p className="md:text-base text-sm font-sans">{props.content}</p>
+    <Card className="overflow-hidden transition-shadow hover:shadow-md bg-white border-gray-200 text-black">
+      <div className="flex flex-col">
+        <div className="relative w-full shrink-0">
+          <Image
+            src={props.img || "/placeholder.svg"}
+            alt={props.alt}
+            className="object-cover w-full h-full"
+            width={500}
+            height={500}
+          />
+        </div>
+        <div className="flex flex-col justify-between p-6">
+          <div className="space-y-2">
+            <h3 className="text-2xl font-serif leading-tight">
+              "{props.title}"
+            </h3>
+            <p className="text-sm text-muted-foreground font-sans">
+              {props.content}
+            </p>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 };

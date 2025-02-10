@@ -2,6 +2,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { ModeToggle } from "@/components/theme-toggle";
 import { auth } from "@/auth";
+import { ThemeProvider } from "next-themes";
 
 export default async function Layout({
   children,
@@ -15,17 +16,19 @@ export default async function Layout({
   }
 
   return (
-    <SidebarProvider>
-      <AppSidebar
-        fullname={session?.user?.name}
-        email={session?.user?.email}
-        photo={session?.user?.image}
-      />
-      <main className="relative w-full h-full">
-        <SidebarTrigger />
-        <ModeToggle />
-        {children}
-      </main>
-    </SidebarProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
+      <SidebarProvider>
+        <AppSidebar
+          fullname={session?.user?.name}
+          email={session?.user?.email}
+          photo={session?.user?.image}
+        />
+        <main className="relative w-full h-full">
+          <SidebarTrigger />
+          <ModeToggle />
+          <div className="min-h-screen">{children}</div>
+        </main>
+      </SidebarProvider>
+    </ThemeProvider>
   );
 }

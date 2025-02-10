@@ -284,8 +284,10 @@ a {
   width: calc(147% + 1.3px);
   height: 67px;
   transform: rotateY(180deg);
+  margin-bottom: -1px;
 }
 
 .custom-shape-divider-bottom-1738595750 .shape-fill {
   fill: #1e1e1e;
+  stroke: none;
 }

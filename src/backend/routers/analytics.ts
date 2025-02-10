@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -89,9 +90,21 @@ export const analyticsRouter = createTRPCRouter({
         }
       );
 
-      return response.data.result.reviews;
-    } catch (error) {
-      console.error("Error fetching reviews:", error);
+      const reviews = response.data?.result?.reviews;
+      if (!reviews) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "No reviews found in the API response",
+        });
+      }
+
+      return reviews;
+    } catch (error: any) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch reviews",
+        cause: error,
+      });
     }
   }),
 });

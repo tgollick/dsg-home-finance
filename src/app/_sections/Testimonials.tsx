@@ -17,7 +17,7 @@ const Testimonials = async () => {
   const reviews: ReviewType[] = await ssrTrpc.analyticsRouter.getReviews();
 
   return (
-    <div className="w-full flex items-center justify-center bg-white">
+    <div className="border-none w-full flex items-center justify-center bg-white">
       <section className="relative w-full max-w-[1400px] pt-20 pb-14  px-6 flex flex-col items-center gap-8">
         <div className="text-black text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif leading-tight mb-4">

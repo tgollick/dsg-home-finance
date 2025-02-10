@@ -64,9 +64,9 @@ type Service = {
 const OtherServices = () => {
   return (
     <div className="w-full bg-white text-black font-sans">
-      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 py-14">
+      <section className="max-w-[1400px] mx-auto px-6 sm:px-6 py-14">
         <div className="flex flex-col lg:flex-row lg:gap-10 lg:items-center">
-          <div className="lg:w-1/2 space-y-8 mb-8 lg:mb-0">
+          <div className="lg:w-[60%] space-y-8 mb-8 lg:mb-0">
             <div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif leading-tight mb-4">
                 Other Services
@@ -82,7 +82,7 @@ const OtherServices = () => {
               </p>
             </div>
 
-            <div className="text-sm sm:text-base lg:text-lg font-sans font-bold flex flex-col gap-4">
+            <div className="text-sm sm:text-base font-sans font-bold flex flex-col gap-4">
               <p className="flex items-center gap-2">
                 <LucideHeart className="w-5 h-5" fill="#f281a4" /> Equity
                 Release
@@ -107,7 +107,7 @@ const OtherServices = () => {
             </Button>
           </div>
 
-          <div className="lg:w-1/2">
+          <div className="lg:w-[40%] md:px-10">
             <Carousel
               className="w-full"
               opts={{
@@ -123,26 +123,34 @@ const OtherServices = () => {
               <CarouselContent>
                 {data.map((service, index) => (
                   <CarouselItem key={index}>
-                    <Card className="p-4 sm:p-6 text-black bg-white border border-gray-200">
-                      <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
-                        <Image
-                          src={service.img || "/placeholder.svg"}
-                          alt={service.alt}
-                          fill
-                          className="object-cover"
-                        />
+                    <Card className="border-gray-200 overflow-hidden transition-shadow hover:shadow-md text-black bg-white">
+                      <div className="flex flex-col">
+                        <div className="relative w-full h-48 lg:h-72 shrink-0">
+                          <Image
+                            src={service.img || "/placeholder.svg"}
+                            alt={service.alt}
+                            className="object-cover w-full h-full"
+                            fill
+                          />
+                        </div>
+                        <div className="flex flex-col justify-between p-6">
+                          <div className="space-y-2">
+                            <h3 className="text-2xl font-serif leading-tight">
+                              "{service.title}"
+                            </h3>
+                            <p className="text-sm text-muted-foreground font-sans line-clamp-3">
+                              {service.content}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-serif mb-2">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm sm:text-base">{service.content}</p>
                     </Card>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <div className="hidden sm:block">
-                <CarouselPrevious />
-                <CarouselNext />
+              <div className="hidden sm:block  text-black">
+                <CarouselPrevious className="bg-white" />
+                <CarouselNext className="bg-white" />
               </div>
             </Carousel>
           </div>

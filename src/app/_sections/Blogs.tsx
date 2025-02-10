@@ -1,10 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { format } from "date-fns";
-
+import { enGB } from "date-fns/locale";
 import FirstTimeBuyer from "../../../public/FirstTimeBuyer.jpg";
 import BuyToLet from "../../../public/BuyToLet.jpg";
 import Remortgage from "../../../public/Remortgage.jpg";
 import Image from "next/image";
+import { ssrTrpc } from "@/backend/trpc/ssr-caller";
 
 interface BlogPost {
   title: string;
@@ -41,9 +42,15 @@ const blogPosts: BlogPost[] = [
   },
 ];
 
-export function BlogSection() {
+export async function BlogSection() {
+  const blogs = await ssrTrpc.blogRouter.getBlogs();
+
+  const top3Blogs = blogs.slice(0, 3);
+
+  console.log(top3Blogs);
+
   return (
-    <div className="w-full h-fit flex flex-col items-center">
+    <div className="w-full h-fit flex flex-col items-center bg-white text-black border-none">
       <section className="w-full max-w-[1400px] px-6 pt-14 pb-20">
         <div className="space-y-6">
           <div>
@@ -64,10 +71,12 @@ export function BlogSection() {
               >
                 <a href="#" className="flex flex-col md:flex-row">
                   <div className="relative w-full md:w-[240px] h-48 shrink-0">
-                    <img
+                    <Image
                       src={post.image || "/placeholder.svg"}
                       alt=""
                       className="object-cover w-full h-full"
+                      width="500"
+                      height="500"
                     />
                   </div>
                   <div className="flex flex-col justify-between p-6">
@@ -81,7 +90,9 @@ export function BlogSection() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4 font-sans">
                       <time dateTime={post.date}>
-                        {format(new Date(post.date), "dd MMMM yyyy")}
+                        {format(new Date(post.date), "dd MMMM yyyy", {
+                          locale: enGB,
+                        })}
                       </time>
                       <span>·</span>
                       <span>{post.readTime} minute read</span>

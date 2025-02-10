@@ -40,19 +40,12 @@ export default function RootLayout({
       <body
         className={`h-full w-full ${dmSans.variable} ${dmSerifDisplay.variable}`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <TRPCProvider>
-            <AuthProvider>
-              <main className="flex-1 overflow-auto">{children}</main>
-            </AuthProvider>
-          </TRPCProvider>
-          <Toaster />
-        </ThemeProvider>
+        <TRPCProvider>
+          <AuthProvider>
+            <main className="flex-1 overflow-auto">{children}</main>
+          </AuthProvider>
+        </TRPCProvider>
+        <Toaster />
       </body>
     </html>
   );

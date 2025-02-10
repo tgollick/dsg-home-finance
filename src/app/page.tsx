@@ -9,7 +9,7 @@ import { Footer } from "./_sections/components/Footer";
 
 export default async function Home() {
   return (
-    <main className="w-full flex flex-col items-center">
+    <main className="w-full flex flex-col items-center border-none">
       <NavBar />
       <Hero />
       <Products />

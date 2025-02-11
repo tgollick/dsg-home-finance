@@ -19,7 +19,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import DeleteButton from "../admin/blogs/deletebutton";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -154,15 +154,8 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
   }
 
   return (
-    <Card className="p-6 flex flex-col items-start gap-2 max-w-[800px]">
-      <CardHeader>
-        <div>
-          <h1 className="text-5xl font-extrabold">Edit Blog Post</h1>
-          <p className="mt-4 max-w-3xl text-lg">
-            Update and manage your blog posts efficiently.
-          </p>
-        </div>
-      </CardHeader>
+    <Card className="p-6 flex flex-col items-start gap-2 w-full max-w-3xl">
+      <h1 className="text-4xl font-bold mb-6">Edit Blog Post</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -222,9 +215,9 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
           />
 
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Sections</h2>
+            <h2 className="text-lg font-semibold mb-2">Sections</h2>
             {sectionFields.map((field, index) => (
-              <div key={field.id} className="space-y-4 p-4 border rounded">
+              <div key={field.id} className="space-y-4 mb-4 p-4 border rounded">
                 <FormField
                   control={form.control}
                   name={`sections.${index}.title`}
@@ -280,9 +273,9 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Featured Images</h2>
+            <h2 className="text-lg font-semibold mb-2">Featured Images</h2>
             {imageFields.map((field, index) => (
-              <div key={field.id} className="space-y-4 p-4 border rounded">
+              <div key={field.id} className="space-y-4 mb-4 p-4 border rounded">
                 <FormField
                   control={form.control}
                   name={`featuredImages.${index}.url`}
@@ -331,24 +324,22 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
             </Button>
           </div>
 
-          <div className="flex md:flex-row flex-col w-full items-center gap-4">
-            <Button type="submit" disabled={loading} className="w-full">
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Changes
-                </>
-              )}
-            </Button>
-            <DeleteButton id={data?.id ? data?.id : ""} />
-          </div>
+          <Button type="submit" disabled={loading} className="w-full">
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                Save Changes
+              </>
+            )}
+          </Button>
         </form>
       </Form>
+      <DeleteButton id={data?.id ? data?.id : ""} />
     </Card>
   );
 };

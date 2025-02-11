@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { trpc } from "../../../../../utils/providers/TrpcProviders";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,9 +21,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
-  title: z.string(),
-  content: z.string(),
-  author: z.string(),
+  title: z.string().min(1, "Title is required"),
+  content: z.string().min(1, "Content is required"),
+  author: z.string().min(1, "Author is required"),
+  imageUrl: z.string().url("Invalid URL"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -61,6 +62,7 @@ const NewBlog = () => {
       title: "",
       content: "",
       author: "",
+      imageUrl: "",
     },
   });
 
@@ -71,6 +73,7 @@ const NewBlog = () => {
       title: values.title,
       content: values.content,
       author: values.author,
+      imageUrl: values.imageUrl,
     });
 
     setLoading(false);
@@ -123,6 +126,22 @@ const NewBlog = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image URL (optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="https://example.com/image.jpg"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? (
@@ -132,7 +151,7 @@ const NewBlog = () => {
               </>
             ) : (
               <>
-                <LucideCog />
+                <LucideCog className="mr-2 h-4 w-4" />
                 Create Blog
               </>
             )}

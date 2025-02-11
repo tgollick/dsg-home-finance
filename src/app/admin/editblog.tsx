@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { trpc } from "../../../utils/providers/TrpcProviders";
 import { useForm } from "react-hook-form";
@@ -24,9 +24,10 @@ import { useRouter } from "next/navigation";
 import { CardHeader } from "@/components/ui/card";
 
 const formSchema = z.object({
-  title: z.string(),
-  content: z.string(),
-  author: z.string(),
+  title: z.string().min(1, "Title is required"),
+  content: z.string().min(1, "Content is required"),
+  author: z.string().min(1, "Author is required"),
+  imageUrl: z.string().url("Invalid URL"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -66,16 +67,17 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
       title: "",
       content: "",
       author: "",
+      imageUrl: "",
     },
   });
 
-  // Update form when data is loaded
   useEffect(() => {
     if (data) {
       form.reset({
         title: data.title,
         content: data.content,
         author: data.author,
+        imageUrl: data.imageUrl || "",
       });
     }
   }, [data, form]);
@@ -85,7 +87,8 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
 
     mutation.mutate({
       id: blogId,
-      ...values, // Ensure other is never undefined
+      ...values,
+      imageUrl: values.imageUrl,
     });
 
     setLoading(false);
@@ -103,8 +106,8 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
     return (
       <div className="flex items-center justify-center w-full h-64">
         <div className="text-center text-destructive">
-          <h2 className="text-lg font-semibold">Error Loading Contact</h2>
-          <p>{error?.message || "Failed to load contact information"}</p>
+          <h2 className="text-lg font-semibold">Error Loading Blog</h2>
+          <p>{error?.message || "Failed to load blog information"}</p>
         </div>
       </div>
     );
@@ -164,6 +167,22 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image URL (optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="https://example.com/image.jpg"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <div className="flex md:flex-row flex-col w-full items-center gap-4">
             <Button type="submit" disabled={loading} className="w-full">
@@ -174,7 +193,7 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
                 </>
               ) : (
                 <>
-                  <Save />
+                  <Save className="mr-2 h-4 w-4" />
                   Save Changes
                 </>
               )}

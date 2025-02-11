@@ -44,10 +44,7 @@ const blogPosts: BlogPost[] = [
 
 export async function BlogSection() {
   const blogs = await ssrTrpc.blogRouter.getBlogs();
-
   const top3Blogs = blogs.slice(0, 3);
-
-  console.log(top3Blogs);
 
   return (
     <div className="w-full h-fit flex flex-col items-center bg-white text-black border-none">

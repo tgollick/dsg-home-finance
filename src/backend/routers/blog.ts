@@ -15,16 +15,22 @@ export const blogRouter = createTRPCRouter({
   }),
   addBlog: protectedProcedure
     .input(
-      z.object({ title: z.string(), content: z.string(), author: z.string() })
+      z.object({
+        title: z.string(),
+        content: z.string(),
+        author: z.string(),
+        imageUrl: z.string(),
+      })
     )
     .mutation(({ input, ctx }) => {
-      const { title, content, author } = input;
+      const { title, content, author, imageUrl } = input;
 
       const newBlog = ctx.prisma.blogPost.create({
         data: {
           title,
           content,
           author,
+          imageUrl,
         },
       });
 
@@ -93,6 +99,7 @@ export const blogRouter = createTRPCRouter({
         title: z.string(),
         content: z.string(),
         author: z.string(),
+        imageUrl: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -102,6 +109,7 @@ export const blogRouter = createTRPCRouter({
           title: input.title,
           content: input.content,
           author: input.author,
+          imageUrl: input.imageUrl,
           updatedAt: new Date(),
         },
       });

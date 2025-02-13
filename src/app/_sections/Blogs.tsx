@@ -1,49 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
-import FirstTimeBuyer from "../../../public/FirstTimeBuyer.jpg";
-import BuyToLet from "../../../public/BuyToLet.jpg";
-import Remortgage from "../../../public/Remortgage.jpg";
 import Image from "next/image";
 import { ssrTrpc } from "@/backend/trpc/ssr-caller";
 
-interface BlogPost {
-  title: string;
-  description: string;
-  date: string;
-  readTime: number;
-  image: string;
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    title: "How Much Do I Really Need to Earn to Buy a Home in 2023?",
-    description:
-      "You've seen the headlines about soaring rates, but what does it mean for your paycheck? This blog breaks down the math: Why a £30k salary might get you a £150k home in Newcastle but barely a studio in London. Discover tricks to stretch your borrowing power (hint: that side hustle can count), which lenders are friendliest to single buyers, and how a broker can spot \"hidden\" affordability rules. Download our free 'Salary vs. Mortgage Calculator' to test your numbers.",
-    date: "2024-10-24",
-    readTime: 5,
-    image: BuyToLet.src,
-  },
-  {
-    title: "The 5% Deposit Trap: Are Low Down Payments Too Good to Be True?",
-    description:
-      'Low deposits sound perfect for first-timers—until you see the catch. We compare 5% mortgages with higher-rate deals, revealing why a 10% deposit could save you £15k in interest. Learn how to dodge "mortgage prison" if prices dip. And why brokers matter. They\'ll fight lenders to waive strict affordability tests. Book a free "Deposit Strategy Session" to avoid costly mistakes.',
-    date: "2024-10-24",
-    readTime: 5,
-    image: FirstTimeBuyer.src,
-  },
-  {
-    title: "Bad Credit? How to Fix Your Score Fast (Without Waiting 6 Years)",
-    description:
-      'That student loan default or missed phone bill doesn\'t have to kill your mortgage hopes. Learn how lenders weigh credit history (spoiler: recent behavior matters most), and how brokers match you with "second-chance" lenders. Real example: Jess, 28, boosted her score 120 points in 3 months using a broker\'s "credit rehab" plan. Start your free credit health check today.',
-    date: "2024-10-24",
-    readTime: 5,
-    image: Remortgage.src,
-  },
-];
-
 export async function BlogSection() {
-  const blogs = await ssrTrpc.blogRouter.getBlogs();
+  const blogs = await ssrTrpc.blogRouter.getAllBlogs();
   const top3Blogs = blogs.slice(0, 3);
 
   return (
@@ -61,17 +23,17 @@ export async function BlogSection() {
             </p>
           </div>
           <div className="grid gap-6">
-            {blogPosts.map((post) => (
+            {top3Blogs.map((post) => (
               <Card
                 key={post.title}
                 className="overflow-hidden transition-shadow hover:shadow-md"
               >
-                <a href="#" className="flex flex-col md:flex-row">
+                <a href={"/" + post.slug} className="flex flex-col md:flex-row">
                   <div className="relative w-full md:w-[240px] h-48 shrink-0">
                     <Image
-                      src={post.image || "/placeholder.svg"}
+                      src={post.image || "placeholder.svg"}
                       alt=""
-                      className="object-cover w-full h-full"
+                      className="object-cover h-full"
                       width="500"
                       height="500"
                     />
@@ -82,17 +44,17 @@ export async function BlogSection() {
                         "{post.title}"
                       </h3>
                       <p className="text-sm text-muted-foreground font-sans line-clamp-3">
-                        {post.description}
+                        {post.metaDescription}
                       </p>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4 font-sans">
-                      <time dateTime={post.date}>
-                        {format(new Date(post.date), "dd MMMM yyyy", {
+                      <time dateTime={String(post.createdAt)}>
+                        {format(new Date(post.createdAt), "dd MMMM yyyy", {
                           locale: enGB,
                         })}
                       </time>
                       <span>·</span>
-                      <span>{post.readTime} minute read</span>
+                      <span>4 minute read</span>
                     </div>
                   </div>
                 </a>

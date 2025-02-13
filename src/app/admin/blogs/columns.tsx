@@ -49,17 +49,6 @@ export const columns: ColumnDef<BlogPost>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => {
-      const createdAt = new Date(row.original.createdAt);
-      const options: Intl.DateTimeFormatOptions = {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      };
-      const formattedDate = createdAt.toLocaleDateString("en-GB", options);
-      return formattedDate;
-    },
   },
   {
     id: "actions",

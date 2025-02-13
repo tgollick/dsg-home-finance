@@ -1,11 +1,10 @@
 "use client";
-
 import { useState } from "react";
 import { z } from "zod";
 import { trpc } from "../../../../../utils/providers/TrpcProviders";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider, useFieldArray } from "react-hook-form";
-import { Loader2, LucideCog, Plus, Trash2 } from "lucide-react";
+import { useForm, FormProvider } from "react-hook-form";
+import { Loader2, LucideCog } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -19,25 +18,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Editor } from "@tinymce/tinymce-react";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
   author: z.string().min(1, "Author is required"),
-  metaTitle: z.string().optional(),
-  metaDescription: z.string().optional(),
-  sections: z.array(
-    z.object({
-      title: z.string().min(1, "Section title is required"),
-      content: z.string().min(1, "Section content is required"),
-      order: z.number(),
-    })
-  ),
-  featuredImages: z.array(
-    z.object({
-      url: z.string().url("Invalid URL"),
-      altText: z.string().optional(),
-    })
-  ),
+  image: z.string(),
+  metaTitle: z.string(),
+  metaDescription: z.string(),
+  content: z.string().min(1, "Content is required"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -49,7 +38,7 @@ const NewBlog = () => {
 
   const mutation = trpc.blogRouter.addBlog.useMutation({
     onSuccess: () => {
-      utils.blogRouter.getBlogs.invalidate();
+      utils.blogRouter.getAllBlogs.invalidate();
       router.push("/admin/blogs/");
       toast({
         title: "New Blog Successfully Added",
@@ -62,7 +51,7 @@ const NewBlog = () => {
       toast({
         title: "Blog Creation Failed",
         description:
-          "An error occurred while processing your request. Please verify the details and try again." +
+          "An error occurred while processing your request. Please verify the details and try again. " +
           error.message,
         variant: "destructive",
       });
@@ -74,46 +63,23 @@ const NewBlog = () => {
     defaultValues: {
       title: "",
       author: "",
+      image: "",
       metaTitle: "",
       metaDescription: "",
-      sections: [{ title: "", content: "", order: 0 }],
-      featuredImages: [{ url: "", altText: "" }],
+      content: "",
     },
-  });
-
-  const {
-    fields: sectionFields,
-    append: appendSection,
-    remove: removeSection,
-  } = useFieldArray({
-    control: form.control,
-    name: "sections",
-  });
-
-  const {
-    fields: imageFields,
-    append: appendImage,
-    remove: removeImage,
-  } = useFieldArray({
-    control: form.control,
-    name: "featuredImages",
   });
 
   const onSubmit = (values: FormValues) => {
     setLoading(true);
-
     mutation.mutate({
       title: values.title,
       author: values.author,
+      image: values.image,
       metaTitle: values.metaTitle,
       metaDescription: values.metaDescription,
-      sections: values.sections.map((section, index) => ({
-        ...section,
-        order: index,
-      })),
-      featuredImages: values.featuredImages,
+      content: values.content,
     });
-
     setLoading(false);
   };
 
@@ -177,120 +143,87 @@ const NewBlog = () => {
               </FormItem>
             )}
           />
-
-          <div>
-            <h2 className="text-lg font-semibold mb-2">Sections</h2>
-            {sectionFields.map((field, index) => (
-              <div key={field.id} className="space-y-4 mb-4 p-4 border rounded">
-                <FormField
-                  control={form.control}
-                  name={`sections.${index}.title`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Section Title</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`sections.${index}.content`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Section Content</FormLabel>
-                      <FormControl>
-                        <Textarea {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => removeSection(index)}
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Remove Section
-                </Button>
-              </div>
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                appendSection({
-                  title: "",
-                  content: "",
-                  order: sectionFields.length,
-                })
-              }
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Section
-            </Button>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-semibold mb-2">Featured Images</h2>
-            {imageFields.map((field, index) => (
-              <div key={field.id} className="space-y-4 mb-4 p-4 border rounded">
-                <FormField
-                  control={form.control}
-                  name={`featuredImages.${index}.url`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Image URL</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="https://example.com/image.jpg"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`featuredImages.${index}.altText`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Alt Text (optional)</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => removeImage(index)}
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Remove Image
-                </Button>
-              </div>
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => appendImage({ url: "", altText: "" })}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Image
-            </Button>
-          </div>
-
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Cover Image</FormLabel>
+              </FormItem>
+            )}
+          />
+          {/* TinyMCE editor integrated for the content field */}
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Content</FormLabel>
+                <FormControl>
+                  <Editor
+                    apiKey="ogz7ibugntev82h3llyfowfwltz0i4foxeilyak5zyum5i3c"
+                    init={{
+                      plugins: [
+                        // Core editing features
+                        "anchor",
+                        "autolink",
+                        "charmap",
+                        "codesample",
+                        "emoticons",
+                        "image",
+                        "link",
+                        "lists",
+                        "media",
+                        "searchreplace",
+                        "table",
+                        "visualblocks",
+                        "wordcount",
+                        // Your account includes a free trial of TinyMCE premium features
+                        // Try the most popular premium features until Feb 27, 2025:
+                        "checklist",
+                        "mediaembed",
+                        "casechange",
+                        "export",
+                        "formatpainter",
+                        "pageembed",
+                        "a11ychecker",
+                        "tinymcespellchecker",
+                        "permanentpen",
+                        "powerpaste",
+                        "advtable",
+                        "advcode",
+                        "editimage",
+                        "advtemplate",
+                        "mentions",
+                        "tinycomments",
+                        "tableofcontents",
+                        "footnotes",
+                        "mergetags",
+                        "autocorrect",
+                        "typography",
+                        "inlinecss",
+                        "markdown",
+                        "importword",
+                        "exportword",
+                        "exportpdf",
+                      ],
+                      toolbar:
+                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                      tinycomments_mode: "embedded",
+                      tinycomments_author: "Author name",
+                      mergetags_list: [
+                        { value: "First.Name", title: "First Name" },
+                        { value: "Email", title: "Email" },
+                      ],
+                    }}
+                    initialValue={field.value}
+                    onEditorChange={(value, editor) => field.onChange(value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? (
               <>

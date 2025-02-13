@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { trpc } from "../../../utils/providers/TrpcProviders";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Save, Plus, Trash2 } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -15,33 +15,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import DeleteButton from "../admin/blogs/deletebutton";
-import { Textarea } from "@/components/ui/textarea";
-import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import { Editor } from "@tinymce/tinymce-react";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
   author: z.string().min(1, "Author is required"),
+  image: z.string().optional(),
   metaTitle: z.string().optional(),
   metaDescription: z.string().optional(),
-  sections: z.array(
-    z.object({
-      id: z.string().optional(),
-      title: z.string().min(1, "Section title is required"),
-      content: z.string().min(1, "Section content is required"),
-      order: z.number(),
-    })
-  ),
-  featuredImages: z.array(
-    z.object({
-      id: z.string().optional(),
-      url: z.string().url("Invalid URL"),
-      altText: z.string().optional(),
-    })
-  ),
+  content: z.string().min(1, "Content is required"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -56,18 +41,18 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
 
   const mutation = trpc.blogRouter.editBlog.useMutation({
     onSuccess: () => {
-      utils.blogRouter.getBlogs.invalidate();
+      utils.blogRouter.getAllBlogs.invalidate();
       router.push(`/admin/blogs`);
       toast({
         title: "Blog Updated",
-        description: "Your Blog has been updated successfully.",
+        description: "Your blog has been updated successfully.",
       });
     },
     onError: (error) => {
       console.error(error);
       toast({
         title: "Blog Update Error!",
-        description: "Your blog has not updated successfully.",
+        description: "Your blog was not updated successfully.",
         variant: "destructive",
       });
     },
@@ -78,29 +63,11 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
     defaultValues: {
       title: "",
       author: "",
+      image: "",
       metaTitle: "",
       metaDescription: "",
-      sections: [],
-      featuredImages: [],
+      content: "",
     },
-  });
-
-  const {
-    fields: sectionFields,
-    append: appendSection,
-    remove: removeSection,
-  } = useFieldArray({
-    control: form.control,
-    name: "sections",
-  });
-
-  const {
-    fields: imageFields,
-    append: appendImage,
-    remove: removeImage,
-  } = useFieldArray({
-    control: form.control,
-    name: "featuredImages",
   });
 
   useEffect(() => {
@@ -108,19 +75,10 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
       form.reset({
         title: data.title,
         author: data.author,
+        image: data.image || "",
         metaTitle: data.metaTitle || "",
         metaDescription: data.metaDescription || "",
-        sections: data.sections.map((section) => ({
-          id: section.id,
-          title: section.title,
-          content: section.content,
-          order: section.order,
-        })),
-        featuredImages: data.featuredImage.map((image) => ({
-          id: image.id,
-          url: image.url,
-          altText: image.altText || "",
-        })),
+        content: data.content || "",
       });
     }
   }, [data, form]);
@@ -154,193 +112,165 @@ const EditBlog = ({ blogId }: { blogId: string }) => {
   }
 
   return (
-    <Card className="p-6 flex flex-col items-start gap-2 w-full max-w-3xl">
-      <h1 className="text-4xl font-bold mb-6">Edit Blog Post</h1>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 w-full"
-        >
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="author"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Author</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="metaTitle"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Meta Title (optional)</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="metaDescription"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Meta Description (optional)</FormLabel>
-                <FormControl>
-                  <Textarea {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold mb-2">Sections</h2>
-            {sectionFields.map((field, index) => (
-              <div key={field.id} className="space-y-4 mb-4 p-4 border rounded">
-                <FormField
-                  control={form.control}
-                  name={`sections.${index}.title`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Section Title</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`sections.${index}.content`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Section Content</FormLabel>
-                      <FormControl>
-                        <Textarea {...field} className="h-[200px]" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => removeSection(index)}
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Remove Section
-                </Button>
-              </div>
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                appendSection({
-                  title: "",
-                  content: "",
-                  order: sectionFields.length,
-                })
-              }
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Section
+    <div className="max-w-3xl mx-auto">
+      <div className="p-6 border rounded">
+        <h1 className="text-4xl font-bold mb-6">Edit Blog Post</h1>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="author"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Author</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="metaTitle"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meta Title (optional)</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="metaDescription"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meta Description (optional)</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cover Image</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            {/* TinyMCE editor for the content field */}
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Content</FormLabel>
+                  <FormControl>
+                    <Editor
+                      apiKey="ogz7ibugntev82h3llyfowfwltz0i4foxeilyak5zyum5i3c"
+                      init={{
+                        plugins: [
+                          // Core editing features
+                          "anchor",
+                          "autolink",
+                          "charmap",
+                          "codesample",
+                          "emoticons",
+                          "image",
+                          "link",
+                          "lists",
+                          "media",
+                          "searchreplace",
+                          "table",
+                          "visualblocks",
+                          "wordcount",
+                          // Your account includes a free trial of TinyMCE premium features
+                          // Try the most popular premium features until Feb 27, 2025:
+                          "checklist",
+                          "mediaembed",
+                          "casechange",
+                          "export",
+                          "formatpainter",
+                          "pageembed",
+                          "a11ychecker",
+                          "tinymcespellchecker",
+                          "permanentpen",
+                          "powerpaste",
+                          "advtable",
+                          "advcode",
+                          "editimage",
+                          "advtemplate",
+                          "mentions",
+                          "tinycomments",
+                          "tableofcontents",
+                          "footnotes",
+                          "mergetags",
+                          "autocorrect",
+                          "typography",
+                          "inlinecss",
+                          "markdown",
+                          "importword",
+                          "exportword",
+                          "exportpdf",
+                        ],
+                        toolbar:
+                          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                        tinycomments_mode: "embedded",
+                        tinycomments_author: "Author name",
+                        mergetags_list: [
+                          { value: "First.Name", title: "First Name" },
+                          { value: "Email", title: "Email" },
+                        ],
+                      }}
+                      initialValue={field.value}
+                      onEditorChange={(value, editor) => field.onChange(value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={loading} className="w-full">
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Save className="mr-2 h-4 w-4" />
+                  Save Changes
+                </>
+              )}
             </Button>
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold mb-2">Featured Images</h2>
-            {imageFields.map((field, index) => (
-              <div key={field.id} className="space-y-4 mb-4 p-4 border rounded">
-                <FormField
-                  control={form.control}
-                  name={`featuredImages.${index}.url`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Image URL</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name={`featuredImages.${index}.altText`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Alt Text (optional)</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => removeImage(index)}
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Remove Image
-                </Button>
-              </div>
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => appendImage({ url: "", altText: "" })}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Image
-            </Button>
-          </div>
-
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              <>
-                <Save className="mr-2 h-4 w-4" />
-                Save Changes
-              </>
-            )}
-          </Button>
-        </form>
-      </Form>
-      <DeleteButton id={data?.id ? data?.id : ""} />
-    </Card>
+          </form>
+        </Form>
+        <DeleteButton id={data.id} />
+      </div>
+    </div>
   );
 };
 

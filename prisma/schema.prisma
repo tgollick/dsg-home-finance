@@ -30,29 +30,10 @@ model BlogPost {
   title       String
   slug        String     @unique
   author      String
+  image String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   metaTitle   String?
   metaDescription String?
-  featuredImage Image[]  
-  sections    Section[] 
-  tags        String[]
-}
-
-model Image {
-  id          String    @id @default(uuid())
-  url         String
-  altText     String?
-  caption     String?
-  blogPost    BlogPost? @relation(fields: [blogPostId], references: [id])
-  blogPostId  String?
-}
-
-model Section {
-  id          String    @id @default(uuid())
-  title       String    
-  content     String    
-  order       Int    
-  blogPost    BlogPost? @relation(fields: [blogPostId], references: [id])
-  blogPostId  String?
+  content String @db.Text
 }

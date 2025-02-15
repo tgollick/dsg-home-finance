@@ -73,25 +73,10 @@ type Props = {
 };
 
 export function MarqueeDemo({ reviews, googleReviewsUrl }: Props) {
-  const firstRow = reviews.slice(0, reviews.length / 2);
-  const secondRow = reviews.slice(reviews.length / 2);
-
   return (
     <div className="relative flex h-fit w-full flex-col items-center justify-center overflow-hidden">
       <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review) => (
-          <ReviewCard
-            key={review.author_name}
-            name={review.author_name}
-            img={review.profile_photo_url}
-            date={review.relative_time_description}
-            body={review.text}
-            googleReviewsUrl={googleReviewsUrl}
-          />
-        ))}
-      </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {secondRow.map((review) => (
+        {reviews.map((review) => (
           <ReviewCard
             key={review.author_name}
             name={review.author_name}

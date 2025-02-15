@@ -17,7 +17,7 @@ export async function BlogSection() {
               Our Blog Posts
             </h2>
             <p className="text-sm sm:text-base font-sans mb-2">
-              We always like to keep you up to date, that's why DSG Home Finance
+              We always like to keep you up to date, thats why DSG Home Finance
               is committed to producing blog posts relating to the current
               events.
             </p>

@@ -237,7 +237,7 @@ export default function MortgageCalculator() {
       <AnimatePresence>
         {isDialogOpen && (
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogContent className="sm:max-w-[425px] w-[95vw] max-h-[90vh] z-[500] rounded-lg overflow-hidden p-0 bg-[#1e1e1e] text-white border border-[#F49FB7] flex flex-col">
+            <DialogContent className="sm:max-w-[425px] w-[95vw] max-h-[90vh] z-[500] rounded-lg overflow-hidden p-0 bg-[#1e1e1e] text-white border border-[#F49FB7] flex flex-col font-sans">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}

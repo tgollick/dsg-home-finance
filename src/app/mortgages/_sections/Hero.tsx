@@ -1,48 +1,66 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LucideHouse, LucideShieldCheck } from "lucide-react";
+import {
+  LucideHouse,
+  LucideMoveRight,
+  LucidePercentDiamond,
+} from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
-import MortgageCalculator from "./components/MortgageCalculator";
+import MortgageCalculator from "../../_sections/components/MortgageCalculator";
 
 const Hero = () => {
   return (
-    <div className=" w-full h-fit relative bg-[#1e1e1e] bg-[url('/MargateHeroBG.png')] bg-cover bg-bottom flex items-center justify-center">
+    <div className="relative w-full h-fit bg-[#1e1e1e] flex items-center justify-center">
+      <div className="w-full h-full z-0 puzzle-background absolute opacity-10"></div>
       <MortgageCalculator />
       <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/25 to-[#1e1e1e]/25"></div>
       <section className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-6">
-        {/* Content Container with max-width for larger screens */}
-        <div className="w-full mx-auto relative pt-40 pb-80 sm:pt-52 md:pt-64 lg:py-72">
+        <div className="w-full mx-auto relative pt-44 pb-80 sm:pt-48 md:pt-56 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex flex-col items-center md:items-start gap-8 md:gap-10 text-white text-center md:text-left max-w-2xl"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif leading-tight max-w-xl">
-              Mortgage Advice <span className="italic">you</span> can trust
-            </h1>
-            <p className="text-sm sm:text-base font-sans">
-              With years of experience, DSG Home Finance specializes in finding
-              the right products to suit your unique needs. No matter your
-              circumstances, Dave is committed to pairing you with tailored
-              solutions that keep you confident, happy, and protected.
-            </p>
+            <div className="flex flex-col text-center items-center sm:items-start sm:text-start w-full">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif leading-tight">
+                Over
+              </h1>
+              <h1 className="text-[120px] sm:text-[140px] md:text-[160px] lg:text-[180px] xl:text-[200px] font-serif leading-tight mt-[-30px] text-[#F49FB7]">
+                4000+
+              </h1>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif leading-tight mt-[-10px]">
+                Mortgages Completed by David
+              </h1>
+            </div>
             <div className="font-sans flex sm:flex-row flex-col items-center gap-3 w-full">
               <Button className="w-full sm:w-auto text-black bg-white hover:bg-gray-200 transition text-sm md:text-base">
-                Explore Mortgages
+                See Popular Mortgages
                 <LucideHouse />
               </Button>
               <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base">
-                Explore Protection
-                <LucideShieldCheck />
+                Make Yours Next
+                <LucideMoveRight />
               </Button>
             </div>
           </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30, rotateY: 180, rotateX: -180 }}
+            animate={{ opacity: 1, y: 0, rotateY: 0, rotateX: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="hidden lg:block"
+          >
+            <LucidePercentDiamond
+              fill={"#F49FB7"}
+              className="text-white"
+              size={"400"}
+            />
+          </motion.div>
         </div>
       </section>
-      <div className="custom-shape-divider-bottom-1738595750">
+      <div className="custom-shape-divider-bottom-17385957502">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"

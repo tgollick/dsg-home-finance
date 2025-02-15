@@ -1,12 +1,17 @@
+import NavBar from "@/components/NavBar";
 import React from "react";
+import Hero from "./_sections/Hero";
+import PopularProducts from "./_sections/PopularProducts";
 
 // type Props = {}
 
 const Mortgages = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <h1 className="text-4xl">Mortgages</h1>
-    </div>
+    <main className="w-full flex flex-col items-center border-none">
+      <NavBar />
+      <Hero />
+      <PopularProducts />
+    </main>
   );
 };
 

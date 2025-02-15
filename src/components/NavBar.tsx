@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  LucideCross,
-  LucideMenu,
-  LucidePhoneCall,
-  LucideX,
-} from "lucide-react";
+import { LucideMenu, LucidePhoneCall, LucideX } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import DSGLogoWhite from "../../public/DSGGreyLogo.png";
@@ -51,26 +46,40 @@ const NavBar = () => {
               "Privacy Policy",
               "About Us",
               <Button
-                key={6}
-                className="w-full md:w-auto bg-[#F49FB7] text-black hover:bg-[#f281a4] transition text-sm md:text-base"
+                key="cta"
+                className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base"
               >
-                Book a call
+                Book a Call
                 <LucidePhoneCall />
               </Button>,
-            ].map((item, index) => (
-              <motion.a
-                key={index}
-                href=""
-                variants={navItemVariants}
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-                whileTap="tap"
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                {item}
-              </motion.a>
-            ))}
+            ].map((item, index) => {
+              // Determine the href only for string items
+              let href = "";
+              if (typeof item === "string") {
+                const hrefMapping: Record<string, string> = {
+                  Home: "/",
+                  Mortgages: "/mortgages",
+                  Protection: "/protection",
+                  "Privacy Policy": "/privacy",
+                  "About Us": "/about",
+                };
+                href = hrefMapping[item] || "";
+              }
+              return (
+                <motion.a
+                  key={index}
+                  href={href}
+                  variants={navItemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover="hover"
+                  whileTap="tap"
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  {item}
+                </motion.a>
+              );
+            })}
           </nav>
 
           {/* Mobile Menu Icon */}

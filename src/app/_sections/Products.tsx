@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { LucideShieldQuestion } from "lucide-react";
+import { LucidePackageSearch } from "lucide-react";
 import { LogoCarousel } from "@/components/ui/logo-carousel";
 
 const Products = () => {
@@ -25,9 +25,9 @@ const Products = () => {
           <LogoCarousel columns={2} />
         </div>
         {/* New component to show off products  */}
-        <Button className="w-full md:w-auto text-black bg-white hover:bg-gray-200 transition text-sm md:text-base font-sans">
-          How much can I borrow?
-          <LucideShieldQuestion />
+        <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
+          Find your perfect product
+          <LucidePackageSearch />
         </Button>{" "}
       </section>
     </div>

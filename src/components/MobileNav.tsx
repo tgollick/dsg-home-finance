@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 
 const menuItems = [
   { name: "Home", href: "/" },
@@ -27,7 +26,7 @@ const itemVariants = {
 export function MobileNav() {
   return (
     <motion.div
-      className="fixed inset-0 flex flex-col items-center justify-center bg-[#1e1e1e] bg-opacity-90 z-50"
+      className="fixed inset-0 flex flex-col items-center justify-center bg-[#1e1e1e] bg-opacity-90 z-[1000]"
       initial="hidden"
       animate="visible"
       variants={containerVariants}

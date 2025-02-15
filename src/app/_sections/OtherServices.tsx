@@ -7,11 +7,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import type { StaticImageData } from "next/image";
 import Image from "next/image";
-import FirstTimeBuyer from "../../../public/FirstTimeBuyer.jpg";
-import Remortgage from "../../../public/Remortgage.jpg";
-import BuyToLet from "../../../public/BuyToLet.jpg";
+import equityReleaseImage from "../../../public/elderly-lady.avif";
+import debtConsolidationImage from "../../../public/writing-pen.avif";
+import protectionInsuranceImage from "../../../public/lock-image.avif";
+import commercialMortgageImage from "../../../public/commercial-building.avif";
 import {
   LucideCalendar,
   LucideCoins,
@@ -28,38 +28,31 @@ const data = [
     title: "Equity Release",
     content:
       "Unlock the value of your home with a flexible equity release plan tailored to your needs.",
-    img: Remortgage,
+    img: equityReleaseImage,
     alt: "Equity release illustration",
   },
   {
     title: "Debt Consolidation",
     content:
       "Simplify your finances by consolidating multiple debts into one manageable loan.",
-    img: BuyToLet,
+    img: debtConsolidationImage,
     alt: "Debt consolidation illustration",
   },
   {
     title: "Protection Insurance",
     content:
       "Secure your family's future with comprehensive life, critical illness, and income protection insurance.",
-    img: FirstTimeBuyer,
+    img: protectionInsuranceImage,
     alt: "Protection insurance illustration",
   },
   {
     title: "Commercial Mortgages",
     content:
       "Finance your business property with flexible commercial mortgage solutions.",
-    img: BuyToLet,
+    img: commercialMortgageImage,
     alt: "Commercial mortgages illustration",
   },
 ];
-
-type Service = {
-  title: string;
-  content: string;
-  img: StaticImageData;
-  alt: string;
-};
 
 const OtherServices = () => {
   return (
@@ -99,11 +92,14 @@ const OtherServices = () => {
                 <LucideCoins className="w-5 h-5" fill="#f281a4" /> Family Income
                 Benefit
               </p>
+              <p className="text-gray-400">
+                With many more products available on referal...
+              </p>
             </div>
 
-            <Button className="w-full sm:w-auto bg-[#F49FB7] text-black hover:bg-[#f281a4] transition text-sm md:text-base hidden lg:flex lg:items-center lg:gap-0">
-              Book a call with David
-              <LucidePhoneCall className="ml-2 h-4 w-4" />
+            <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base hidden lg:flex lg:items-center">
+              Book a Referal
+              <LucideCalendar />
             </Button>
           </div>
 
@@ -135,10 +131,10 @@ const OtherServices = () => {
                         </div>
                         <div className="flex flex-col justify-between p-6">
                           <div className="space-y-2">
-                            <h3 className="text-2xl font-serif leading-tight">
-                              "{service.title}"
+                            <h3 className="text-2xl sm:text-3xl font-serif leading-tight">
+                              {service.title}
                             </h3>
-                            <p className="text-sm text-muted-foreground font-sans line-clamp-3">
+                            <p className="text-sm sm:text-base text-muted-foreground font-sans line-clamp-3">
                               {service.content}
                             </p>
                           </div>
@@ -158,8 +154,8 @@ const OtherServices = () => {
 
         <div className="block lg:hidden mt-8">
           <Button className="w-full sm:w-auto bg-[#F49FB7] text-black hover:bg-[#f281a4] transition text-sm md:text-base">
-            Book a call with David
-            <LucidePhoneCall className="ml-2 h-4 w-4" />
+            Book a Referal
+            <LucidePhoneCall className="h-4 w-4" />
           </Button>
         </div>
       </section>

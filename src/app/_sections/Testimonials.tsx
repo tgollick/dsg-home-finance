@@ -1,8 +1,6 @@
 import { ssrTrpc } from "@/backend/trpc/ssr-caller";
-import Review from "./components/Review";
 import { Button } from "@/components/ui/button";
-import { LucidePhoneCall } from "lucide-react";
-import { Marquee } from "@/components/magicui/marquee";
+import { LucideMessageCircleQuestion } from "lucide-react";
 import { MarqueeDemo } from "./components/Marquee";
 
 type ReviewType = {
@@ -29,16 +27,14 @@ const Testimonials = async () => {
           </p>
         </div>
 
-        {/* New Reviews component */}
-
         <MarqueeDemo
           reviews={reviews}
           googleReviewsUrl="https://www.google.com/search?sca_esv=47cd9fb8f57accb3&biw=1528&bih=834&si=APYL9btvhO6SAb8jF9HqTZMMa7vs_teLnZaEVrJZwRKFIIKjoTIiwRFYjnV_BQgHwzcwYTZqIlee2Wo5RKBDt2XsOU0bCVzxLM7aAMwymDJdeuiv10hLrFPUct6ezpgTVgb_MMrdEPRY&q=DSG+Home+Finance+Reviews&sa=X&ved=2ahUKEwiyubj3_7SLAxUoQ0EAHQOMHUwQ0bkNegQILRAE"
         />
 
-        <Button className="font-sans w-full md:w-auto bg-[#F49FB7] text-black hover:bg-[#f281a4] transition text-sm md:text-base">
-          Book a call with David
-          <LucidePhoneCall />
+        <Button className="font-sans w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base">
+          Could you be the next one
+          <LucideMessageCircleQuestion />
         </Button>
       </section>
     </div>

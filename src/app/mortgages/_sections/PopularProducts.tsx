@@ -1,14 +1,14 @@
-import Product from "./components/Product";
-import FirstTimeBuyer from "../../../public/FirstTimeBuyer.jpg";
-import Remortgage from "../../../public/Remortgage.jpg";
-import BuyToLet from "../../../public/BuyToLet.jpg";
+import Product from "../../_sections/components/Product";
+import FirstTimeBuyer from "../../../../public/FirstTimeBuyer.jpg";
+import Remortgage from "../../../../public/Remortgage.jpg";
+import BuyToLet from "../../../../public/BuyToLet.jpg";
 import { LucideHouse } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const PopularProducts = () => {
   return (
     <div className="border-none w-full flex items-center justify-center bg-white text-black">
-      <section className="py-14 px-6 w-full max-w-[1400px] flex flex-col items-center gap-8">
+      <section className="pb-20 pt-56 sm:pt-48 md:pt-42 lg:pt-36 xl:pt-32 px-6 w-full max-w-[1400px] flex flex-col items-center gap-8">
         <div className="text-black text-center w-full max-w-[800px]">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif leading-tight mb-4">
             Popular Products

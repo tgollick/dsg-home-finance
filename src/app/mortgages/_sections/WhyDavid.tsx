@@ -50,7 +50,7 @@ const WhyDavid = () => {
 
           <div className="flex flex-col sm:flex-row items-center gap-8 mb-10">
             {stats.map((stat) => (
-              <StatBox {...stat} />
+              <StatBox key={stat.title} {...stat} />
             ))}
           </div>
 

@@ -1,13 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, LucidePhoneCall } from "lucide-react";
+import { LucidePhoneCall } from "lucide-react";
 import dsgWhite from "../../../../public/dsg-logo-white.png";
 
 export function Footer() {
   return (
-    <div className="w-full flex flex-col items-center bg-[#1e1e1e]">
-      <footer className="w-full max-w-[1400px] px-6 py-10">
+    <div className="w-full flex flex-col items-center bg-[#1e1e1e] relative">
+      <div className="dot-background absolute inset-0 opacity-5" />
+      <footer className="w-full max-w-[1400px] h-fit px-6 py-10 relative z-10">
         <div className="w-full space-y-8 sm:space-y-12 text-[#777777]">
           {/* Navigation and CTA Section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
@@ -28,7 +29,7 @@ export function Footer() {
                   About Us
                 </Link>
                 <Link
-                  href="/privacy-policy"
+                  href="/privacy"
                   className="text-sm hover:text-[#F49FB7] transition-colors"
                 >
                   Privacy Policy
@@ -71,7 +72,7 @@ export function Footer() {
                 height={80}
                 className="w-auto h-24"
               />
-              <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base">
+              <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
                 Book a call with David
                 <LucidePhoneCall />
               </Button>
@@ -81,8 +82,8 @@ export function Footer() {
           {/* Regulatory Information */}
           <div className="space-y-6 border-t border-[#333333] pt-8 font-sans">
             <div className="space-y-4 max-w-4xl">
-              <p className="text-sm leading-relaxed">
-                Important Information: Amulet Mortgages LTD is an Appointed
+              <p className="text-sm leading-relaxed font-semibold">
+                Important Information: DSG Home Finance LTD is an Appointed
                 Representative of Stonebridge Mortgage Solutions Ltd, which is
                 authorised and regulated by the Financial Conduct Authority.
                 Your home may be repossessed if you do not keep up repayments on
@@ -92,18 +93,18 @@ export function Footer() {
               <div className="space-y-2">
                 <p className="text-sm leading-relaxed">
                   There may be a fee for arranging a mortgage this will
-                  typically be £299 and is payable upon the completion of your
+                  typically be £599 and is payable upon the completion of your
                   mortgage.
                 </p>
-                <p className="text-sm leading-relaxed">
-                  * You may have to pay an early repayment charge to your
-                  existing lender if you remortgage. *
+                <p className="text-sm leading-relaxed text-destructive">
+                  You may have to pay an early repayment charge to your existing
+                  lender if you remortgage.
                 </p>
                 <p className="text-sm leading-relaxed">
                   Not all Buy to Let Mortgages are regulated by The Financial
                   Conduct Authority.{" "}
                   <Link
-                    href="/privacy-policy"
+                    href="/privacy"
                     className="text-[#F49FB7] hover:text-[#f281a4] transition-colors underline"
                   >
                     Privacy & Cookie Policy
@@ -118,8 +119,8 @@ export function Footer() {
                 Wales. FCA Number: 804140
               </p>
               <p className="text-xs">
-                Registered Address: Amulet Mortgages Ltd, 21 Broadfield Road,
-                Folkestone, Kent, CT20 2JT.
+                Registered Address: 139 Westbrook Avenue, Margate, Kent, CT9
+                5HH, United Kingdom
               </p>
             </div>
           </div>

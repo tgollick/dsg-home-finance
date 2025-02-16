@@ -15,7 +15,8 @@ const Reviews = async () => {
   const reviews: ReviewType[] = await ssrTrpc.analyticsRouter.getReviews();
 
   return (
-    <div className="border-none w-full flex items-center justify-center bg-[#1e1e1e]">
+    <div className="border-none w-full flex items-center justify-center bg-[#1e1e1e] relative">
+      <div className="grid-background absolute w-full h-full opacity-5" />
       <section className="relative w-full max-w-[1400px] p-6 flex flex-col items-center gap-8">
         <MarqueeDemo
           reviews={reviews}

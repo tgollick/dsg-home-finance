@@ -6,6 +6,7 @@ import PopularProducts from "./_sections/PopularProducts";
 import OtherServices from "./_sections/OtherServices";
 import { BlogSection } from "./_sections/Blogs";
 import { Footer } from "./_sections/components/Footer";
+import CTA from "./mortgages/_sections/CTA";
 
 export default async function Home() {
   return (
@@ -17,6 +18,7 @@ export default async function Home() {
       <PopularProducts />
       <OtherServices />
       <BlogSection />
+      <CTA />
       <Footer />
     </main>
   );

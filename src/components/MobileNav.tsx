@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const menuItems = [
   { name: "Home", href: "/" },
@@ -24,24 +25,32 @@ const itemVariants = {
 };
 
 export function MobileNav() {
+  const pathname = usePathname();
   return (
     <motion.div
-      className="fixed inset-0 flex flex-col items-center justify-center bg-[#1e1e1e] bg-opacity-90 z-[1000]"
+      className="fixed inset-0 flex flex-col items-center justify-center bg-[#1e1e1e] bg-opacity-[0.98] z-[1000] wave-background"
       initial="hidden"
       animate="visible"
+      exit="hidden"
       variants={containerVariants}
     >
-      <nav className="flex flex-col items-center space-y-8 text-white font-serif">
-        {menuItems.map((item, index) => (
-          <motion.a
-            key={index}
-            href={item.href}
-            className="text-3xl hover:text-gray-200 transition-colors"
-            variants={itemVariants}
-          >
-            {item.name}
-          </motion.a>
-        ))}
+      <nav className="flex flex-col items-center space-y-10 text-white font-serif">
+        {menuItems.map((item, index) => {
+          const activeClass =
+            pathname === item.href &&
+            " font-bold text-[#F49FB7] hover:text-[#f281a4]";
+
+          return (
+            <motion.a
+              key={index}
+              href={item.href}
+              className={`text-4xl hover:text-gray-200 transition-colors${activeClass}`}
+              variants={itemVariants}
+            >
+              {item.name}
+            </motion.a>
+          );
+        })}
       </nav>
     </motion.div>
   );

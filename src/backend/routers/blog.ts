@@ -99,13 +99,13 @@ export const blogRouter = createTRPCRouter({
   getBlog: publicProcedure
     .input(
       z.object({
-        id: z.string(),
+        slug: z.string(),
       })
     )
     .query(async ({ input, ctx }) => {
       try {
         const blogPost = await ctx.prisma.blogPost.findUnique({
-          where: { id: input.id },
+          where: { slug: input.slug },
         });
 
         return blogPost;

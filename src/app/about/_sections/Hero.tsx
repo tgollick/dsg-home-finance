@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LucidePhone } from "lucide-react";
+import { LucideMedal, LucidePhone } from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
 import Image from "next/image";
@@ -41,14 +41,29 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30, rotateY: 180, rotateX: -180 }}
             animate={{ opacity: 1, y: 0, rotateY: 0, rotateX: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="hidden lg:block"
+            className="max-w-[400px] h-full relative"
           >
+            <div className="w-full h-full max-h-[120px] absolute bottom-0 p-3">
+              <div className="w-full h-full bg-white/90 rounded-lg z-50 p-4 flex gap-3 items-center">
+                <LucideMedal
+                  className="text-black"
+                  size="60"
+                  strokeWidth={"1.5"}
+                />
+                <div className="flex flex-col">
+                  <h4 className="text-3xl font-serif">David Gollick</h4>
+                  <p className="font-sans text-gray-600">
+                    DSG's Lead Principle
+                  </p>
+                </div>
+              </div>
+            </div>
             <Image
               src={aboutUsDavid}
               width="1000"
               height="1000"
               alt="Image of David Gollick the owner of DSG Home Finance"
-              className="h-full aspect-auto max-h-[600px] w-fit"
+              className="object-cover w-full h-full"
             />
           </motion.div>
         </div>

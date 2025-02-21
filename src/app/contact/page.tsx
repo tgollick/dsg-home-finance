@@ -1,12 +1,17 @@
+import NavBar from "@/components/NavBar";
 import React from "react";
+import { Footer } from "../_sections/components/Footer";
+import ContactSection from "./_section/ContactSection";
 
 // type Props = {}
 
 const Contact = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <h1 className="text-4xl">Contact</h1>
-    </div>
+    <main className="w-full h-full">
+      <NavBar />
+      <ContactSection />
+      <Footer />
+    </main>
   );
 };
 

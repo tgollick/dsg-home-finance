@@ -5,13 +5,15 @@ import davidAuthorImage from "../../../public/david-author-image.png";
 import CTA from "../mortgages/_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 import { Card } from "@/components/ui/card";
+import { redirect } from "next/navigation";
 
 const page = async ({ params }: { params: { blogSlug: string } }) => {
   const blogSlug = await params.blogSlug;
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
 
   if (blogPost == null) {
-    return <h1 className="text-destructive">Error Loading Blog</h1>;
+    redirect("/");
+    return;
   }
 
   return (

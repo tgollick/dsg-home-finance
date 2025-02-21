@@ -1,37 +1,41 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LucideHousePlus, LucideMoveRight } from "lucide-react";
+import { LucidePhone } from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
-import MortgageCalculator from "../../_sections/components/MortgageCalculator";
+import Image from "next/image";
+import aboutUsDavid from "../../../../public/about-us-david.png";
 
 const Hero = () => {
   return (
     <div className="relative w-full h-fit bg-[#1e1e1e] flex items-center justify-center">
-      <div className="w-full h-full z-0 tech-background absolute opacity-10"></div>
-      <MortgageCalculator />
+      <div className="w-full h-full z-0 wave-background absolute opacity-40"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60"></div>
       <section className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-6">
-        <div className="w-full mx-auto relative pt-44 pb-80 sm:pt-48 md:pt-56 flex items-center justify-between gap-10">
+        <div className="w-full mx-auto relative pt-44 pb-64 sm:pt-48 md:pt-56 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col items-center md:items-start gap-6 md:gap-8 text-white text-center md:text-left w-full"
+            className="flex flex-col items-center md:items-start gap-8 md:gap-10 text-white text-center md:text-left max-w-2xl"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif leading-tight w-full">
-              Life is Unpredictable - Protect What Matters Most
-            </h1>
-            <p className="text-sm sm:text-base font-sans max-w-xl">
-              Your mortgage is a long-term commitment. Let’s make sure you’re
-              covered if life takes an unexpected turn.
-            </p>
-
-            <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
-              Find The Right Protection For You
-              <LucideMoveRight />
-            </Button>
+            <div className="flex flex-col text-center items-center sm:items-start sm:text-start w-full">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif leading-tight max-w-xl mb-8">
+                The Story Behind Your Security
+              </h1>
+              <p className="text-sm sm:text-base font-sans mb-10">
+                For two decades, David has guided families through mortgages
+                with clarity, not complexity. What began as a one-man mission to
+                simplify homebuying is now a trusted, FCA-regulated firm built
+                on genuine relationships — where your dreams matter as much as
+                your finances.
+              </p>
+              <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
+                Have a Chat with David
+                <LucidePhone />
+              </Button>
+            </div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30, rotateY: 180, rotateX: -180 }}
@@ -39,10 +43,12 @@ const Hero = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="hidden lg:block"
           >
-            <LucideHousePlus
-              fill={"#F49FB7"}
-              className="text-white"
-              size={"400"}
+            <Image
+              src={aboutUsDavid}
+              width="1000"
+              height="1000"
+              alt="Image of David Gollick the owner of DSG Home Finance"
+              className="h-full aspect-auto max-h-[600px] w-fit"
             />
           </motion.div>
         </div>

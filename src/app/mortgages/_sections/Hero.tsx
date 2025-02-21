@@ -15,7 +15,7 @@ const Hero = () => {
     <div className="relative w-full h-fit bg-[#1e1e1e] flex items-center justify-center">
       <div className="w-full h-full z-0 puzzle-background absolute opacity-10"></div>
       <MortgageCalculator />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/25 to-[#1e1e1e]/25"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60"></div>
       <section className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-6">
         <div className="w-full mx-auto relative pt-44 pb-80 sm:pt-48 md:pt-56 flex items-center justify-between">
           <motion.div

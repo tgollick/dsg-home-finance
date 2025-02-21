@@ -31,12 +31,12 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const EditBlog = ({ blogId }: { blogId: string }) => {
+const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const utils = trpc.useUtils();
   const { data, isLoading, error } = trpc.blogRouter.getBlog.useQuery({
-    id: blogId,
+    slug: blogSlug,
   });
 
   const mutation = trpc.blogRouter.editBlog.useMutation({

@@ -25,6 +25,7 @@ export type BlogPost = {
   author: string;
   createdAt: Date;
   updatedAt: Date;
+  slug: String;
 };
 
 export const columns: ColumnDef<BlogPost>[] = [
@@ -70,7 +71,7 @@ export const columns: ColumnDef<BlogPost>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="cursor-pointer"
-              onClick={() => redirect(`/admin/blogs/edit/${post.id}`)}
+              onClick={() => redirect(`/admin/blogs/edit/${post.slug}`)}
             >
               <div className="flex items-center gap-2">
                 <Pencil className="h-4 w-4" />

@@ -41,7 +41,7 @@ const faqData = [
 export default function FAQ() {
   return (
     <div className="w-full bg-[#1e1e1e] relative z-0">
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/10 z-[-5]"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60 z-[-5]"></div>
       <div className="grid-background absolute w-full h-full opacity-5 z-[-10]" />
       <section className="max-w-[1400px] mx-auto pt-14 pb-20 px-6">
         <div className="max-w-4xl mx-auto text-center mb-12">

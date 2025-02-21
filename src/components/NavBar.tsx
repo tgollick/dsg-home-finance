@@ -7,7 +7,7 @@ import DSGLogoWhite from "../../public/DSGGreyLogo.png";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
 import { MobileNav } from "./MobileNav";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navItemVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -17,6 +17,7 @@ const navItemVariants = {
 };
 
 const NavBar = () => {
+  const router = useRouter();
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const pathname = usePathname();
@@ -49,8 +50,9 @@ const NavBar = () => {
             <Image
               src={DSGLogoWhite}
               alt="White DSG Logo"
-              className="w-20 lg:w-24"
+              className="w-20 lg:w-24 hover:cursor-pointer"
               priority
+              onClick={() => router.push("/")}
             />
           </motion.div>
 

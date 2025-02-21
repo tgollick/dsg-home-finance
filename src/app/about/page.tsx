@@ -1,12 +1,21 @@
 import React from "react";
+import Hero from "./_sections/Hero";
+import { TimelineSection } from "./_sections/TimelineSection";
+import NavBar from "@/components/NavBar";
+import CTA from "../mortgages/_sections/CTA";
+import { Footer } from "../_sections/components/Footer";
 
 // type Props = {}
 
 const About = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <h1 className="text-4xl">About</h1>
-    </div>
+    <main>
+      <NavBar />
+      <Hero />
+      <TimelineSection />
+      <CTA />
+      <Footer />
+    </main>
   );
 };
 

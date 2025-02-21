@@ -44,7 +44,7 @@ const faqData = [
 const CompaniesAndFAQ = () => {
   return (
     <div className="w-full bg-[#1e1e1e] relative z-0">
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/10 z-[-5]"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60 z-[-5]"></div>
       <div className="grid-background absolute w-full h-full opacity-5 z-[-10]" />
       <section className="mx-auto w-full max-w-[1400px] pb-14 pt-20 px-6 flex flex-col items-center text-center md:gap-10 gap-8">
         <div className="w-full max-w-[800px] text-white">

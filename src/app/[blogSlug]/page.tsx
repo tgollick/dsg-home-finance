@@ -4,9 +4,11 @@ import Image from "next/image";
 import davidAuthorImage from "../../../public/david-author-image.png";
 import CTA from "../mortgages/_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
+import { Card } from "@/components/ui/card";
 
 const page = async ({ params }: { params: { blogSlug: string } }) => {
-  const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: params.blogSlug });
+  const blogSlug = await params.blogSlug;
+  const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
 
   if (blogPost == null) {
     return <h1 className="text-destructive">Error Loading Blog</h1>;
@@ -15,10 +17,10 @@ const page = async ({ params }: { params: { blogSlug: string } }) => {
   return (
     <main className="relative w-full flex flex-col items-center border-none bg-[#1e1e1e] text-white ">
       <NavBar />
-      <div className="absolute w-full h-full bg-gradient-to-t from-[#F49FB7]/20 to-[#1e1e1e]/60" />
+      <div className="absolute w-full h-full bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60" />
       <div className="absolute w-full h-full grid-background opacity-10" />
-      <section className=" w-full h-fit max-w-[1400px] pt-32 pb-20 px-4 z-50">
-        <div className="w-full p-4 md:p-10 rounded-md bg-white text-black">
+      <section className=" w-full h-fit max-w-[1400px] pt-32 md:pt-52 pb-20 px-4 z-50">
+        <Card className="w-full p-4 md:p-10 bg-[#272727] border-[#3f3f3f] text-white bg-opacity-60 font-sans">
           <div className="flex flex-col-reverse md:flex-row md:justify-between items-center gap-8 mb-8 w-full">
             <div className="flex-1">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 font-serif">
@@ -58,7 +60,7 @@ const page = async ({ params }: { params: { blogSlug: string } }) => {
             className="blog-content"
             dangerouslySetInnerHTML={{ __html: blogPost.content }}
           />
-        </div>
+        </Card>
       </section>
       <CTA />
       <Footer />

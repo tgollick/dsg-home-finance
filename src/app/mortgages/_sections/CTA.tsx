@@ -8,7 +8,7 @@ export default function CTA() {
   return (
     <div className="w-full relative">
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/40 to-[#1e1e1e]/60"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60"></div>
       <section
         className="min-h-[400px] sm:min-h-[500px] flex items-center justify-center px-4 py-20"
         style={{

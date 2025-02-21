@@ -20,7 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { LucideMoveRight } from "lucide-react";
 import { trpc } from "../../../../utils/providers/TrpcProviders";
-import { useToast } from "@/hooks/use-toast";
+import confetti from "canvas-confetti";
 
 // 1. Define a Zod schema for form validation
 const formSchema = z.object({
@@ -50,6 +50,7 @@ export function ContactForm() {
         description: "Your message has been sent to David!",
       });
 
+      shootConfetti();
       setLoading(false);
       form.reset();
     },
@@ -75,6 +76,36 @@ export function ContactForm() {
       consent: false,
     },
   });
+
+  const shootConfetti = () => {
+    const end = Date.now() + 3 * 1000; // 3 seconds
+    const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
+
+    const frame = () => {
+      if (Date.now() > end) return;
+
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 0, y: 0.5 },
+        colors: colors,
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 1, y: 0.5 },
+        colors: colors,
+      });
+
+      requestAnimationFrame(frame);
+    };
+
+    frame();
+  };
 
   // 3. Handle form submission
   function onSubmit(values: z.infer<typeof formSchema>) {

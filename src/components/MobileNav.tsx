@@ -57,7 +57,7 @@ export function MobileNav() {
           <Button
             key="cta"
             onClick={() => redirect("/contact")}
-            className="w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-4xl px-10 py-8 gap-4"
+            className="w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-4xl px-10 py-8 gap-4 rounded-full"
           >
             Book a Call
           </Button>

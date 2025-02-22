@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { LucideMoveRight, LucidePhoneCall } from "lucide-react";
 import { redirect, usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 

@@ -6,7 +6,6 @@ import {
 import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { generateContactEmail } from "./getEmail";
 
 export const contactRouter = createTRPCRouter({
   getContacts: protectedProcedure.query(({ ctx }) => {
@@ -22,14 +21,24 @@ export const contactRouter = createTRPCRouter({
         phone: z.string(),
         situation: z.string(),
         other: z.string(),
+        date: z.date(),
+        time: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const { fullname, email, phone, situation, other } = input;
+      const { fullname, email, phone, situation, other, date, time } = input;
 
       try {
         const newContact = await ctx.prisma.userContact.create({
-          data: { fullname, email, phone, situation, other },
+          data: {
+            fullname,
+            email,
+            phone,
+            situation,
+            other,
+            date: date.toLocaleDateString(),
+            time,
+          },
         });
 
         const generateContactEmail = (
@@ -318,25 +327,33 @@ export const contactRouter = createTRPCRouter({
           `;
         };
 
-        await ctx.resend.emails.send({
-          from: "onboarding@resend.dev",
-          to: email,
-          subject: "First step towards your Mortgage! - DSG HOME FINANCE",
-          html: generateContactEmail("Thomas", "21/03/2025", "15:30"),
-        });
+        ctx.resend.emails
+          .send({
+            from: "onboarding@resend.dev",
+            to: email,
+            subject: "First step towards your Mortgage! - DSG HOME FINANCE",
+            html: generateContactEmail(
+              fullname,
+              date.toLocaleDateString(),
+              time
+            ),
+          })
+          .catch((error) => console.error("Email send error:", error));
 
-        await ctx.resend.emails.send({
-          from: "onboarding@resend.dev",
-          to: "thomasgollick@gmail.com",
-          subject: "New Contact Submission - DSG HOME FINANCE",
-          html: generateBrokerNotificationEmail(
-            fullname,
-            email,
-            phone,
-            "21/03/2025",
-            "15:30"
-          ),
-        });
+        ctx.resend.emails
+          .send({
+            from: "onboarding@resend.dev",
+            to: "thomasgollick@gmail.com",
+            subject: "New Contact Submission - DSG HOME FINANCE",
+            html: generateBrokerNotificationEmail(
+              fullname,
+              email,
+              phone,
+              date.toLocaleDateString(),
+              time
+            ),
+          })
+          .catch((error) => console.error("Email send error:", error));
 
         return newContact;
       } catch (e) {

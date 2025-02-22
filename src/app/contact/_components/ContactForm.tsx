@@ -9,6 +9,7 @@ import { useState } from "react";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,9 +19,23 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { LucideMoveRight } from "lucide-react";
+import { CalendarIcon, LucideMoveRight } from "lucide-react";
 import { trpc } from "../../../../utils/providers/TrpcProviders";
 import confetti from "canvas-confetti";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // 1. Define a Zod schema for form validation
 const formSchema = z.object({
@@ -35,6 +50,10 @@ const formSchema = z.object({
     .string()
     .min(1, { message: "Please enter your current situation" }),
   specificQuestions: z.string(),
+  date: z.date({
+    required_error: "A date of birth is required.",
+  }),
+  time: z.string().min(1, { message: "Please enter a time" }),
   consent: z.boolean().refine((val) => val === true, {
     message: "You must give consent to be contacted",
   }),
@@ -73,6 +92,8 @@ export function ContactForm() {
       phoneNumber: "",
       currentSituation: "",
       specificQuestions: "",
+      date: getNextBusinessDay(),
+      time: "",
       consent: false,
     },
   });
@@ -117,18 +138,37 @@ export function ContactForm() {
       phone: values.phoneNumber,
       situation: values.currentSituation,
       other: values.specificQuestions,
+      date: values.date,
+      time: values.time,
     });
+  }
+
+  // Function to get the next business day
+  function getNextBusinessDay() {
+    const today = new Date();
+    const nextDay = new Date(today);
+    nextDay.setDate(today.getDate() + 1);
+
+    // Check if the next day is Saturday or Sunday
+    while (nextDay.getDay() === 0 || nextDay.getDay() === 6) {
+      nextDay.setDate(nextDay.getDate() + 1);
+    }
+
+    return nextDay;
   }
 
   return (
     <div
       className="
         absolute 
-        top-60
-        left-[70%]
-        -translate-x-1/2
+        xl:top-60
+        top-[32rem]
+        md:top-[38rem]
+        lg:top-[40rem]
+        right-0
         w-full 
-        max-w-lg 
+        max-w-[1200px]
+        xl:max-w-lg
         p-6 
         bg-white 
         shadow-md 
@@ -139,7 +179,7 @@ export function ContactForm() {
     >
       <h2 className="text-3xl md:text-4xl font-serif mb-4">Get in Contact</h2>
 
-      {/* 4. Wrap your form in ShadCN’s <Form> component */}
+      {/* 4. Wrap your form in ShadCN's <Form> component */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {/* First Name */}
@@ -213,6 +253,9 @@ export function ContactForm() {
                     {...field}
                   />
                 </FormControl>
+                <FormDescription>
+                  For example, First Time Buyer, Selling House, Remortaging
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -234,6 +277,96 @@ export function ContactForm() {
                     {...field}
                   />
                 </FormControl>
+                <FormDescription>
+                  Any questions you might want answered in the first chat.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="date"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel className="text-base">Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full bg-gray-200 py-6 pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date: Date) => {
+                        const today = new Date();
+                        const tomorrow = new Date(today);
+                        tomorrow.setDate(today.getDate() + 1);
+                        const day = date.getDay(); // 0 = Sunday, 6 = Saturday
+                        return date < tomorrow || day === 0 || day === 6;
+                      }}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormDescription>
+                  The date that works best for David to give you a call.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="time"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base">Time</FormLabel>
+                <FormControl>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button className="bg-gray-200 py-6 text-sm w-full text-black hover:bg-white">
+                        {field.value || "Select a time"}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {Array.from({ length: 17 }, (_, i) => {
+                        const hour = Math.floor(i / 2) + 9; // 9 AM to 5 PM
+                        const minute = i % 2 === 0 ? "00" : "30"; // 00 or 30 minutes
+                        const timeString = `${hour}:${minute.padStart(2, "0")}`;
+                        return (
+                          <DropdownMenuItem
+                            key={timeString}
+                            onClick={() => field.onChange(timeString)}
+                          >
+                            {timeString}
+                          </DropdownMenuItem>
+                        );
+                      })}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </FormControl>
+                <FormDescription>
+                  The time that works best for you!
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -252,7 +385,7 @@ export function ContactForm() {
                     className="bg-gray-200 w-4 h-4"
                   />
                 </FormControl>
-                <FormLabel className="text-base  leading-tight">
+                <FormLabel className="text-base leading-tight">
                   I give consent to be Contacted by DSG Home Finance regarding
                   my Mortgage and Protection
                 </FormLabel>

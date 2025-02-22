@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { LucideMoveRight, LucidePhoneCall } from "lucide-react";
+import { redirect, usePathname } from "next/navigation";
+import { Button } from "./ui/button";
 
 const menuItems = [
   { name: "Home", href: "/" },
@@ -51,6 +53,15 @@ export function MobileNav() {
             </motion.a>
           );
         })}
+        <motion.div variants={itemVariants}>
+          <Button
+            key="cta"
+            onClick={() => redirect("/contact")}
+            className="w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-4xl px-10 py-8 gap-4"
+          >
+            Book a Call
+          </Button>
+        </motion.div>
       </nav>
     </motion.div>
   );

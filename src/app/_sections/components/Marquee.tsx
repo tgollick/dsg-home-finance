@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/marquee";
 import Link from "next/link";
+import Image from "next/image";
 
 const MAX_BODY_LENGTH = 200; // Adjust this value as needed
 
@@ -30,11 +31,11 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center font-sans gap-2 text-black">
-        <img
+        <Image
           className="rounded-full"
           width="32"
           height="32"
-          alt=""
+          alt={`Image of ${name}`}
           src={img || "/placeholder.svg"}
         />
         <div className="flex flex-col">
@@ -60,11 +61,11 @@ const ReviewCard = ({
 };
 
 type ReviewType = {
-  author_name: string;
-  profile_photo_url: string;
+  fullname: string;
+  photo: string;
+  content: string;
   rating: number;
-  text: string;
-  relative_time_description: string;
+  date: string;
 };
 
 type Props = {
@@ -81,11 +82,11 @@ export function MarqueeDemo({ reviews, googleReviewsUrl }: Props) {
       <Marquee pauseOnHover className="[--duration:20s]">
         {firstRow.map((review) => (
           <ReviewCard
-            key={review.author_name}
-            name={review.author_name}
-            img={review.profile_photo_url}
-            date={review.relative_time_description}
-            body={review.text}
+            key={review.fullname}
+            name={review.fullname}
+            img={review.photo}
+            date={review.date}
+            body={review.content}
             googleReviewsUrl={googleReviewsUrl}
           />
         ))}
@@ -93,11 +94,11 @@ export function MarqueeDemo({ reviews, googleReviewsUrl }: Props) {
       <Marquee reverse pauseOnHover className="[--duration:20s]">
         {secondRow.map((review) => (
           <ReviewCard
-            key={review.author_name}
-            name={review.author_name}
-            img={review.profile_photo_url}
-            date={review.relative_time_description}
-            body={review.text}
+            key={review.fullname}
+            name={review.fullname}
+            img={review.photo}
+            date={review.date}
+            body={review.content}
             googleReviewsUrl={googleReviewsUrl}
           />
         ))}

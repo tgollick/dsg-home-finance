@@ -1,17 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { LucideHouse, LucideShieldCheck } from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
+import { ContactForm } from "../_components/ContactForm";
 
 const Hero = () => {
   return (
-    <div className=" w-full h-fit relative bg-[#1e1e1e] bg-[url('https://images.unsplash.com/photo-1471958680802-1345a694ba6d?q=80&w=1866&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-opacity-20 bg-cover bg-bottom flex items-center justify-center">
+    <div className="w-full h-fit relative bg-[#1e1e1e] bg-[url('https://images.unsplash.com/photo-1471958680802-1345a694ba6d?q=80&w=1866&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-opacity-20 bg-cover bg-bottom flex items-center justify-center">
       <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60"></div>
       <section className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-6">
         {/* Content Container with max-width for larger screens */}
-        <div className="w-full mx-auto relative pt-40 pb-80 sm:pt-52 md:pt-64 lg:py-72">
+        <div className="w-full mx-auto relative pt-40 pb-[41rem] sm:pt-52 md:pt-64 lg:pt-72 xl:pb-80">
+          <ContactForm />
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

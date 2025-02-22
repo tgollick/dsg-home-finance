@@ -4,12 +4,14 @@ import { LucideMessageCircleQuestion } from "lucide-react";
 import { MarqueeDemo } from "./components/Marquee";
 
 type ReviewType = {
-  author_name: string;
-  profile_photo_url: string;
+  fullname: string;
+  photo: string;
+  content: string;
   rating: number;
-  text: string;
-  relative_time_description: string;
+  date: string;
 };
+
+export const revalidate = 86400; // revalidates every 86400 seconds (1 day)
 
 const Testimonials = async () => {
   const reviews: ReviewType[] = await ssrTrpc.analyticsRouter.getReviews();

@@ -77,33 +77,13 @@ export const analyticsRouter = createTRPCRouter({
       usersSignedUpLast7Days,
     };
   }),
-  getReviews: publicProcedure.query(async () => {
+  getReviews: publicProcedure.query(async ({ ctx }) => {
     try {
-      const response = await axios.get(
-        "https://maps.googleapis.com/maps/api/place/details/json",
-        {
-          params: {
-            placeid: "ChIJn01FqKNT2UcRiIYNZ3VBAbI",
-            fields: "reviews",
-            key: "AIzaSyD8vtfaPueXUU6ucbaHxXvKtM0j-znd3jI",
-          },
-        }
-      );
-
-      const reviews = response.data?.result?.reviews;
-      if (!reviews) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "No reviews found in the API response",
-        });
-      }
-
-      return reviews;
-    } catch (error: any) {
+      return await ctx.prisma.review.findMany();
+    } catch (e) {
       throw new TRPCError({
+        message: `Error retrieving reviews: ${e}`,
         code: "INTERNAL_SERVER_ERROR",
-        message: "Failed to fetch reviews",
-        cause: error,
       });
     }
   }),

@@ -1,15 +1,15 @@
 import { ssrTrpc } from "@/backend/trpc/ssr-caller";
-import { Button } from "@/components/ui/button";
-import { LucideMessageCircleQuestion } from "lucide-react";
 import { MarqueeDemo } from "../_components/Marquee";
 
 type ReviewType = {
-  author_name: string;
-  profile_photo_url: string;
+  fullname: string;
+  photo: string;
+  content: string;
   rating: number;
-  text: string;
-  relative_time_description: string;
+  date: string;
 };
+
+export const revalidate = 86400; // revalidates every 86400 seconds (1 day)
 
 const Reviews = async () => {
   const reviews: ReviewType[] = await ssrTrpc.analyticsRouter.getReviews();

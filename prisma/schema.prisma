@@ -20,6 +20,8 @@ model UserContact {
   phone String
   situation String
   other String
+  date String
+  time String
   contacted Boolean @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -36,4 +38,14 @@ model BlogPost {
   metaTitle   String?
   metaDescription String?
   content String @db.Text
+}
+
+model Review {
+  id String @id @default(uuid())
+  fullname String
+  photo String
+  content String @db.Text
+  rating Int
+  date String
+  createdAt   DateTime @default(now())
 }

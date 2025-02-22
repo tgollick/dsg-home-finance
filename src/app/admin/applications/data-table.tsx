@@ -64,13 +64,6 @@ export function DataTable<TData, TValue>({
           }
           className="bg-[--dark-accent: hsl(0, 0%, 18%)] text-[--primary] md:w-fit w-full border-solid"
         />
-        <Button
-          className="md:w-fit w-full"
-          onClick={() => redirect("/admin/applications/new")}
-        >
-          <LucideHardDriveUpload />
-          Add a New Applicant
-        </Button>
       </div>
 
       <div className="rounded-md border w-full h-full">

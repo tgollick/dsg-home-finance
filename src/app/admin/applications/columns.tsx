@@ -1,8 +1,13 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, LucideCheck, LucideX, Pencil } from "lucide-react";
-import DeleteButton from "./deletebutton";
+import {
+  ArrowUpDown,
+  LucideCheck,
+  LucideTrash,
+  LucideX,
+  Pencil,
+} from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -15,6 +20,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { redirect } from "next/navigation";
+import { deleteContact } from "@/lib/deleteContact";
+import DeleteContactColumn from "./deleteContactColumn";
 
 export type Contact = {
   id: string;
@@ -106,7 +113,9 @@ export const columns: ColumnDef<Contact>[] = [
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DeleteButton id={payment.id} />
+            <DropdownMenuItem>
+              <DeleteContactColumn id={payment.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

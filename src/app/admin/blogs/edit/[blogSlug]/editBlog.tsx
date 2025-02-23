@@ -55,7 +55,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
         description: "Your blog has been updated successfully.",
       });
     },
-    onError: (error) => {
+    onError: (error: unknown) => {
       console.error(error);
       toast({
         title: "Blog Update Error!",
@@ -76,7 +76,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
         description: "Your blog has been deleted successfully.",
       });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       console.error(error);
       toast({
         title: "Blog Deletion Error!",

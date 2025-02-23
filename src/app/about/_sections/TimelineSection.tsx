@@ -67,11 +67,11 @@ export const TimelineSection: React.FC = () => {
           <p className="text-sm sm:text-base font-sans mb-4 max-w-3xl mx-auto text-black">
             What started in 2003 as a one-man mission to simplify mortgages has
             grown into a thriving, FCA-regulated team supporting hundreds of
-            families yearly. But at our core, we're still that same homegrown
-            business — driven by David's belief that honest advice and human
-            connection always come first. Explore the milestones that shaped us,
-            and see how our journey mirrors yours: always forward, always
-            focused on what matters most.
+            families yearly. But at our core, we&apos;re still that same
+            homegrown business — driven by David&apos;s belief that honest
+            advice and human connection always come first. Explore the
+            milestones that shaped us, and see how our journey mirrors yours:
+            always forward, always focused on what matters most.
           </p>
         </div>
 

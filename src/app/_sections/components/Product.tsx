@@ -24,7 +24,7 @@ const Product = (props: Props) => {
         <div className="flex flex-col justify-between p-6">
           <div className="space-y-2">
             <h3 className="text-2xl font-serif leading-tight">
-              "{props.title}"
+              &quot;{props.title}&quot;
             </h3>
             <p className="text-sm text-muted-foreground font-sans">
               {props.content}

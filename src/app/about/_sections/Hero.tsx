@@ -29,7 +29,8 @@ const Hero = () => {
                 with clarity, not complexity. What began as a one-man mission to
                 simplify homebuying is now a trusted, FCA-regulated firm built
                 on genuine relationships — where your dreams matter as much as
-                your finances.
+                your finances. Your mortgage is a long-term commitment. Let’s
+                make sure you’re
               </p>
               <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
                 Have a Chat with David
@@ -53,7 +54,7 @@ const Hero = () => {
                 <div className="flex flex-col">
                   <h4 className="text-3xl font-serif">David Gollick</h4>
                   <p className="font-sans text-gray-600">
-                    DSG's Lead Principle
+                    DSG&quot;s Lead Principle
                   </p>
                 </div>
               </div>

@@ -14,7 +14,7 @@ const DeleteContactColumn = ({ id }: { id: string }) => {
         description: "You have successfully deleted the contact.",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "Contact Deletion Error",
         description:

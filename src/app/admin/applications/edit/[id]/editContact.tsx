@@ -53,7 +53,7 @@ const EditForm = ({ userId }: { userId: string }) => {
         description: "Your contact has been updated successfully.",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "Contact Update Error!",
         description: "Your contact has not updated successfully.",
@@ -71,7 +71,7 @@ const EditForm = ({ userId }: { userId: string }) => {
         description: "You have successfully deleted the contact.",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "Contact Deletion Error",
         description:

@@ -250,8 +250,8 @@ export default function MortgageCalculator() {
                     Estimated Borrowing Amount
                   </DialogTitle>
                   <DialogDescription className="text-[#1e1e1e]/80 text-sm sm:text-base">
-                    Based on the information provided, here's an estimate of
-                    what you might be able to borrow:
+                    Based on the information provided, here&apos;s an estimate
+                    of what you might be able to borrow:
                   </DialogDescription>
                 </DialogHeader>
                 <motion.div

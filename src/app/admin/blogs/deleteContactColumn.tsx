@@ -14,7 +14,7 @@ const DeleteContactColumn = ({ blogSlug }: { blogSlug: string }) => {
         description: "You have successfully deleted the blog.",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "Blog Deletion Error",
         description:

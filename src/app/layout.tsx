@@ -4,6 +4,8 @@ import { TRPCProvider } from "../../utils/providers/TrpcProviders";
 import { Toaster } from "@/components/ui/toaster";
 import dsgGrey from "../../public/dsg-logo-white.png";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -39,7 +41,11 @@ export default function RootLayout({
         className={`h-full w-full ${dmSans.variable} ${dmSerifDisplay.variable}`}
       >
         <TRPCProvider>
-          <main className="flex-1 overflow-auto">{children}</main>
+          <main className="flex-1 overflow-auto">
+            {children}
+            <SpeedInsights />
+            <Analytics />
+          </main>
         </TRPCProvider>
         <Toaster />
       </body>

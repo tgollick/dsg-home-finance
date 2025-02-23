@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useRef } from "react";
 import { z } from "zod";
 import { trpc } from "../../../../../../utils/providers/TrpcProviders";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Save, Loader2 } from "lucide-react";
+import { Loader2, LucideTrash2, LucideSave } from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -14,11 +16,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import DeleteButton from "../admin/blogs/deletebutton";
 import { useRouter } from "next/navigation";
 import { Editor } from "@tinymce/tinymce-react";
+import { Card } from "@/components/ui/card";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -33,8 +36,12 @@ type FormValues = z.infer<typeof formSchema>;
 
 const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+
+  const [editLoading, setEditLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const utils = trpc.useUtils();
+
   const { data, isLoading, error } = trpc.blogRouter.getBlog.useQuery({
     slug: blogSlug,
   });
@@ -58,6 +65,27 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
     },
   });
 
+  const deleteBlog = trpc.blogRouter.deleteBlog.useMutation({
+    onSuccess: () => {
+      utils.blogRouter.getAllBlogs.invalidate();
+
+      router.push(`/admin/blogs`);
+
+      toast({
+        title: "Blog Deleted",
+        description: "Your blog has been deleted successfully.",
+      });
+    },
+    onError: (error: any) => {
+      console.error(error);
+      toast({
+        title: "Blog Deletion Error!",
+        description: "Your blog was not deleted successfully:" + error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,6 +97,8 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
       content: "",
     },
   });
+
+  const editorRef = useRef<any>(null);
 
   useEffect(() => {
     if (data) {
@@ -84,17 +114,17 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
   }, [data, form]);
 
   const onSubmit = (values: FormValues) => {
-    setLoading(true);
+    setEditLoading(true);
     editBlog.mutate({
-      id: blogId,
+      slug: blogSlug,
       ...values,
     });
-    setLoading(false);
+    setEditLoading(false);
   };
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center w-full h-64">
+      <div className="flex items-center justify-center w-full h-full">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -102,9 +132,10 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
 
   if (!data) {
     return (
-      <div className="flex items-center justify-center w-full h-64">
+      <div className="flex items-center justify-center w-full full">
         <div className="text-center text-destructive">
-          <h2 className="text-lg font-semibold">Error Loading Blog</h2>
+          <h2 className="text-lg font-semibold mb-4">Error Loading Blog</h2>
+          <p className="mb-4">Please contact you system administrator</p>
           <p>{error?.message || "Failed to load blog information"}</p>
         </div>
       </div>
@@ -112,165 +143,198 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <div className="p-6 border rounded">
-        <h1 className="text-4xl font-bold mb-6">Edit Blog Post</h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="author"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Author</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="metaTitle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Meta Title (optional)</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="metaDescription"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Meta Description (optional)</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cover Image</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            {/* TinyMCE editor for the content field */}
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Content</FormLabel>
-                  <FormControl>
-                    <Editor
-                      apiKey="ogz7ibugntev82h3llyfowfwltz0i4foxeilyak5zyum5i3c"
-                      init={{
-                        plugins: [
-                          // Core editing features
-                          "anchor",
-                          "autolink",
-                          "charmap",
-                          "codesample",
-                          "emoticons",
-                          "image",
-                          "link",
-                          "lists",
-                          "media",
-                          "searchreplace",
-                          "table",
-                          "visualblocks",
-                          "wordcount",
-                          // Your account includes a free trial of TinyMCE premium features
-                          // Try the most popular premium features until Feb 27, 2025:
-                          "checklist",
-                          "mediaembed",
-                          "casechange",
-                          "export",
-                          "formatpainter",
-                          "pageembed",
-                          "a11ychecker",
-                          "tinymcespellchecker",
-                          "permanentpen",
-                          "powerpaste",
-                          "advtable",
-                          "advcode",
-                          "editimage",
-                          "advtemplate",
-                          "mentions",
-                          "tinycomments",
-                          "tableofcontents",
-                          "footnotes",
-                          "mergetags",
-                          "autocorrect",
-                          "typography",
-                          "inlinecss",
-                          "markdown",
-                          "importword",
-                          "exportword",
-                          "exportpdf",
-                        ],
-                        toolbar:
-                          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                        tinycomments_mode: "embedded",
-                        tinycomments_author: "Author name",
-                        mergetags_list: [
-                          { value: "First.Name", title: "First Name" },
-                          { value: "Email", title: "Email" },
-                        ],
-                      }}
-                      initialValue={field.value}
-                      onEditorChange={(value, editor) => field.onChange(value)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={loading} className="w-full">
-              {loading ? (
+    <Card className="p-6 flex flex-col items-start gap-2 w-full max-w-[900px]">
+      <h1 className="text-4xl font-bold mb-6">Edit Blog</h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6 w-full"
+        >
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="author"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Author</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="metaTitle"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Meta Title (optional)</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="metaDescription"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Meta Description (optional)</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Cover Image</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* TinyMCE editor for the content field */}
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Content</FormLabel>
+                <FormControl>
+                  <Editor
+                    onInit={(evt, editor) => (editorRef.current = editor)}
+                    value={field.value}
+                    apiKey="ogz7ibugntev82h3llyfowfwltz0i4foxeilyak5zyum5i3c"
+                    init={{
+                      plugins: [
+                        // Core editing features
+                        "anchor",
+                        "autolink",
+                        "charmap",
+                        "codesample",
+                        "emoticons",
+                        "image",
+                        "link",
+                        "lists",
+                        "media",
+                        "searchreplace",
+                        "table",
+                        "visualblocks",
+                        "wordcount",
+                        // Your account includes a free trial of TinyMCE premium features
+                        // Try the most popular premium features until Feb 27, 2025:
+                        "checklist",
+                        "mediaembed",
+                        "casechange",
+                        "export",
+                        "formatpainter",
+                        "pageembed",
+                        "a11ychecker",
+                        "tinymcespellchecker",
+                        "permanentpen",
+                        "powerpaste",
+                        "advtable",
+                        "advcode",
+                        "editimage",
+                        "advtemplate",
+                        "mentions",
+                        "tinycomments",
+                        "tableofcontents",
+                        "footnotes",
+                        "mergetags",
+                        "autocorrect",
+                        "typography",
+                        "inlinecss",
+                        "markdown",
+                        "importword",
+                        "exportword",
+                        "exportpdf",
+                      ],
+                      toolbar:
+                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                      tinycomments_mode: "embedded",
+                      tinycomments_author: "Author name",
+                      mergetags_list: [
+                        { value: "First.Name", title: "First Name" },
+                        { value: "Email", title: "Email" },
+                      ],
+                    }}
+                    onEditorChange={(value) => {
+                      field.onChange(value);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div>
+            <Button
+              type="submit"
+              disabled={editLoading}
+              className="w-full mb-2"
+            >
+              {editLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Saving contact...
                 </>
               ) : (
                 <>
-                  <Save className="mr-2 h-4 w-4" />
+                  <LucideSave className="h-4 w-4" />
                   Save Changes
                 </>
               )}
             </Button>
-          </form>
-        </Form>
-        <DeleteButton id={data.id} />
-      </div>
-    </div>
+
+            <Button
+              className="text-destructive w-full"
+              onClick={() => {
+                setDeleteLoading(true);
+                router.push("/admin/applications");
+                deleteBlog.mutate({
+                  slug: blogSlug,
+                });
+              }}
+              disabled={deleteLoading}
+            >
+              {deleteLoading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Deleting blog...
+                </>
+              ) : (
+                <>
+                  <LucideTrash2 className="h-4 w-4" />
+                  Delete Blog
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </Card>
   );
 };
 

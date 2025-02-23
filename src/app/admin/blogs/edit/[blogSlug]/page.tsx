@@ -1,11 +1,11 @@
-import EditBlog from "@/app/admin/editblog";
+import EditBlog from "./editBlog";
 import React from "react";
 
 const page = async ({ params }: { params: { blogSlug: string } }) => {
   const data = await params;
   const { blogSlug } = data;
   return (
-    <div className="w-full flex items-center md:justify-center justify-start md:p-0 pt-20 p-6">
+    <div className="w-full min-h-screen py-20 px-6 flex items-center justify-center">
       <EditBlog blogSlug={blogSlug} />
     </div>
   );

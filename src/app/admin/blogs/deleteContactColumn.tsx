@@ -2,23 +2,23 @@ import { LucideTrash2 } from "lucide-react";
 import { trpc } from "../../../../utils/providers/TrpcProviders";
 import { toast } from "@/hooks/use-toast";
 
-const DeleteContactColumn = ({ id }: { id: string }) => {
+const DeleteContactColumn = ({ blogSlug }: { blogSlug: string }) => {
   const utils = trpc.useUtils();
 
-  const deleteContact = trpc.contactRouter.deleteContact.useMutation({
+  const deleteContact = trpc.blogRouter.deleteBlog.useMutation({
     onSuccess: () => {
-      utils.contactRouter.getContacts.invalidate();
+      utils.blogRouter.getAllBlogs.invalidate();
 
       toast({
-        title: "Contact Deleted Successfully",
-        description: "You have successfully deleted the contact.",
+        title: "Blog Deleted Successfully",
+        description: "You have successfully deleted the blog.",
       });
     },
     onError: (error) => {
       toast({
-        title: "Contact Deletion Error",
+        title: "Blog Deletion Error",
         description:
-          "There has been an error deleting the contact. Please contact your system administrator",
+          "There has been an error deleting the blog. Please contact your system administrator",
         variant: "destructive",
       });
     },
@@ -29,12 +29,12 @@ const DeleteContactColumn = ({ id }: { id: string }) => {
       className="flex items-center gap-2 text-red-500 hover:cursor-pointer"
       onClick={async () => {
         await deleteContact.mutate({
-          contactId: id,
+          slug: blogSlug,
         });
       }}
     >
       <LucideTrash2 className="h-4 w-4" />
-      <span>Delete Contact</span>
+      <span>Delete Blog</span>
     </div>
   );
 };

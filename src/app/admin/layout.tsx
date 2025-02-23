@@ -16,7 +16,7 @@ export default async function Layout({
   }
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
+    <ThemeProvider attribute="class" defaultTheme="dark">
       <SidebarProvider>
         <AppSidebar
           fullname={session?.user?.name}

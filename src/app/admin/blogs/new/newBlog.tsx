@@ -1,58 +1,60 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useRef } from "react";
 import { z } from "zod";
 import { trpc } from "../../../../../utils/providers/TrpcProviders";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider } from "react-hook-form";
-import { Loader2, LucideCog } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { Card } from "@/components/ui/card";
+import { Loader2, LucideTrash2, LucideSave } from "lucide-react";
+
 import {
-  FormField,
-  FormLabel,
+  Form,
   FormControl,
-  FormMessage,
+  FormField,
   FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 import { Editor } from "@tinymce/tinymce-react";
+import { Card } from "@/components/ui/card";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
   author: z.string().min(1, "Author is required"),
-  image: z.string(),
-  metaTitle: z.string(),
-  metaDescription: z.string(),
+  image: z.string().min(1, "Image is required"),
+  metaTitle: z.string().min(1, "Meta Title is required"),
+  metaDescription: z.string().min(1, "Meta Description is required"),
   content: z.string().min(1, "Content is required"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-const NewBlog = () => {
+const EditBlog = () => {
   const router = useRouter();
-  const utils = trpc.useUtils();
-  const [loading, setLoading] = useState(false);
 
-  const mutation = trpc.blogRouter.addBlog.useMutation({
+  const [editLoading, setEditLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const utils = trpc.useUtils();
+
+  const addBlog = trpc.blogRouter.addBlog.useMutation({
     onSuccess: () => {
       utils.blogRouter.getAllBlogs.invalidate();
-      router.push("/admin/blogs/");
       toast({
-        title: "New Blog Successfully Added",
-        description: "The new blog has been integrated into your system.",
-        variant: "default",
-        duration: 3000,
+        title: "Blog Added",
+        description: "Your blog has been updated added.",
       });
     },
     onError: (error) => {
+      console.error(error);
       toast({
-        title: "Blog Creation Failed",
-        description:
-          "An error occurred while processing your request. Please verify the details and try again. " +
-          error.message,
+        title: "Blog Addition Error!",
+        description: "Your blog was not added successfully.",
         variant: "destructive",
       });
     },
@@ -70,9 +72,13 @@ const NewBlog = () => {
     },
   });
 
+  const editorRef = useRef<any>(null);
+
   const onSubmit = (values: FormValues) => {
-    setLoading(true);
-    mutation.mutate({
+    setEditLoading(true);
+    router.push(`/admin/blogs`);
+
+    addBlog.mutate({
       title: values.title,
       author: values.author,
       image: values.image,
@@ -80,13 +86,14 @@ const NewBlog = () => {
       metaDescription: values.metaDescription,
       content: values.content,
     });
-    setLoading(false);
+
+    setEditLoading(false);
   };
 
   return (
-    <Card className="p-6 flex flex-col items-start gap-2 w-full max-w-3xl">
-      <h1 className="text-4xl font-bold mb-6">Create a New Blog</h1>
-      <FormProvider {...form}>
+    <Card className="p-6 flex flex-col items-start gap-2 w-full max-w-[900px]">
+      <h1 className="text-4xl font-bold mb-6">Edit Blog</h1>
+      <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6 w-full"
@@ -96,7 +103,7 @@ const NewBlog = () => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Blog Title</FormLabel>
+                <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -109,7 +116,7 @@ const NewBlog = () => {
             name="author"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Blog Author</FormLabel>
+                <FormLabel>Author</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -137,7 +144,7 @@ const NewBlog = () => {
               <FormItem>
                 <FormLabel>Meta Description (optional)</FormLabel>
                 <FormControl>
-                  <Textarea {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,10 +156,13 @@ const NewBlog = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Cover Image</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
               </FormItem>
             )}
           />
-          {/* TinyMCE editor integrated for the content field */}
+          {/* TinyMCE editor for the content field */}
           <FormField
             control={form.control}
             name="content"
@@ -161,6 +171,8 @@ const NewBlog = () => {
                 <FormLabel>Content</FormLabel>
                 <FormControl>
                   <Editor
+                    onInit={(evt, editor) => (editorRef.current = editor)}
+                    value={field.value}
                     apiKey="ogz7ibugntev82h3llyfowfwltz0i4foxeilyak5zyum5i3c"
                     init={{
                       plugins: [
@@ -216,31 +228,59 @@ const NewBlog = () => {
                         { value: "Email", title: "Email" },
                       ],
                     }}
-                    initialValue={field.value}
-                    onEditorChange={(value, editor) => field.onChange(value)}
+                    onEditorChange={(value) => {
+                      field.onChange(value);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating...
-              </>
-            ) : (
-              <>
-                <LucideCog className="mr-2 h-4 w-4" />
-                Create Blog
-              </>
-            )}
-          </Button>
+          <div>
+            <Button
+              type="submit"
+              disabled={editLoading}
+              className="w-full mb-2"
+            >
+              {editLoading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Saving contact...
+                </>
+              ) : (
+                <>
+                  <LucideSave className="h-4 w-4" />
+                  Save Changes
+                </>
+              )}
+            </Button>
+
+            <Button
+              className="text-destructive w-full"
+              onClick={() => {
+                setDeleteLoading(true);
+                router.push("/admin/blogs");
+              }}
+              disabled={deleteLoading}
+            >
+              {deleteLoading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Deleting blog...
+                </>
+              ) : (
+                <>
+                  <LucideTrash2 className="h-4 w-4" />
+                  Delete Blog
+                </>
+              )}
+            </Button>
+          </div>
         </form>
-      </FormProvider>
+      </Form>
     </Card>
   );
 };
 
-export default NewBlog;
+export default EditBlog;

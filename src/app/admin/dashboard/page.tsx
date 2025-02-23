@@ -1,5 +1,4 @@
-// app/dashboard/page.tsx
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { LoadingFallback } from "../Fallback";
 import { ssrTrpc } from "@/backend/trpc/ssr-caller";
 import ApplicationsTable from "../applications/applicationsTable";
@@ -10,6 +9,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import AnalyticsComponent from "./AnalyticsComponent";
+import { UpcomingAppointments } from "./upcoming-appointments";
 
 const Dashboard = async () => {
   const data = await ssrTrpc.contactRouter.getContacts();
@@ -17,7 +17,7 @@ const Dashboard = async () => {
   return (
     <div className="w-full h-full pt-20 p-6 flex flex-col gap-10">
       <Card className="shadow-xl rounded-xl p-6 flex flex-col items-start gap-6 w-full h-full">
-        <CardHeader className="flex flex-col md:flex-row justify-between items-start md:items-center">
+        <CardHeader className="flex flex-col md:flex-row justify-between items-start md:items-center w-full">
           <div>
             <CardTitle className="text-5xl font-extrabold">Dashboard</CardTitle>
             <CardDescription className="mt-4 max-w-3xl text-lg">
@@ -27,6 +27,7 @@ const Dashboard = async () => {
           </div>
         </CardHeader>
         <AnalyticsComponent />
+        <UpcomingAppointments contacts={data} />
         <Suspense fallback={<LoadingFallback />}>
           <ApplicationsTable initialData={data} />
         </Suspense>

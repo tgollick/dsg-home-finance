@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
-import DeleteButton from "./deletebutton";
 import { redirect } from "next/navigation";
+import DeleteContactColumn from "./deleteContactColumn";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -25,7 +25,7 @@ export type BlogPost = {
   author: string;
   createdAt: Date;
   updatedAt: Date;
-  slug: String;
+  slug: string;
 };
 
 export const columns: ColumnDef<BlogPost>[] = [
@@ -79,7 +79,9 @@ export const columns: ColumnDef<BlogPost>[] = [
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DeleteButton id={post.id} />
+            <DropdownMenuItem>
+              <DeleteContactColumn blogSlug={post.slug} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

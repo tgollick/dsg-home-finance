@@ -31,12 +31,12 @@ export const blogRouter = createTRPCRouter({
         const newBlogPost = await ctx.prisma.blogPost.create({
           data: {
             title: input.title,
-            slug,
             image: input.image,
             author: input.author,
             metaTitle: input.metaTitle,
             metaDescription: input.metaDescription,
             content: sanatizedContent,
+            slug,
           },
         });
 
@@ -52,10 +52,10 @@ export const blogRouter = createTRPCRouter({
   editBlog: protectedProcedure
     .input(
       z.object({
-        id: z.string(),
         title: z.string(),
         author: z.string(),
         image: z.string().optional(),
+        slug: z.string(),
         metaTitle: z.string().optional(),
         metaDescription: z.string().optional(),
         content: z.string(),
@@ -75,7 +75,7 @@ export const blogRouter = createTRPCRouter({
       try {
         // Update the blog post in the database
         const updatedBlogPost = await ctx.prisma.blogPost.update({
-          where: { id: input.id }, // Use the ID to find the specific blog post
+          where: { slug: input.slug }, // Use the slug to find the specific blog post
           data: {
             title: input.title,
             author: input.author,
@@ -130,4 +130,25 @@ export const blogRouter = createTRPCRouter({
       });
     }
   }),
+  deleteBlog: publicProcedure
+    .input(
+      z.object({
+        slug: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      try {
+        return await ctx.prisma.blogPost.delete({
+          where: {
+            slug: input.slug,
+          },
+        });
+      } catch (err) {
+        console.log(`Error deleting blog post: ${err}`);
+        throw new TRPCError({
+          message: `Error deleting blog post: ${err}`,
+          code: "NOT_FOUND",
+        });
+      }
+    }),
 });

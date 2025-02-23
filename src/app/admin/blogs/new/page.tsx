@@ -3,7 +3,7 @@ import NewBlog from "./newBlog";
 
 const page = () => {
   return (
-    <div className="w-full h-full flex items-center md:justify-center justify-start pt-20 p-6">
+    <div className="w-full min-h-screen py-20 px-6 flex items-center justify-center">
       <NewBlog />
     </div>
   );

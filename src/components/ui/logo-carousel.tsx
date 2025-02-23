@@ -22,7 +22,6 @@ interface LogoColumnProps {
 export function LogoCarousel({ columns = 2 }: { columns?: number }) {
   const [logoColumns, setLogoColumns] = useState<Logo[][]>([]);
   const [time, setTime] = useState(0);
-  const CYCLE_DURATION = 2000; // 2 Seconds per logo
 
   // Define logos using public SVGs
   const logos = useMemo<Logo[]>(
@@ -75,7 +74,7 @@ export function LogoCarousel({ columns = 2 }: { columns?: number }) {
   }, []);
 
   return (
-    <div className="flex justify-center gap-14 py-8">
+    <div className="flex justify-center gap-4 py-8">
       {logoColumns.map((columnLogos, index) => (
         <LogoColumn
           key={index}
@@ -90,7 +89,7 @@ export function LogoCarousel({ columns = 2 }: { columns?: number }) {
 
 // Column component
 function LogoColumn({ logos, columnIndex, currentTime }: LogoColumnProps) {
-  const CYCLE_DURATION = 2000;
+  const CYCLE_DURATION = 2500;
   const columnDelay = columnIndex * 200;
   const adjustedTime =
     (currentTime + columnDelay) % (CYCLE_DURATION * logos.length);
@@ -99,7 +98,7 @@ function LogoColumn({ logos, columnIndex, currentTime }: LogoColumnProps) {
 
   return (
     <motion.div
-      className="relative h-20 w-32 overflow-hidden md:h-24 md:w-48"
+      className="relative h-14 w-24 overflow-hidden md:h-24 md:w-48"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -110,4 +109,33 @@ function LogoColumn({ logos, columnIndex, currentTime }: LogoColumnProps) {
     >
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${currentLogo.id}-${currentIndex}`
+          key={`${currentLogo.id}-${currentIndex}`}
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ y: "10%", opacity: 0 }}
+          animate={{
+            y: "0%",
+            opacity: 1,
+            transition: {
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            },
+          }}
+          exit={{
+            y: "-20%",
+            opacity: 0,
+            transition: { duration: 0.3 },
+          }}
+        >
+          <Image
+            src={currentLogo.src}
+            alt={currentLogo.name}
+            width={120}
+            height={40}
+            className="h-auto w-auto max-h-[80%] max-w-[80%] object-contain"
+          />
+        </motion.div>
+      </AnimatePresence>
+    </motion.div>
+  );
+}

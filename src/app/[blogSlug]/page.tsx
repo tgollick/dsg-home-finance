@@ -7,11 +7,19 @@ import { Footer } from "../_sections/components/Footer";
 import { Card } from "@/components/ui/card";
 import { redirect } from "next/navigation";
 
-const page = async ({ params }: { params: { blogSlug: string } }) => {
-  const blogSlug = await params.blogSlug;
+// Add proper PageProps type
+type PageProps = {
+  params: {
+    blogSlug: string;
+  };
+};
+
+const Page = async ({ params }: PageProps) => {
+  // Changed component name to PascalCase
+  const blogSlug = params.blogSlug; // Remove await here
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
 
-  if (blogPost == null) {
+  if (!blogPost) {
     redirect("/");
     return;
   }
@@ -70,4 +78,4 @@ const page = async ({ params }: { params: { blogSlug: string } }) => {
   );
 };
 
-export default page;
+export default Page;

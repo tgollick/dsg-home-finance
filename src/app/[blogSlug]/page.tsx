@@ -9,8 +9,11 @@ import { redirect } from "next/navigation";
 
 // Remove custom PageProps type and use inline typing
 const Page = async ({ params }: { params: { blogSlug: string } }) => {
+  const data = await params;
+  const slug = data.blogSlug;
+
   const blogPost = await ssrTrpc.blogRouter.getBlog({
-    slug: params.blogSlug,
+    slug: slug,
   });
 
   if (!blogPost) {

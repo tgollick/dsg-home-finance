@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchGoogleReviews = async () => {
+export const fetchGoogleReviews = async (): Promise<object> => {
   try {
     const response = await axios.get(
       "https://maps.googleapis.com/maps/api/place/details/json",
@@ -20,11 +20,11 @@ export const fetchGoogleReviews = async () => {
     }
 
     return reviews;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       code: "INTERNAL_SERVER_ERROR",
       message: "Failed to fetch reviews",
-      cause: error.message,
+      cause: error,
     };
   }
 };

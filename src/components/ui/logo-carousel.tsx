@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { SVGProps } from "react";
 import Image from "next/image";
 import * as BrandLogos from "../../../public/brands";
 
@@ -111,33 +110,4 @@ function LogoColumn({ logos, columnIndex, currentTime }: LogoColumnProps) {
     >
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${currentLogo.id}-${currentIndex}`}
-          className="absolute inset-0 flex items-center justify-center"
-          initial={{ y: "10%", opacity: 0 }}
-          animate={{
-            y: "0%",
-            opacity: 1,
-            transition: {
-              type: "spring",
-              stiffness: 300,
-              damping: 20,
-            },
-          }}
-          exit={{
-            y: "-20%",
-            opacity: 0,
-            transition: { duration: 0.3 },
-          }}
-        >
-          <Image
-            src={currentLogo.src}
-            alt={currentLogo.name}
-            width={1000}
-            height={1000}
-            className="h-auto w-auto max-h-[100%] max-w-[100%] object-contain"
-          />
-        </motion.div>
-      </AnimatePresence>
-    </motion.div>
-  );
-}
+          key={`${currentLogo.id}-${currentIndex}`

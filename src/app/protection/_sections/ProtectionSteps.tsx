@@ -14,7 +14,7 @@ const steps = [
     number: 2,
     title: "Match to Products",
     description:
-      "We'll pair your needs with the right mix of cover – no jargon, just clarity.",
+      "We'll pair your needs with the right mix of cover &ndash; no jargon, just clarity.",
   },
   {
     number: 3,
@@ -35,21 +35,24 @@ const ProtectionSteps = () => {
             Your protection plan starts with understanding what matters most.
             Think about your biggest financial responsibilities: your mortgage
             repayments, supporting your family, or covering medical costs if
-            you're unable to work.
+            you&apos;re unable to work.
           </p>
           <p className="text-sm sm:text-base font-sans font-bold mb-1">
             Ask yourself:
           </p>
           <ul className="list-disc pl-6 space-y-1 mb-4 text-sm sm:text-base font-sans">
             <li>What would happen if my income stopped suddenly?</li>
-            <li>How would my family cope if I couldn't pay the mortgage?</li>
+            <li>
+              How would my family cope if I couldn&apos;t pay the mortgage?
+            </li>
             <li>Do I have savings to fall back on?</li>
           </ul>
 
           <p className="text-sm sm:text-base font-sans mb-8">
-            This isn't about dwelling on the worst-case scenario – it's about
-            building a safety net so you can live with confidence. David will
-            help you pinpoint risks you might not have considered.
+            This isn&apos;t about dwelling on the worst-case scenario &mdash;
+            it&apos;s about building a safety net so you can live with
+            confidence. David will help you pinpoint risks you might not have
+            considered.
           </p>
 
           <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">

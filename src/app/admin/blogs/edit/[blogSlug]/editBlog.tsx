@@ -80,7 +80,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
       console.error(error);
       toast({
         title: "Blog Deletion Error!",
-        description: "Your blog was not deleted successfully:" + error.message,
+        description: "Your blog was not deleted successfully:" + error,
         variant: "destructive",
       });
     },
@@ -98,7 +98,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
     },
   });
 
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<unknown>(null);
 
   useEffect(() => {
     if (data) {

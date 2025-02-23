@@ -31,7 +31,6 @@ export const contactRouter = createTRPCRouter({
       const names = input.fullname.trim().split(/\s+/);
       const firstName = names[0] || "";
       const lastName = names.length > 1 ? names[names.length - 1] : "";
-      const middleName = names.length > 2 ? names.slice(1, -1).join(" ") : "";
 
       try {
         const newContact = await ctx.prisma.userContact.create({

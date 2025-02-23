@@ -33,7 +33,7 @@ export const envSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
 
-  VERCEL_URL: z.string().url().optional().default("http://localhost:3000"),
+  VERCEL_URL: z.string(),
   ALLOWED_EMAILS: z.string(),
 });
 

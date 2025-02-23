@@ -47,6 +47,7 @@ const EditForm = ({ userId }: { userId: string }) => {
   const editContact = trpc.contactRouter.editContact.useMutation({
     onSuccess: () => {
       utils.contactRouter.getContacts.invalidate();
+      utils.contactRouter.getContact.invalidate({ id: userId });
 
       toast({
         title: "Contact Updated",

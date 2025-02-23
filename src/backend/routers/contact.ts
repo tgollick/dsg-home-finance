@@ -7,6 +7,21 @@ import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+type UserContact = {
+  other: string;
+  id: string;
+  fullname: string;
+  email: string;
+  phone: string;
+  situation: string;
+  date: string;
+  time: string;
+  contacted: boolean;
+  month: Date;
+  updatedAt: Date;
+  count: number;
+};
+
 export const contactRouter = createTRPCRouter({
   getContacts: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.userContact.findMany({
@@ -375,7 +390,7 @@ export const contactRouter = createTRPCRouter({
     }),
   getContactChart: protectedProcedure.query(async ({ ctx }) => {
     // Raw SQL query to group by year and month
-    const responses = await ctx.prisma.$queryRaw`
+    const responses: UserContact[] = await ctx.prisma.$queryRaw`
         SELECT
           DATE_TRUNC('month', "createdAt") AS month,
           COUNT(*) AS count

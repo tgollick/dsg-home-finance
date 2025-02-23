@@ -29,7 +29,7 @@ import {
 import { useRouter } from "next/navigation";
 
 // Create a motion-enabled version of the Button component.
-const MotionButton = motion(Button);
+const MotionButton = motion.create(Button);
 
 const formSchema = z.object({
   monthlyIncome: z.string().min(1, "Required"),

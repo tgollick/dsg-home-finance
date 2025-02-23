@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { useSession, signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { signIn } from "next-auth/react";
 import {
   Card,
   CardTitle,
@@ -15,12 +14,6 @@ import dsgGrey from "../../../public/dsg-logo-grey.png";
 import { ModeToggle } from "@/components/theme-toggle";
 
 const Login = () => {
-  const { data: session } = useSession();
-
-  if (session) {
-    redirect("/admin/dashboard");
-  }
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-background p-4 relative">
       <ModeToggle />
@@ -59,7 +52,7 @@ const Login = () => {
 
                 <Button
                   onClick={() =>
-                    signIn("google", { callbackUrl: "/admin/dashboard" })
+                    signIn("google", { redirectTo: "/admin/dashboard" })
                   }
                   className="w-full h-12 text-base font-semibold gap-3"
                   variant="outline"

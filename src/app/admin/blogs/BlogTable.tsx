@@ -4,14 +4,24 @@ import React from "react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { trpc } from "../../../../utils/providers/TrpcProviders";
-import type { BlogPost } from "./columns";
 
 interface BlogTableProps {
-  initialData: BlogPost[];
+  initialData: {
+    id: string;
+    title: string;
+    content: string;
+    author: string;
+    createdAt: Date;
+    updatedAt: Date;
+    slug: string;
+    image: string | null;
+    metaTitle: string | null;
+    metaDescription: string | null;
+  }[];
 }
 
 const BlogTable = ({ initialData }: BlogTableProps) => {
-  const { data } = trpc.blogRouter.getBlogs.useQuery(undefined, {
+  const { data } = trpc.blogRouter.getAllBlogs.useQuery(undefined, {
     initialData: initialData.map((post) => ({
       ...post,
       createdAt: new Date(post.createdAt),
@@ -19,7 +29,19 @@ const BlogTable = ({ initialData }: BlogTableProps) => {
     })),
   });
 
-  return <DataTable data={data || []} columns={columns} />;
+  const formattedData = data.map((post) => {
+    return {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+      author: post.author,
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt,
+      slug: post.slug,
+    };
+  });
+
+  return <DataTable data={formattedData || []} columns={columns} />;
 };
 
 export default BlogTable;

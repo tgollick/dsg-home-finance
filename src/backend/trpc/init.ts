@@ -2,19 +2,16 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import prisma from "@/lib/prisma";
-import { auth } from "@/auth";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { Resend } from "resend";
+import { auth } from "@/auth";
 
-export const createContext = async (opts: CreateNextContextOptions) => {
+export const createContext = async () => {
+  // Your existing context creation logic
   const resend = new Resend(process.env.RESEND_API);
-  const session = await auth();
 
   return {
-    ...opts,
-    session,
-    prisma,
     resend,
+    prisma,
   };
 };
 
@@ -43,13 +40,11 @@ const t = initTRPC.context<Context>().create({
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 
-export const isAuthed = t.middleware(({ ctx, next }) => {
+export const isAuthed = t.middleware(async ({ next }) => {
+  const session = await auth();
   const allowedEmails = ["thomasgollick@gmail.com", "davidgollick@gmail.com"];
 
-  if (
-    !ctx.session?.user?.email ||
-    !allowedEmails.includes(ctx.session.user.email)
-  ) {
+  if (!session?.user?.email || !allowedEmails.includes(session.user.email)) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
       message:
@@ -59,7 +54,7 @@ export const isAuthed = t.middleware(({ ctx, next }) => {
 
   return next({
     ctx: {
-      session: { user: ctx.session.user },
+      session: { user: session.user },
     },
   });
 });

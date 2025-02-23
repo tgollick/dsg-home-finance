@@ -1,3 +1,4 @@
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 
 export default async function Layout({
@@ -7,7 +8,9 @@ export default async function Layout({
 }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
-      <main className="relative w-full h-full">{children}</main>
+      <SessionProvider>
+        <main className="relative w-full h-full">{children}</main>
+      </SessionProvider>
     </ThemeProvider>
   );
 }

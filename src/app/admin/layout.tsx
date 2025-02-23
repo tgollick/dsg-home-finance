@@ -3,6 +3,7 @@ import { AppSidebar } from "@/components/ui/app-sidebar";
 import { ModeToggle } from "@/components/theme-toggle";
 import { auth } from "@/auth";
 import { ThemeProvider } from "next-themes";
+import { SessionProvider } from "next-auth/react";
 
 export default async function Layout({
   children,
@@ -26,7 +27,9 @@ export default async function Layout({
         <main className="relative w-full h-full">
           <SidebarTrigger />
           <ModeToggle />
-          <div className="min-h-screen">{children}</div>
+          <SessionProvider>
+            <div className="min-h-screen">{children}</div>
+          </SessionProvider>
         </main>
       </SidebarProvider>
     </ThemeProvider>

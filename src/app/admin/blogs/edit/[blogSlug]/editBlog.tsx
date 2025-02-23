@@ -49,6 +49,8 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
   const editBlog = trpc.blogRouter.editBlog.useMutation({
     onSuccess: () => {
       utils.blogRouter.getAllBlogs.invalidate();
+      utils.blogRouter.getBlog.invalidate({ slug: blogSlug });
+
       router.push(`/admin/blogs`);
       toast({
         title: "Blog Updated",

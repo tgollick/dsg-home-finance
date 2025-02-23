@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { TRPCProvider } from "../../utils/providers/TrpcProviders";
 import { Toaster } from "@/components/ui/toaster";
-import AuthProvider from "./sessionProvider";
 import dsgGrey from "../../public/dsg-logo-white.png";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 
@@ -40,9 +39,7 @@ export default function RootLayout({
         className={`h-full w-full ${dmSans.variable} ${dmSerifDisplay.variable}`}
       >
         <TRPCProvider>
-          <AuthProvider>
-            <main className="flex-1 overflow-auto">{children}</main>
-          </AuthProvider>
+          <main className="flex-1 overflow-auto">{children}</main>
         </TRPCProvider>
         <Toaster />
       </body>

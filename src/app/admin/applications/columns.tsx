@@ -23,6 +23,8 @@ export type Contact = {
   phone: string;
   situation: string;
   other: string;
+  date: string;
+  time: string;
   contacted: boolean;
   createdAt: Date;
   updatedAt: Date;

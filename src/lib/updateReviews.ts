@@ -32,7 +32,7 @@ export const updateReviews = async (reviews: Review[]) => {
     return {
       code: "INTERNAL_SERVER_ERROR",
       error: "Failed to update reviews.",
-      message: e.message,
+      message: e,
     };
   }
 };

@@ -6,26 +6,26 @@ import CTA from "../mortgages/_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 import { Card } from "@/components/ui/card";
 import { redirect } from "next/navigation";
+import { JSX } from "react";
 
-// Remove custom PageProps type and use inline typing
-const Page = async ({ params }: { params: { blogSlug: string } }) => {
-  const data = await params;
-  const slug = data.blogSlug;
+interface PageProps {
+  params: Promise<{ blogSlug: string }>;
+}
 
-  const blogPost = await ssrTrpc.blogRouter.getBlog({
-    slug: slug,
-  });
+export default async function Page({
+  params,
+}: PageProps): Promise<JSX.Element> {
+  const { blogSlug } = await params;
 
-  if (!blogPost) {
-    redirect("/");
-  }
+  const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
+  if (!blogPost) redirect("/");
 
   return (
     <main className="relative w-full flex flex-col items-center border-none bg-[#1e1e1e] text-white ">
       <NavBar />
       <div className="absolute w-full h-full bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60" />
       <div className="absolute w-full h-full grid-background opacity-10" />
-      <section className=" w-full h-fit max-w-[1400px] pt-32 md:pt-52 pb-20 px-4 z-50">
+      <section className="w-full h-fit max-w-[1400px] pt-32 md:pt-52 pb-20 px-4 z-50">
         <Card className="w-full p-4 md:p-10 bg-[#272727] border-[#3f3f3f] text-white bg-opacity-60 font-sans">
           <div className="flex flex-col-reverse md:flex-row md:justify-between items-center gap-8 mb-8 w-full">
             <div className="flex-1">
@@ -42,7 +42,7 @@ const Page = async ({ params }: { params: { blogSlug: string } }) => {
                 />
                 <div className="flex flex-col justify-evenly">
                   <p className="text-base sm:text-lg md:text-xl">
-                    {blogPost.author}{" "}
+                    {blogPost.author}
                   </p>
                   <p className="text-gray-500">
                     {blogPost.createdAt.toDateString()}
@@ -53,7 +53,7 @@ const Page = async ({ params }: { params: { blogSlug: string } }) => {
 
             <div className="w-full max-w-[500px] h-[300px]">
               <Image
-                src={blogPost.image ? blogPost.image : "/placeholder.jpg"}
+                src={blogPost.image ?? "/placeholder.jpg"}
                 width="500"
                 height="500"
                 alt="Blog Post Image"
@@ -72,6 +72,4 @@ const Page = async ({ params }: { params: { blogSlug: string } }) => {
       <Footer />
     </main>
   );
-};
-
-export default Page;
+}

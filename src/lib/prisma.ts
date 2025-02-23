@@ -1,5 +1,6 @@
 // lib/prisma.ts
 import { PrismaClient, Prisma } from "@prisma/client";
+import { env } from "@/lib/env";
 
 declare global {
   // eslint-disable-next-line no-var
@@ -8,7 +9,7 @@ declare global {
 
 const prisma = globalThis.prisma || new PrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
+if (env.NODE_ENV !== "production") globalThis.prisma = prisma;
 
 // Error handling with proper event type
 prisma.$on("error" as never, (e: Prisma.PrismaClientKnownRequestError) => {

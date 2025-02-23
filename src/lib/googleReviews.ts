@@ -1,4 +1,5 @@
 import axios from "axios";
+import { env } from "@/lib/env";
 
 type Review = {
   author_name: string;
@@ -21,7 +22,7 @@ export const fetchGoogleReviews = async (): Promise<Review[]> => {
         params: {
           placeid: "ChIJn01FqKNT2UcRiIYNZ3VBAbI",
           fields: "reviews",
-          key: "AIzaSyD8vtfaPueXUU6ucbaHxXvKtM0j-znd3jI",
+          key: env.GOOGLE_PLACES_API_KEY,
         },
       }
     );

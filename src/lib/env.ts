@@ -35,6 +35,7 @@ export const envSchema = z.object({
 
   VERCEL_URL: z.string(),
   ALLOWED_EMAILS: z.string(),
+  GOOGLE_PLACES_API_KEY: z.string(),
 });
 
 // Export validated environment variables

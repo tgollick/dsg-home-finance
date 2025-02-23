@@ -59,12 +59,15 @@ const ExplainProcess = () => {
       });
     }, options);
 
-    stepsRef.current.forEach((ref) => {
+    // Store the current value of stepsRef in a variable
+    const currentStepsRef = stepsRef.current;
+
+    currentStepsRef.forEach((ref) => {
       if (ref) observer.observe(ref);
     });
 
     return () => {
-      stepsRef.current.forEach((ref) => {
+      currentStepsRef.forEach((ref) => {
         if (ref) observer.unobserve(ref);
       });
     };
@@ -80,8 +83,8 @@ const ExplainProcess = () => {
           <p className="text-sm sm:text-base font-sans mb-4 max-w-3xl mx-auto">
             Understanding the mortgage process is key to a smooth journey. Our
             simple timeline walks you through each step, from initial inquiry to
-            completing your dream home purchase, ensuring you're informed and
-            confident every step of the way.
+            completing your dream home purchase, ensuring you&apos;re informed
+            and confident every step of the way.
           </p>
         </div>
 

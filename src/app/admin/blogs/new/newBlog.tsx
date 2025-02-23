@@ -72,7 +72,7 @@ const EditBlog = () => {
     },
   });
 
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<unknown>(null);
 
   const onSubmit = (values: FormValues) => {
     setEditLoading(true);

@@ -73,7 +73,7 @@ export function ContactForm() {
       setLoading(false);
       form.reset();
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "Contact Message Error",
         description:

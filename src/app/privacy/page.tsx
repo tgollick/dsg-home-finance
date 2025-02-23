@@ -34,10 +34,10 @@ const Privacy = () => {
           </CardHeader>
           <CardContent className="space-y-4 px-4 pt-0 pb-4">
             <p>
-              DSG Home Finance ("we", "our", "us") is committed to protecting
-              your privacy. This policy explains how we collect, use, and
-              protect your personal information when you use our website and
-              services.
+              DSG Home Finance (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;)
+              is committed to protecting your privacy. This policy explains how
+              we collect, use, and protect your personal information when you
+              use our website and services.
             </p>
             <p>
               We are regulated by the Financial Conduct Authority (FCA Number:

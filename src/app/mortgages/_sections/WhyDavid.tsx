@@ -28,16 +28,17 @@ const WhyDavid = () => {
             Why DSG?
           </h2>
           <p className="text-sm sm:text-base font-sans mb-4">
-            I'm David, and I've spent the last 20 years helping people just like
-            you find their perfect mortgage. I believe in keeping things simple,
-            being transparent, and always putting your needs first.
+            I&apos;m David, and I&apos;ve spent the last 20 years helping people
+            just like you find their perfect mortgage. I believe in keeping
+            things simple, being transparent, and always putting your needs
+            first.
           </p>
           <p className="text-sm sm:text-base font-sans mb-10">
-            As your dedicated mortgage broker, I'll be with you throughout your
-            entire journey – from our first chat to getting your keys. I have
-            direct access to exclusive rates from leading lenders, but more
-            importantly, I have the experience to know which mortgage will work
-            best for your unique situation.
+            As your dedicated mortgage broker, I&apos;ll be with you throughout
+            your entire journey &ndash; from our first chat to getting your
+            keys. I have direct access to exclusive rates from leading lenders,
+            but more importantly, I have the experience to know which mortgage
+            will work best for your unique situation.
           </p>
 
           <Image

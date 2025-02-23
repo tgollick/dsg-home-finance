@@ -51,7 +51,7 @@ export default function FAQ() {
           <p className="text-sm sm:text-base font-sans mb-4 max-w-3xl mx-auto text-white">
             Got questions about the mortgage process? Our FAQ section covers the
             most common queries to help you feel informed and confident. Whether
-            you're a first-time buyer or looking to re-mortgage, find
+            you&apos;re a first-time buyer or looking to re-mortgage, find
             straightforward answers to guide you every step of the way.
           </p>
         </div>

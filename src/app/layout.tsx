@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { TRPCProvider } from "../../utils/providers/TrpcProviders";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme-provider";
 import AuthProvider from "./sessionProvider";
 import dsgGrey from "../../public/dsg-logo-white.png";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";

@@ -8,13 +8,7 @@ import { Card } from "@/components/ui/card";
 import { redirect } from "next/navigation";
 
 // Remove custom PageProps type and use inline typing
-const Page = async ({
-  params,
-}: {
-  params: {
-    blogSlug: string;
-  };
-}) => {
+const Page = async ({ params }: { params: { blogSlug: string } }) => {
   const blogPost = await ssrTrpc.blogRouter.getBlog({
     slug: params.blogSlug,
   });

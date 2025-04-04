@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import CTAButton from "@/components/CTAButton";
+
 import {
   LucideCalendar,
   LucideCoins,
@@ -12,7 +13,7 @@ const ProtectionExplained = () => {
   return (
     <div className="bg-white w-full h-full">
       <section className="w-full max-w-[1400px] pb-14 pt-56 sm:pt-48 md:pt-42 lg:pt-36 xl:pt-32 px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-10 mx-auto">
-        <div className="text-black w-full">
+        <div className="text-black w-full text-center flex flex-col items-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif mb-4">
             What Are Protection Products?
           </h2>
@@ -25,7 +26,7 @@ const ProtectionExplained = () => {
             Check out this short video which breaks down the need for protection
             and explains some of the product we offer such as:
           </p>
-          <div className="text-sm sm:text-base font-sans font-bold flex flex-col gap-4 mb-8">
+          <div className="text-sm sm:text-base font-sans font-bold flex flex-col gap-4 mb-8 items-center">
             <p className="flex items-center gap-2">
               <LucideHeart className="w-5 h-5" fill="#F49FB7" /> Family Income
               Benefit
@@ -46,24 +47,16 @@ const ProtectionExplained = () => {
               With many other products to suit your situation...
             </p>
           </div>
-          <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
-            Find Your Perfect Protection Solution
-            <LucidePackageSearch />
-          </Button>
-        </div>
 
-        <video
-          className="mb-6 lg:mb-0 w-full aspect-video rounded-lg"
-          controls
-          muted
-          autoPlay
-          loop
-          playsInline
-          poster="/images/video-poster.jpg"
-        >
-          <source src="/protection-explained-hsbc.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+          <CTAButton
+            route={"/contact"}
+            text={"Find Your Perfect Protection Solution"}
+            icon={<LucidePackageSearch />}
+            textColor={"text-white"}
+            bgColor={"bg-[#F49FB7]"}
+            hoverColor={"hover:bg-[#f281a4]"}
+          />
+        </div>
       </section>
     </div>
   );

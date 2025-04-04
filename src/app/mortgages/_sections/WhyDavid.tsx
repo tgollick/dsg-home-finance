@@ -2,7 +2,7 @@ import whyDavid from "../../../../public/why-david.png";
 import Image from "next/image";
 import StatBox from "../_components/StatBox";
 import { LucidePhone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import CTAButton from "@/components/CTAButton";
 
 const stats = [
   {
@@ -55,10 +55,14 @@ const WhyDavid = () => {
             ))}
           </div>
 
-          <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f17a9c] transition text-sm md:text-base font-sans">
-            Lets Chat About Your Mortgage
-            <LucidePhone />
-          </Button>
+          <CTAButton
+            route={"/contact"}
+            text={"Let's Chat About Your Mortgage"}
+            icon={<LucidePhone />}
+            textColor={"text-white"}
+            bgColor={"bg-[#F49FB7]"}
+            hoverColor={"hover:bg-[#f17a9c]"}
+          />
         </div>
 
         <Image

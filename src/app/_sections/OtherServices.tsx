@@ -10,18 +10,17 @@ import {
 import Image from "next/image";
 import equityReleaseImage from "../../../public/elderly-lady.avif";
 import debtConsolidationImage from "../../../public/writing-pen.avif";
-import protectionInsuranceImage from "../../../public/lock-image.avif";
+import bridgingFinanceImage from "../../../public/bridge.avif";
 import commercialMortgageImage from "../../../public/commercial-building.avif";
 import {
   LucideCalendar,
   LucideCoins,
   LucideHeart,
   HomeIcon as LucideHouse,
-  LucidePhoneCall,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Autoplay from "embla-carousel-autoplay";
 import { Card } from "@/components/ui/card";
+import CTAButton from "@/components/CTAButton";
 
 const data = [
   {
@@ -39,11 +38,11 @@ const data = [
     alt: "Debt consolidation illustration",
   },
   {
-    title: "Protection Insurance",
+    title: "Bridging Finance",
     content:
-      "Secure your family's future with comprehensive life, critical illness, and income protection insurance.",
-    img: protectionInsuranceImage,
-    alt: "Protection insurance illustration",
+      "Access short-term financing solutions to bridge the gap between property transactions.",
+    img: bridgingFinanceImage,
+    alt: "Bridging finance illustration",
   },
   {
     title: "Commercial Mortgages",
@@ -89,18 +88,24 @@ const OtherServices = () => {
                 Estates Planning
               </p>
               <p className="flex items-center gap-2">
-                <LucideCoins className="w-5 h-5" fill="#f281a4" /> Family Income
-                Benefit
+                <LucideCoins className="w-5 h-5" fill="#f281a4" /> Second Charge
+                Mortgages
               </p>
               <p className="text-gray-400">
                 With many more products available on referal...
               </p>
             </div>
 
-            <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base hidden lg:flex lg:items-center">
-              Book a Referal
-              <LucideCalendar />
-            </Button>
+            <div className="hidden lg:flex lg:items-center">
+              <CTAButton
+                route={"/contact"}
+                text={"Book a Chat"}
+                icon={<LucideCalendar />}
+                textColor={"text-white"}
+                bgColor={"bg-[#F49FB7]"}
+                hoverColor={"hover:bg-[#f582a2]"}
+              />
+            </div>
           </div>
 
           <div className="lg:w-[40%] md:px-10">
@@ -152,11 +157,15 @@ const OtherServices = () => {
           </div>
         </div>
 
-        <div className="block lg:hidden mt-8">
-          <Button className="w-full sm:w-auto bg-[#F49FB7] text-black hover:bg-[#f281a4] transition text-sm md:text-base">
-            Book a Referal
-            <LucidePhoneCall className="h-4 w-4" />
-          </Button>
+        <div className="block lg:hidden mt-8 w-full">
+          <CTAButton
+            route={"/contact"}
+            text={"Book a Chat"}
+            icon={<LucideCalendar />}
+            textColor={"text-white w-full"}
+            bgColor={"bg-[#F49FB7]"}
+            hoverColor={"hover:bg-[#f582a2]"}
+          />
         </div>
       </section>
     </div>

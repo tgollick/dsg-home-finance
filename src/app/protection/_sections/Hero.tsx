@@ -5,8 +5,11 @@ import { LucideHousePlus, LucideMoveRight } from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
 import MortgageCalculator from "../../_sections/components/MortgageCalculator";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
+
   return (
     <div className="relative w-full h-fit bg-[#1e1e1e] flex items-center justify-center">
       <div className="w-full h-full z-0 tech-background absolute opacity-10"></div>
@@ -28,7 +31,10 @@ const Hero = () => {
               covered if life takes an unexpected turn.
             </p>
 
-            <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
+            <Button
+              onClick={() => router.push("/contact")}
+              className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans"
+            >
               Find The Right Protection For You
               <LucideMoveRight />
             </Button>

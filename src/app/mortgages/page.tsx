@@ -9,8 +9,6 @@ import FAQ from "./_sections/FAQ";
 import CTA from "./_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 
-// type Props = {}
-
 const Mortgages = () => {
   return (
     <main className="w-full flex flex-col items-center border-none">

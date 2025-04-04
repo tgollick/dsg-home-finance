@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LucideMedal, LucidePhone } from "lucide-react";
+import { LucidePhone } from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
 import Image from "next/image";
@@ -29,9 +29,9 @@ const Hero = () => {
                 with clarity, not complexity. What began as a one-man mission to
                 simplify homebuying is now a trusted, FCA-regulated firm built
                 on genuine relationships — where your dreams matter as much as
-                your finances. Your mortgage is a long-term commitment. Let’s
-                make sure you’re
+                your finances. Your mortgage is a long-term commitment.
               </p>
+
               <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
                 Have a Chat with David
                 <LucidePhone />
@@ -44,17 +44,12 @@ const Hero = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-[400px] h-full relative"
           >
-            <div className="w-full h-full max-h-[120px] absolute bottom-0 p-3">
+            <div className="w-full h-full max-h-[100px] absolute bottom-0 p-3">
               <div className="w-full h-full bg-white/90 rounded-lg z-50 p-4 flex gap-3 items-center">
-                <LucideMedal
-                  className="text-black"
-                  size="60"
-                  strokeWidth={"1.5"}
-                />
                 <div className="flex flex-col">
                   <h4 className="text-3xl font-serif">David Gollick</h4>
                   <p className="font-sans text-gray-600">
-                    DSG&quot;s Lead Principle
+                    DSG&apos;s Principle
                   </p>
                 </div>
               </div>

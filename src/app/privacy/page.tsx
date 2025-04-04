@@ -41,7 +41,7 @@ const Privacy = () => {
             </p>
             <p>
               We are regulated by the Financial Conduct Authority (FCA Number:
-              804140) and comply with the UK General Data Protection Regulation
+              412162) and comply with the UK General Data Protection Regulation
               (GDPR) and the Data Protection Act 2018.
             </p>
           </CardContent>

@@ -64,14 +64,6 @@ const NavBar = () => {
               "Protection",
               "Privacy Policy",
               "About Us",
-              <Button
-                key="cta"
-                onClick={() => router.push("/contact")}
-                className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base"
-              >
-                Book a Call
-                <LucidePhoneCall />
-              </Button>,
             ].map((item, index) => {
               let href = "";
               let activeClass = "";
@@ -106,6 +98,15 @@ const NavBar = () => {
                 </motion.a>
               );
             })}
+
+            <Button
+              key="cta"
+              onClick={() => router.push("/contact")}
+              className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base"
+            >
+              Book a Call
+              <LucidePhoneCall />
+            </Button>
           </nav>
 
           {/* Mobile Menu Icon */}

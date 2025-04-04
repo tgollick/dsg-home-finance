@@ -9,8 +9,23 @@ import {
 import { motion } from "motion/react";
 import React from "react";
 import MortgageCalculator from "../../_sections/components/MortgageCalculator";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
+
+  const handleScroll = (targetId: string) => {
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      // Smooth scroll to the target element
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <div className="relative w-full h-fit bg-[#1e1e1e] flex items-center justify-center">
       <div className="w-full h-full z-0 puzzle-background absolute opacity-10"></div>
@@ -36,11 +51,17 @@ const Hero = () => {
               </h1>
             </div>
             <div className="font-sans flex sm:flex-row flex-col items-center gap-3 w-full">
-              <Button className="w-full sm:w-auto text-black bg-white hover:bg-gray-200 transition text-sm md:text-base">
+              <Button
+                onClick={() => handleScroll("popular-products")}
+                className="w-full sm:w-auto text-black bg-white hover:bg-gray-200 transition text-sm md:text-base"
+              >
                 See Popular Mortgages
                 <LucideHouse />
               </Button>
-              <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base">
+              <Button
+                onClick={() => router.push("/contact")}
+                className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base"
+              >
                 Make Yours Next
                 <LucideMoveRight />
               </Button>

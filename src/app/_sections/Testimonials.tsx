@@ -1,7 +1,7 @@
 import { ssrTrpc } from "@/backend/trpc/ssr-caller";
-import { Button } from "@/components/ui/button";
 import { LucideMessageCircleQuestion } from "lucide-react";
 import { MarqueeDemo } from "./components/Marquee";
+import CTAButton from "@/components/CTAButton";
 
 type ReviewType = {
   fullname: string;
@@ -34,10 +34,14 @@ const Testimonials = async () => {
           googleReviewsUrl="https://www.google.com/search?sca_esv=47cd9fb8f57accb3&biw=1528&bih=834&si=APYL9btvhO6SAb8jF9HqTZMMa7vs_teLnZaEVrJZwRKFIIKjoTIiwRFYjnV_BQgHwzcwYTZqIlee2Wo5RKBDt2XsOU0bCVzxLM7aAMwymDJdeuiv10hLrFPUct6ezpgTVgb_MMrdEPRY&q=DSG+Home+Finance+Reviews&sa=X&ved=2ahUKEwiyubj3_7SLAxUoQ0EAHQOMHUwQ0bkNegQILRAE"
         />
 
-        <Button className="font-sans w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base">
-          Could you be the next one
-          <LucideMessageCircleQuestion />
-        </Button>
+        <CTAButton
+          route={"/contact"}
+          text={"Could you be next"}
+          icon={<LucideMessageCircleQuestion />}
+          textColor={"text-white"}
+          bgColor={"bg-[#F49FB7]"}
+          hoverColor={"hover:bg-[#f582a2]"}
+        />
       </section>
     </div>
   );

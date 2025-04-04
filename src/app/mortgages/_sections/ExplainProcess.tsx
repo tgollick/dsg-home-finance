@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { LucidePlane } from "lucide-react";
+import CTAButton from "@/components/CTAButton";
 
 const steps = [
   {
@@ -21,19 +21,19 @@ const steps = [
     number: 3,
     title: "Apply for Your Mortgage",
     description:
-      "Once you've found the right property, we'll help you submit a full mortgage application with the necessary documents.",
+      "Once you've found the right property, we will submit a full mortgage application with the necessary documents.",
   },
   {
     number: 4,
     title: "Approval and Offer",
     description:
-      "Once you've found the right property, we'll help you submit a full mortgage application with the necessary documents.",
+      "After reviewing your application, the lender will assess your financial information and property details. If approved, you'll receive a formal mortgage offer outlining the terms and conditions.",
   },
   {
     number: 5,
     title: "Completion",
     description:
-      "Once you've found the right property, we'll help you submit a full mortgage application with the necessary documents.",
+      "With the mortgage offer accepted, the final steps include signing the necessary legal documents and transferring funds. Once completed, you'll receive the keys to your new home.",
   },
 ];
 
@@ -149,10 +149,14 @@ const ExplainProcess = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button className="w-full md:w-auto bg-[#1e1e1e] text-white hover:bg-black transition text-sm md:text-base font-sans">
-            Lets Chat About Your Mortgage
-            <LucidePlane />
-          </Button>
+          <CTAButton
+            route={"/contact"}
+            text={"Let's Chat About Your Mortgage"}
+            icon={<LucidePlane />}
+            textColor={"text-white"}
+            bgColor={"bg-[#1e1e1e]"}
+            hoverColor={"hover:bg-black"}
+          />
         </div>
       </div>
     </div>

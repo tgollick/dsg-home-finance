@@ -14,9 +14,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
+import CTAButton from "@/components/CTAButton";
 
 const products = [
   {
@@ -101,13 +101,15 @@ const ProductCarousel = () => {
                       </span>
                       {product.cost}
                     </div>
-                    <Button
-                      variant="default"
-                      className="bg-black text-[#F49FB7] hover:bg-gray-800 w-full lg:w-auto"
-                    >
-                      Find out more
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
+
+                    <CTAButton
+                      route={"/contact"}
+                      text={"Find out more"}
+                      icon={<ArrowRight className="w-4 h-4 ml-2" />}
+                      textColor={"text-[#F49FB7]"}
+                      bgColor={"bg-black"}
+                      hoverColor={"hover:bg-slate-900"}
+                    />
                   </div>
                 </CardContent>
               </Card>

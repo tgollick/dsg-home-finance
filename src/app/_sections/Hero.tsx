@@ -5,8 +5,11 @@ import { LucideHouse, LucideShieldCheck } from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
 import MortgageCalculator from "./components/MortgageCalculator";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
+
   return (
     <div className=" w-full h-fit relative bg-[#1e1e1e] bg-[url('/MargateHeroBG.png')] bg-cover bg-bottom flex items-center justify-center">
       <MortgageCalculator />
@@ -26,15 +29,21 @@ const Hero = () => {
             <p className="text-sm sm:text-base font-sans">
               With years of experience, DSG Home Finance specializes in finding
               the right products to suit your unique needs. No matter your
-              circumstances, Dave is committed to pairing you with tailored
+              circumstances DSG is committed to pairing you with tailored
               solutions that keep you confident, happy, and protected.
             </p>
             <div className="font-sans flex sm:flex-row flex-col items-center gap-3 w-full">
-              <Button className="w-full sm:w-auto text-black bg-white hover:bg-gray-200 transition text-sm md:text-base">
+              <Button
+                onClick={() => router.push("/mortgages")}
+                className="w-full sm:w-auto text-black bg-white hover:bg-gray-200 transition text-sm md:text-base"
+              >
                 Explore Mortgages
                 <LucideHouse />
               </Button>
-              <Button className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base">
+              <Button
+                onClick={() => router.push("/protection")}
+                className="w-full sm:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base"
+              >
                 Explore Protection
                 <LucideShieldCheck />
               </Button>

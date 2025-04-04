@@ -1,11 +1,11 @@
+import CTAButton from "@/components/CTAButton";
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { LogoCarousel } from "@/components/ui/logo-carousel";
+import { LogoCarousel } from "@/components/ui/logo-carousel-insurance";
 import { LucidePackageSearch } from "lucide-react";
 
 const faqData = [
@@ -52,12 +52,11 @@ const CompaniesAndFAQ = () => {
             Backed by Industry Leaders
           </h2>
           <p className="text-sm sm:text-base font-sans">
-            David partners exclusively with award-winning, FCA-regulated
-            industry leaders—including equity release, life insurance, and home
-            protection specialists—to ensure you receive tailored, reliable
-            solutions. Every provider is vetted for exceptional service,
-            flexible products, and proven claims support, so your mortgage
-            journey stays secure at every step.
+            David partners exclusively with award-winning industry leaders —
+            including, life insurance, and home protection specialists—to ensure
+            you receive tailored, reliable solutions. Every provider is vetted
+            for exceptional service, flexible products, and proven claims
+            support, so your mortgage journey stays secure at every step.
           </p>
         </div>
         <div className="hidden sm:block">
@@ -66,11 +65,15 @@ const CompaniesAndFAQ = () => {
         <div className="block sm:hidden">
           <LogoCarousel columns={2} />
         </div>
-        {/* New component to show off products  */}
-        <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
-          Find your perfect product
-          <LucidePackageSearch />
-        </Button>{" "}
+
+        <CTAButton
+          route={"/contact"}
+          text={"Find your perfect product"}
+          icon={<LucidePackageSearch />}
+          textColor={"text-white"}
+          bgColor={"bg-[#F49FB7]"}
+          hoverColor={"hover:bg-[#f281a4]"}
+        />
       </section>
       <section className="max-w-[1400px] mx-auto pt-14 pb-20 px-6">
         <div className="max-w-4xl mx-auto text-center mb-12">

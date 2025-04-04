@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { LucidePhoneCall } from "lucide-react";
 import dsgWhite from "../../../../public/dsg-logo-white.png";
+import CTAButton from "@/components/CTAButton";
 
 export function Footer() {
   return (
@@ -72,10 +72,15 @@ export function Footer() {
                 height={80}
                 className="w-auto h-24"
               />
-              <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
-                Book a call with David
-                <LucidePhoneCall />
-              </Button>
+
+              <CTAButton
+                route={"/contact"}
+                text={"Book a call with David"}
+                icon={<LucidePhoneCall />}
+                textColor={"text-white"}
+                bgColor={"bg-[#F49FB7]"}
+                hoverColor={"hover:bg-[#f281a4]"}
+              />
             </div>
           </div>
 

@@ -3,7 +3,7 @@ import FirstTimeBuyer from "../../../public/FirstTimeBuyer.jpg";
 import Remortgage from "../../../public/Remortgage.jpg";
 import BuyToLet from "../../../public/BuyToLet.jpg";
 import { LucideHouse } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import CTAButton from "@/components/CTAButton";
 
 const PopularProducts = () => {
   return (
@@ -48,10 +48,15 @@ const PopularProducts = () => {
             }
           />
         </div>
-        <Button className="w-full md:w-auto bg-[#1e1e1e] text-[#F49FB7] hover:bg-black transition text-sm md:text-base font-sans">
-          Explore Mortgage Products
-          <LucideHouse />
-        </Button>
+
+        <CTAButton
+          route={"/mortgages"}
+          text={"Explore Mortgage Products"}
+          icon={<LucideHouse />}
+          textColor={"text-[#F49FB7]"}
+          bgColor={"bg-[#1e1e1e]"}
+          hoverColor={"hover:bg-black"}
+        />
       </section>
     </div>
   );

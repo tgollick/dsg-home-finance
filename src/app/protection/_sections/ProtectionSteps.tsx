@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import CTAButton from "@/components/CTAButton";
 import { Card } from "@/components/ui/card";
 import { LucideMoveRight } from "lucide-react";
 import React from "react";
@@ -14,7 +14,7 @@ const steps = [
     number: 2,
     title: "Match to Products",
     description:
-      "We'll pair your needs with the right mix of cover &ndash; no jargon, just clarity.",
+      "We'll pair your needs with the right mix of cover — no jargon, just clarity.",
   },
   {
     number: 3,
@@ -55,10 +55,14 @@ const ProtectionSteps = () => {
             considered.
           </p>
 
-          <Button className="w-full md:w-auto bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm md:text-base font-sans">
-            Starting Your Protection Plan
-            <LucideMoveRight />
-          </Button>
+          <CTAButton
+            route={"/contact"}
+            text={"Starting Your Protection Plan"}
+            icon={<LucideMoveRight />}
+            textColor={"text-white"}
+            bgColor={"bg-[#F49FB7]"}
+            hoverColor={"hover:bg-[#f281a4]"}
+          />
         </div>
 
         <div className="w-full flex flex-col gap-6">

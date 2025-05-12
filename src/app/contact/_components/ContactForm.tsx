@@ -36,6 +36,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 // 1. Define a Zod schema for form validation
 const formSchema = z.object({
@@ -386,8 +387,16 @@ export function ContactForm() {
                   />
                 </FormControl>
                 <FormLabel className="text-base leading-tight">
-                  I give consent to be Contacted by DSG Home Finance regarding
-                  my Mortgage and Protection
+                  I give consent to be contacted by DSG Home Finance regarding
+                  my Mortgage and Protection. I understand that my data will be
+                  processed in accordance with the{" "}
+                  <Link
+                    href="/privacy-policy"
+                    className="text-[#F49FB7] hover:underline"
+                  >
+                    privacy policy
+                  </Link>
+                  .
                 </FormLabel>
                 <FormMessage />
               </FormItem>

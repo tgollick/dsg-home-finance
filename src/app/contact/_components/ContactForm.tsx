@@ -391,7 +391,7 @@ export function ContactForm() {
                   my Mortgage and Protection. I understand that my data will be
                   processed in accordance with the{" "}
                   <Link
-                    href="/privacy-policy"
+                    href="/privacy"
                     className="text-[#F49FB7] hover:underline"
                   >
                     privacy policy

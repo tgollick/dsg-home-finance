@@ -447,10 +447,10 @@ export function ContactForm() {
                 <div className="space-y-4 text-sm leading-relaxed text-gray-800">
                   <p>
                     <strong>DSG Home Finance</strong> will be what is known as
-                    the 'controller' of the personal data you provide to us. We
-                    only collect basic personal data about you which does not
-                    include any special types of information or location-based
-                    information.
+                    the &apos;controller&apos; of the personal data you provide
+                    to us. We only collect basic personal data about you which
+                    does not include any special types of information or
+                    location-based information.
                   </p>
 
                   <div>
@@ -512,7 +512,7 @@ export function ContactForm() {
                       . If you are not satisfied with our response or believe we
                       are processing your personal data not in accordance with
                       the law, you can complain to the information
-                      commissioner's office:{" "}
+                      commissioner&apos;s office:{" "}
                       <strong className="text-[#F49FB7]">
                         https://ico.org.uk
                       </strong>

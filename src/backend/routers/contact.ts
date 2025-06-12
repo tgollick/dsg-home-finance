@@ -364,7 +364,7 @@ export const contactRouter = createTRPCRouter({
           .then(() => {
             ctx.resend.batch.send([
               {
-                from: "noreply@updates.dsgmortgages.com",
+                from: "mortgageenquirys@updates.dsgmortgages.com",
                 to: input.email,
                 subject: "First step towards your Mortgage! - DSG HOME FINANCE",
                 html: generateContactEmail(
@@ -374,7 +374,7 @@ export const contactRouter = createTRPCRouter({
                 ),
               },
               {
-                from: "noreply@updates.dsgmortgages.com",
+                from: "mortgageenquirys@updates.dsgmortgages.com",
                 to: "david@dsgmortgages.com",
                 subject: "New Contact Submission - DSG HOME FINANCE",
                 html: generateBrokerNotificationEmail(

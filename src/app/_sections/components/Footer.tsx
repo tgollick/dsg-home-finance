@@ -120,8 +120,8 @@ export function Footer() {
             </div>
             <div className="space-y-1 text-[#777777]">
               <p className="text-xs">
-                Registered Company Number: 11174596. Registered in England &
-                Wales. FCA Number: 804140
+                Registered Company Number: 4678744. Registered in England &
+                Wales. FCA Number: 412162
               </p>
               <p className="text-xs">
                 Registered Address: 139 Westbrook Avenue, Margate, Kent, CT9

@@ -205,8 +205,15 @@ export const contactRouter = createTRPCRouter({
                     <li>📌 If you have existing mortgage details, keep them handy.</li>
                   </ul>
         
-                  <a href="#" class="button">📆 Add to Calendar</a>
-        
+                  <a
+                    href="https://www.google.com/calendar/render?action=TEMPLATE&text=DSG+Mortgage+Call&dates=20250613T143000Z/20250613T150000Z&details=Initial+mortgage+consultation+with+DSG+Home+Finance.&location=Google+Meet&sf=true&output=xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button"
+                  >
+                    📆 Add to Calendar
+                  </a>
+
                   <p>If you need to reschedule or have any urgent questions, simply reply to this email.</p>
                 </div>
                 <div class="footer">

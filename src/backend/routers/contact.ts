@@ -353,41 +353,47 @@ export const contactRouter = createTRPCRouter({
           `;
         };
 
-        await ctx.resend.contacts
-          .create({
+        try {
+          // create contact (awaited so we can catch errors)
+          const contact = await ctx.resend.contacts.create({
             email: input.email,
-            firstName: firstName,
-            lastName: lastName,
+            firstName,
+            lastName,
             unsubscribed: false,
             audienceId: "b16c7c9b-6902-462a-9cf7-0e5973792295",
-          })
-          .then(() => {
-            ctx.resend.batch.send([
-              {
-                from: "mortgageenquiries@updates.dsgmortgages.com",
-                to: input.email,
-                subject: "First step towards your Mortgage! - DSG HOME FINANCE",
-                html: generateContactEmail(
-                  fullname,
-                  date.toLocaleDateString(),
-                  time
-                ),
-              },
-              {
-                from: "mortgageenquiries@updates.dsgmortgages.com",
-                to: "david@dsgmortgages.com",
-                subject: "New Contact Submission - DSG HOME FINANCE",
-                html: generateBrokerNotificationEmail(
-                  fullname,
-                  email,
-                  phone,
-                  date.toLocaleDateString(),
-                  time
-                ),
-              },
-            ]);
-          })
-          .catch((err) => console.error("There was an error", err));
+          });
+          console.log("contact created", contact);
+
+          // IMPORTANT: `to` must be an array for batch.send
+          const batchResponse = await ctx.resend.batch.send([
+            {
+              from: "DSG Home Finance <mortgageenquiries@updates.dsgmortgages.com>",
+              to: [input.email],
+              subject: "First step towards your Mortgage! - DSG HOME FINANCE",
+              html: generateContactEmail(
+                fullname,
+                date.toLocaleDateString(),
+                time
+              ),
+            },
+            {
+              from: "DSG Home Finance <mortgageenquiries@updates.dsgmortgages.com>",
+              to: ["david@dsgmortgages.com"],
+              subject: "New Contact Submission - DSG HOME FINANCE",
+              html: generateBrokerNotificationEmail(
+                fullname,
+                email,
+                phone,
+                date.toLocaleDateString(),
+                time
+              ),
+            },
+          ]);
+
+          console.log("batch send response", batchResponse);
+        } catch (err) {
+          console.error("Resend error:", err);
+        }
 
         return newContact;
       } catch (e) {

@@ -46,13 +46,13 @@ export async function generateMetadata({ params }: { params: { blogSlug: string 
 }
 
 interface PageProps {
-  params: Promise<{ blogSlug: string }>;
+  params: { blogSlug: string }, 
 }
 
 export default async function Page({
   params,
 }: PageProps): Promise<JSX.Element> {
-  const { blogSlug } = await params;
+  const { blogSlug } = params;
 
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
   if (!blogPost) redirect("/");

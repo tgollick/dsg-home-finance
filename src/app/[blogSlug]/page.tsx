@@ -5,12 +5,12 @@ import davidAuthorImage from "../../../public/david-author-image.png";
 import CTA from "../mortgages/_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 import { Card } from "@/components/ui/card";
-import { notFound } from "next/navigation"; // Use notFound for better static handling
+import { notFound } from "next/navigation";
 import { JSX } from "react";
 import type { Metadata } from 'next';
 
 interface PageProps {
-  params: { blogSlug: string };
+  params: Promise<{ blogSlug: string }>;  // Updated to Promise
 }
 
 export async function generateStaticParams() {
@@ -21,15 +21,14 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { blogSlug } = params;
+  const resolvedParams = await params;  // Await here
+  const { blogSlug } = resolvedParams;
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
-
   if (!blogPost) {
     return {
       title: 'Blog Post Not Found',
     };
   }
-
   return {
     title: blogPost.metaTitle || blogPost.title,
     description: blogPost.metaDescription,
@@ -42,14 +41,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps): Promise<JSX.Element> {
-  const { blogSlug } = params;
-
+  const resolvedParams = await params;  // Await here
+  const { blogSlug } = resolvedParams;
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
-  
+ 
   if (!blogPost) {
     notFound();
   }
-
   return (
     <main className="relative w-full flex flex-col items-center border-none bg-[#1e1e1e] text-white ">
       <NavBar />
@@ -69,6 +67,7 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
                   width={300}
                   height={300}
                   className="rounded-full aspect-square w-14"
+                  priority
                 />
                 <div className="flex flex-col justify-evenly">
                   <p className="text-base sm:text-lg md:text-xl">
@@ -80,7 +79,6 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
                 </div>
               </div>
             </div>
-
             <div className="w-full max-w-[500px] h-[300px]">
               <Image
                 src={blogPost.image ?? "/placeholder.jpg"}
@@ -91,7 +89,6 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
               />
             </div>
           </div>
-
           <div
             className="blog-content"
             dangerouslySetInnerHTML={{ __html: blogPost.content }}

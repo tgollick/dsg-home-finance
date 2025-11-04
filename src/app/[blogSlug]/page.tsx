@@ -11,7 +11,6 @@ import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
   const posts = await ssrTrpc.blogRouter.getAllBlogs();
-
   return posts.map((post) => ({
     blogSlug: post.slug,
   }));
@@ -22,10 +21,7 @@ export async function generateMetadata({ params }: { params: { blogSlug: string 
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
 
   if (!blogPost) {
-    return {
-      title: 'Blog Post Not Found',
-      description: 'The requested blog post could not be found.',
-    };
+    return { title: 'Not Found' };
   }
 
   return {
@@ -34,28 +30,23 @@ export async function generateMetadata({ params }: { params: { blogSlug: string 
     openGraph: {
       title: blogPost.metaTitle || blogPost.title,
       description: blogPost.metaDescription || '',
-      images: [
-        {
-          url: blogPost.image || '/default-og-image.png', 
-          width: 1200,
-          height: 630,
-        },
-      ],
+      images: [blogPost.image || '/default-og-image.png'],
     },
   };
 }
 
 interface PageProps {
-  params: { blogSlug: string }, 
+  params: { blogSlug: string }; 
 }
 
-export default async function Page({
-  params,
-}: PageProps): Promise<JSX.Element> {
+export default async function Page({ params }: PageProps): Promise<JSX.Element> {
   const { blogSlug } = params;
 
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
-  if (!blogPost) redirect("/");
+  
+  if (!blogPost) {
+    redirect("/");
+  }
 
   return (
     <main className="relative w-full flex flex-col items-center border-none bg-[#1e1e1e] text-white ">
@@ -73,8 +64,8 @@ export default async function Page({
                 <Image
                   src={davidAuthorImage}
                   alt="Image of Author David Gollick"
-                  width="300"
-                  height="300"
+                  width={300}
+                  height={300}
                   className="rounded-full aspect-square w-14"
                 />
                 <div className="flex flex-col justify-evenly">

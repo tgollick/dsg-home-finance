@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 import prisma from "@/lib/prisma";
 import { Resend } from "resend";
 import { auth } from "@/auth";
+import { env } from "@/lib/env";
 
 export const createContext = async () => {
   // Your existing context creation logic
@@ -36,13 +37,15 @@ const t = initTRPC.context<Context>().create({
   },
 });
 
-// Base router and procedure helpers
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 
 export const isAuthed = t.middleware(async ({ next }) => {
   const session = await auth();
-  const allowedEmails = ["thomasgollick@gmail.com", "davidgollick@gmail.com"];
+  const allowedEmails =
+    env.ALLOWED_EMAILS?.split(",")
+      .map((email) => email.trim().replace(/['";]/g, ""))
+      .filter(Boolean) || [];
 
   if (!session?.user?.email || !allowedEmails.includes(session.user.email)) {
     throw new TRPCError({

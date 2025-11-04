@@ -22,6 +22,7 @@ import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Editor } from "@tinymce/tinymce-react";
 import { Card } from "@/components/ui/card";
+import { env } from "@/lib/env";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -173,7 +174,7 @@ const EditBlog = () => {
                   <Editor
                     onInit={(evt, editor) => (editorRef.current = editor)}
                     value={field.value}
-                    apiKey="ogz7ibugntev82h3llyfowfwltz0i4foxeilyak5zyum5i3c"
+                    apiKey={env.NEXT_PUBLIC_TINYMCE_API_KEY}
                     init={{
                       plugins: [
                         // Core editing features

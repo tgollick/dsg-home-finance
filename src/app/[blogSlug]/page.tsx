@@ -7,6 +7,43 @@ import { Footer } from "../_sections/components/Footer";
 import { Card } from "@/components/ui/card";
 import { redirect } from "next/navigation";
 import { JSX } from "react";
+import type { Metadata } from 'next';
+
+export async function generateStaticParams() {
+  const posts = await ssrTrpc.blogRouter.getAllBlogs();
+
+  return posts.map((post) => ({
+    blogSlug: post.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: { params: { blogSlug: string } }): Promise<Metadata> {
+  const { blogSlug } = params;
+  const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
+
+  if (!blogPost) {
+    return {
+      title: 'Blog Post Not Found',
+      description: 'The requested blog post could not be found.',
+    };
+  }
+
+  return {
+    title: blogPost.metaTitle || blogPost.title,
+    description: blogPost.metaDescription,
+    openGraph: {
+      title: blogPost.metaTitle || blogPost.title,
+      description: blogPost.metaDescription || '',
+      images: [
+        {
+          url: blogPost.image || '/default-og-image.png', 
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
+}
 
 interface PageProps {
   params: Promise<{ blogSlug: string }>;

@@ -249,7 +249,3 @@ Built by Thomas Gollick for DSG Home Finance
 
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/thomasgollick)
 [![Email](https://img.shields.io/badge/-Email-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:thomasgollick@gmail.com)
-
----
-
-*Built for real-world use • Deployed on Vercel • Powered by Next.js*

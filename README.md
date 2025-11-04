@@ -8,13 +8,13 @@ A web application I built for my dad's mortgage advisory business to replace spr
 ![Prisma](https://img.shields.io/badge/Prisma-6.4-2D3748?style=flat&logo=prisma)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat&logo=tailwind-css)
 
-## 🎯 Project Overview
+## Project Overview
 
 This is a full-stack website for DSG Home Finance, a small mortgage advisory business. It handles contact form submissions, enquiry management, and blog posts about the housing market. Before this, everything was done through Gmail and spreadsheets, which was a mess.
 
 The site gives my dad a proper admin dashboard to manage enquiries, post blog updates, and keep track of potential clients without drowning in emails.
 
-## 🚀 Core Features
+## Core Features
 
 **Public Website**
 * Contact form for enquiries (name, email, phone, mortgage amount)
@@ -37,7 +37,7 @@ The site gives my dad a proper admin dashboard to manage enquiries, post blog up
 * Email notifications for new enquiries
 * Custom domain business email setup
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend**
 * Next.js 15 (App Router) with React 19
@@ -58,7 +58,7 @@ The site gives my dad a proper admin dashboard to manage enquiries, post blog up
 * Resend for transactional emails
 * Custom domain email routing
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 dsg-home-finance/
@@ -86,7 +86,7 @@ dsg-home-finance/
 └── public/
 ```
 
-## 🔄 How It Works
+## How It Works
 
 **Contact Form Flow**
 1. User fills out contact form on website
@@ -109,7 +109,7 @@ dsg-home-finance/
 * Session management with cookies
 * No user registration (single admin user)
 
-## 💡 What I Learned
+## What I Learned
 
 **tRPC Integration**
 Getting tRPC working properly with Next.js 15 took a bit of trial and error. The type safety between client and server is brilliant once it's set up, but the initial configuration with the App Router was a bit fiddly.
@@ -126,7 +126,7 @@ Implemented a simple image upload system for blog posts. Used Base64 encoding in
 **Email Routing**
 Set up proper business email (david@dsgmortgages.com) instead of forwarding to Gmail. Used custom domain DNS records and configured Resend for transactional emails. Much more professional than the Gmail forwarding mess.
 
-## 🧱 Challenges Faced + Solutions
+## Challenges Faced + Solutions
 
 **Challenge: Blog posts rendering slowly**
 Problem: All blog posts were being rendered dynamically on every request, which was slow.
@@ -148,7 +148,7 @@ Solution: Wrote custom migration scripts to convert string dates to DateTime fie
 Problem: Dashboard looked rubbish on mobile initially.
 Solution: Used Tailwind's responsive utilities and tested on actual mobile devices. Made sure tables were scrollable and forms were easy to fill out on small screens.
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -212,7 +212,7 @@ npx prisma generate
 npm run db:seed
 ```
 
-## 💻 Usage
+## Usage
 
 **Development**
 ```bash
@@ -229,7 +229,7 @@ npm start
 **Admin Access**
 Navigate to `/admin` and sign in with your configured admin email.
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 **Issue: tRPC errors on build**
 Make sure your Prisma client is generated: `npx prisma generate`
@@ -243,7 +243,7 @@ Verify your Resend API key is valid and the sender email is verified.
 **Issue: Images not loading**
 Check file size limits and ensure the upload directory has write permissions.
 
-## 📧 Contact
+## Contact
 
 Built by Thomas Gollick for DSG Home Finance
 

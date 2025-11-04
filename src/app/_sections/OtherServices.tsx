@@ -91,7 +91,7 @@ const OtherServices = () => {
                 <LucideCoins className="w-5 h-5" fill="#f281a4" /> Second Charge
                 Mortgages
               </p>
-              <p className="text-gray-400">
+              <p className="text-gray-400 font-normal">
                 With many more products available on referal...
               </p>
             </div>

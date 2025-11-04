@@ -1,6 +1,6 @@
 const BottomContact = () => {
   return (
-    <section className="w-full max-w-[1400px] h-full mx-auto py-20 px-6 xl:pt-20 pt-[41rem]">
+    <section className="w-full max-w-[1400px] h-full mx-auto py-20 px-6 xl:pt-20 pt-[575px]">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif leading-tight mb-4">
         What to Expect in Your First Chat
       </h2>

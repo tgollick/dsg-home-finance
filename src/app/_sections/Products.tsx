@@ -1,10 +1,7 @@
 import {
   LucidePackageSearch,
   Building2,
-  Users,
   TrendingUp,
-  Shield,
-  Clock,
   Award,
 } from "lucide-react";
 import CTAButton from "@/components/CTAButton";
@@ -15,32 +12,6 @@ const Products = () => {
     { number: "50+", label: "Lenders", icon: Building2 },
     { number: "10,000+", label: "Products", icon: TrendingUp },
     { number: "100%", label: "Market Coverage", icon: Award },
-  ];
-
-  // Alternative 2: Feature highlights instead of logos
-  const features = [
-    {
-      icon: Building2,
-      title: "Major Banks",
-      description: "All major high street banks",
-    },
-    {
-      icon: Users,
-      title: "Specialist Lenders",
-      description: "Niche and specialist providers",
-    },
-    {
-      icon: Shield,
-      title: "Building Societies",
-      description: "Traditional building societies",
-    },
-    {
-      icon: TrendingUp,
-      title: "Online Lenders",
-      description: "Modern digital-first lenders",
-    },
-    { icon: Clock, title: "Fast Track", description: "Quick decision lenders" },
-    { icon: Award, title: "Premium", description: "Exclusive rate providers" },
   ];
 
   return (
@@ -58,7 +29,6 @@ const Products = () => {
           </p>
         </div>
 
-        {/* Option 1: Statistics Display */}
         <div className="w-full max-w-4xl">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
             {stats.map((stat, index) => (
@@ -71,29 +41,6 @@ const Products = () => {
                   {stat.number}
                 </div>
                 <div className="text-sm text-white/80">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Option 2: Lender Categories Grid */}
-        <div className="w-full max-w-4xl">
-          <h3 className="text-xl font-serif text-white mb-6">
-            Our Lender Network Includes:
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center p-4 bg-white/5 rounded-lg backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
-              >
-                <feature.icon className="w-6 h-6 text-[#F49FB7] mb-2" />
-                <div className="text-sm font-medium text-white mb-1">
-                  {feature.title}
-                </div>
-                <div className="text-xs text-white/70 text-center">
-                  {feature.description}
-                </div>
               </div>
             ))}
           </div>

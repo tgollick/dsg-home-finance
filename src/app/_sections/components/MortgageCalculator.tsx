@@ -1,12 +1,10 @@
 "use client";
-
 import * as React from "react";
 import { Calculator, LucideMessageCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -25,8 +23,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
+import { Switch } from "@/components/ui/switch";
 
-// Create a motion-enabled version of the Button component
 const MotionButton = motion.create(Button);
 
 const formSchema = z.object({
@@ -38,6 +36,7 @@ const formSchema = z.object({
 
 export default function MortgageCalculator() {
   const router = useRouter();
+  const [isJoint, setIsJoint] = React.useState(false);
   const [calculationResults, setCalculationResults] = React.useState({
     maxBorrowingAmount: 0,
     totalPropertyValue: 0,
@@ -57,58 +56,84 @@ export default function MortgageCalculator() {
   });
 
   function calculateBorrowingAmount(values: z.infer<typeof formSchema>) {
-    // Parse input values
     const yearlyIncome = Number.parseFloat(values.yearlyIncome);
     const monthlyExpenses = Number.parseFloat(values.monthlyExpenses);
     const dependents = Number.parseInt(values.dependents);
     const deposit = Number.parseFloat(values.depositAmount);
 
-    // More competitive formula aligned with major UK lenders
-
-    // Base multiplier - major lenders like NatWest typically use 4.5-5.5x income
-    let incomeMultiplier = 5.25;
-
-    // Adjust multiplier based on dependents (more conservative with more dependents)
-    // Less aggressive reduction compared to previous formula
-    incomeMultiplier -= dependents * 0.05;
-
-    // Monthly credit commitments impact borrowing power
-    // Convert to annual impact but with less aggressive reduction
-    const annualExpensesImpact = monthlyExpenses * 12;
-    const affordabilityReduction = annualExpensesImpact * 0.8;
-
-    // Calculate maximum borrowing amount based on income
-    let maxBorrowingAmount =
-      yearlyIncome * incomeMultiplier - affordabilityReduction;
-
-    // Factor in stress testing for interest rate rises
-    // This is what banks do to ensure you can afford payments if rates rise
-    // Less conservative adjustment
-    maxBorrowingAmount *= 0.95;
-
-    // Ensure we don't go below reasonable thresholds
-    maxBorrowingAmount = Math.max(maxBorrowingAmount, yearlyIncome * 3);
-
-    // Total property value you can afford
-    const totalPropertyValue = maxBorrowingAmount + deposit;
-
-    // Estimated monthly payment (using 3.5% interest over 25 years)
+    let maxBorrowingAmount = 0;
     const interestRate = 0.035;
     const loanTermYears = 25;
     const monthlyInterestRate = interestRate / 12;
     const numberOfPayments = loanTermYears * 12;
 
-    const estimatedMonthlyPayment =
-      (maxBorrowingAmount *
-        monthlyInterestRate *
-        Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
-      (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+    if (isJoint) {
+      const incomePerPerson = yearlyIncome / 2;
+      const baseMultiplier = 4.75;
+      let multiplier1 = baseMultiplier;
+      let multiplier2 = baseMultiplier;
 
-    // Loan-to-value ratio
-    const loanToValue =
-      totalPropertyValue > 0
-        ? (maxBorrowingAmount / totalPropertyValue) * 100
+      multiplier1 -= dependents > 0 ? 0.1 : 0;
+      multiplier2 -= dependents > 1 ? 0.1 : 0;
+
+      const annualExpenses = monthlyExpenses * 12;
+      const stressRate = 0.065;
+      const stressedMonthlyRate = stressRate / 12;
+
+      const stressedPayment1 =
+        (incomePerPerson * multiplier1 * stressedMonthlyRate * Math.pow(1 + stressedMonthlyRate, numberOfPayments)) /
+        (Math.pow(1 + stressedMonthlyRate, numberOfPayments) - 1);
+      const stressedPayment2 =
+        (incomePerPerson * multiplier2 * stressedMonthlyRate * Math.pow(1 + stressedMonthlyRate, numberOfPayments)) /
+        (Math.pow(1 + stressedMonthlyRate, numberOfPayments) - 1);
+
+      const totalStressedPayment = stressedPayment1 + stressedPayment2;
+      const affordableMonthlyUnderStress = (yearlyIncome * 0.38) / 12 - monthlyExpenses * 0.75;
+
+      if (totalStressedPayment > affordableMonthlyUnderStress * 12 * loanTermYears) {
+        const adjustedTotalBorrow = (affordableMonthlyUnderStress * 12 * loanTermYears * stressedMonthlyRate * Math.pow(1 + stressedMonthlyRate, numberOfPayments)) /
+          (Math.pow(1 + stressedMonthlyRate, numberOfPayments) - 1);
+        maxBorrowingAmount = adjustedTotalBorrow;
+      } else {
+        maxBorrowingAmount = incomePerPerson * (multiplier1 + multiplier2);
+      }
+      maxBorrowingAmount = Math.min(maxBorrowingAmount, yearlyIncome * 5.5);
+      maxBorrowingAmount = Math.max(maxBorrowingAmount, yearlyIncome * 3.5);
+    } else {
+      let incomeMultiplier = 5.0;
+      incomeMultiplier -= dependents * 0.08;
+      incomeMultiplier = Math.max(incomeMultiplier, 4.0);
+
+      const annualExpensesImpact = monthlyExpenses * 12;
+      const affordabilityReduction = annualExpensesImpact * 0.75;
+
+      maxBorrowingAmount = yearlyIncome * incomeMultiplier - affordabilityReduction;
+      maxBorrowingAmount *= 0.97;
+
+      const stressRate = 0.065;
+      const stressedMonthlyRate = stressRate / 12;
+      const stressedPayment =
+        (maxBorrowingAmount * stressedMonthlyRate * Math.pow(1 + stressedMonthlyRate, numberOfPayments)) /
+        (Math.pow(1 + stressedMonthlyRate, numberOfPayments) - 1);
+
+      const disposableIncome = yearlyIncome * 0.36 / 12 - monthlyExpenses;
+      if (stressedPayment > disposableIncome) {
+        maxBorrowingAmount = (disposableIncome * (Math.pow(1 + stressedMonthlyRate, numberOfPayments) - 1)) /
+          (stressedMonthlyRate * Math.pow(1 + stressedMonthlyRate, numberOfPayments));
+      }
+
+      maxBorrowingAmount = Math.max(maxBorrowingAmount, yearlyIncome * 3.5);
+    }
+
+    const totalPropertyValue = maxBorrowingAmount + deposit;
+
+    const estimatedMonthlyPayment =
+      maxBorrowingAmount > 0
+        ? (maxBorrowingAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
+          (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1)
         : 0;
+
+    const loanToValue = totalPropertyValue > 0 ? (maxBorrowingAmount / totalPropertyValue) * 100 : 0;
 
     setCalculationResults({
       maxBorrowingAmount,
@@ -116,7 +141,6 @@ export default function MortgageCalculator() {
       estimatedMonthlyPayment,
       loanToValue,
     });
-
     setIsDialogOpen(true);
   }
 
@@ -128,32 +152,40 @@ export default function MortgageCalculator() {
       className="absolute shadow-lg right-50 lg:bottom-[-50px] md:bottom-[-75px] sm:bottom-[-100px] bottom-[-175px] z-[100] w-full max-w-[90%] lg:max-w-4xl mx-auto bg-white rounded-lg border p-4 font-sans"
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-        <div className="mb-2 sm:mb-0">
-          <h3 className="text-lg font-medium text-gray-900">
+        <div className="mb-4 sm:mb-2">
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
             Residential Mortgage Calculator
           </h3>
           <p className="text-xs text-gray-500">
-            Estimate how much you could borrow
+            Enter your <span className="font-bold">yearly income</span> alongside your <span className="font-bold">credit commitments (monthly, e.g. £50 for a credit card payment)</span>, the <span className="font-bold">number of dependants</span> and <span className="font-bold">total deposit</span> to get an estimated amount you could borrow!
           </p>
         </div>
         <MotionButton
           type="submit"
           form="mortgage-form"
-          className="bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm font-sans px-4 py-2 h-9 w-full sm:w-fit"
+          className="bg-[#F49FB7] text-white hover:bg-[#f281a4] transition text-sm sm:text-base font-sans px-4 py-2 w-full sm:w-fit flex-grow h-8 sm:h-12"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Calculator className="h-4 w-4 mr-2" />
+          <Calculator className="h-5 w-5" />
           Calculate
         </MotionButton>
       </div>
-
       <Form {...form}>
         <form
           id="mortgage-form"
           onSubmit={form.handleSubmit(calculateBorrowingAmount)}
           className="space-y-4"
         >
+          <div className="flex items-center justify-between mb-3 w-fit mx-auto sm:mx-0 gap-3">
+            <span className="text-sm font-bold">Individual</span>
+            <Switch
+              checked={isJoint}
+              onCheckedChange={setIsJoint}
+              className="data-[state=checked]:bg-[#F49FB7]"
+            />
+            <span className="text-sm font-bold">Joint</span>
+          </div>
           <motion.div
             className="grid gap-x-4 gap-y-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-4"
             initial={{ opacity: 0 }}
@@ -170,7 +202,7 @@ export default function MortgageCalculator() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm">
-                      Yearly Income <span className="text-destructive">*</span>
+                      {isJoint ? "Joint Income" : "Yearly Income"} <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <div className="relative">
@@ -200,7 +232,7 @@ export default function MortgageCalculator() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm">
-                      Monthly Credit <span className="text-destructive">*</span>
+                      Credit Commitments<span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <div className="relative">
@@ -279,7 +311,6 @@ export default function MortgageCalculator() {
           </motion.div>
         </form>
       </Form>
-
       <AnimatePresence>
         {isDialogOpen && (
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

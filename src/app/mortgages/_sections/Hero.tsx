@@ -32,7 +32,7 @@ const Hero = () => {
       <MortgageCalculator />
       <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60"></div>
       <section className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-6">
-        <div className="w-full mx-auto relative pt-44 pb-80 sm:pt-48 md:pt-56 flex items-center justify-between">
+        <div className="w-full mx-auto relative pt-44 pb-[440px] sm:pt-48 md:pt-56 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

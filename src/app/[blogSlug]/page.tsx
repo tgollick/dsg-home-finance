@@ -5,9 +5,13 @@ import davidAuthorImage from "../../../public/david-author-image.png";
 import CTA from "../mortgages/_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 import { Card } from "@/components/ui/card";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation"; // Use notFound for better static handling
 import { JSX } from "react";
 import type { Metadata } from 'next';
+
+interface PageProps {
+  params: { blogSlug: string };
+}
 
 export async function generateStaticParams() {
   const posts = await ssrTrpc.blogRouter.getAllBlogs();
@@ -16,12 +20,14 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { blogSlug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { blogSlug } = params;
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
 
   if (!blogPost) {
-    return { title: 'Not Found' };
+    return {
+      title: 'Blog Post Not Found',
+    };
   }
 
   return {
@@ -35,17 +41,13 @@ export async function generateMetadata({ params }: { params: { blogSlug: string 
   };
 }
 
-interface PageProps {
-  params: { blogSlug: string }; 
-}
-
 export default async function Page({ params }: PageProps): Promise<JSX.Element> {
   const { blogSlug } = params;
 
   const blogPost = await ssrTrpc.blogRouter.getBlog({ slug: blogSlug });
   
   if (!blogPost) {
-    redirect("/");
+    notFound();
   }
 
   return (
@@ -84,7 +86,7 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
                 src={blogPost.image ?? "/placeholder.jpg"}
                 width="500"
                 height="500"
-                alt="Blog Post Image"
+                alt={blogPost.title} // Use the blog title for a better alt tag
                 className="rounded-md object-cover w-full h-full"
               />
             </div>

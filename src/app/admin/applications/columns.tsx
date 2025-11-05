@@ -26,7 +26,7 @@ export type Contact = {
   date: string;
   time: string;
   contacted: boolean;
-  createdAtFormatted: string;
+  createdAt: string;
   updatedAt: Date;
 };
 
@@ -44,7 +44,7 @@ export const columns: ColumnDef<Contact>[] = [
     header: "Contact Number",
   },
   {
-    accessorKey: "createdAtFormatted",
+    accessorKey: "createdAt",
     header: "Date Contacted",
   },
   {

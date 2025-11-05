@@ -2,24 +2,20 @@
 
 import React from "react";
 import { DataTable } from "./data-table";
-import { columns } from "./columns";
+import { columns, Contact } from "./columns";
 import { trpc } from "../../../../utils/providers/TrpcProviders";
-import { Contact } from "./columns";
+import { ssrTrpc } from "@/backend/trpc/ssr-caller";
+
 
 interface ApplicationsTableProps {
   initialData: Contact[];
 }
 
 const ApplicationsTable = ({ initialData }: ApplicationsTableProps) => {
-  const { data } = trpc.contactRouter.getContacts.useQuery(undefined, {
-    initialData: initialData.map((contact) => ({
-      ...contact,
-      createdAt: new Date(contact.createdAt),
-      updatedAt: new Date(contact.updatedAt),
-    })),
-  });
 
-  return <DataTable data={data || []} columns={columns} />;
+
+
+  return <DataTable data={initialData || []} columns={columns} />;
 };
 
 export default ApplicationsTable;

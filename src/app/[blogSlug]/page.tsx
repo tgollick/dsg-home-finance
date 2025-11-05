@@ -51,7 +51,17 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
   return (
     <main className="relative w-full flex flex-col items-center border-none bg-[#1e1e1e] text-white ">
       <NavBar />
-      <div className="absolute w-full h-full bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60" />
+
+       <div className="absolute w-full h-full bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60" />     <div
+        className="absolute inset-0 z-0 opacity-40"
+        style={{
+          backgroundImage: `
+            radial-gradient(125% 125% at 50% 10%, #1e1e1e 40%, #ec4899 100%)
+          `,
+          backgroundSize: "100% 100%",
+        }}
+      />
+
       <div className="absolute w-full h-full grid-background opacity-10" />
       <section className="w-full h-fit max-w-[1400px] pt-32 md:pt-52 pb-20 px-4 z-50">
         <Card className="w-full p-4 md:p-10 bg-[#272727] border-[#3f3f3f] text-white bg-opacity-60 font-sans">

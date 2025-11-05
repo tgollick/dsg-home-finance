@@ -13,8 +13,8 @@ const Hero = () => {
   return (
     <div className=" w-full h-fit relative bg-[#1e1e1e] bg-[url('/MargateHeroBG.png')] bg-cover bg-bottom flex items-center justify-center">
       <MortgageCalculator />
-      <div
-        className="absolute inset-0 z-0 opacity-25"
+       <div className="absolute w-full h-full bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60" />     <div
+        className="absolute inset-0 z-0 opacity-20"
         style={{
           backgroundImage: `
             radial-gradient(125% 125% at 50% 10%, #1e1e1e 40%, #ec4899 100%)

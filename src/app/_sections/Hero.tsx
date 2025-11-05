@@ -13,10 +13,18 @@ const Hero = () => {
   return (
     <div className=" w-full h-fit relative bg-[#1e1e1e] bg-[url('/MargateHeroBG.png')] bg-cover bg-bottom flex items-center justify-center">
       <MortgageCalculator />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60"></div>
+      <div
+        className="absolute inset-0 z-0 opacity-25"
+        style={{
+          backgroundImage: `
+            radial-gradient(125% 125% at 50% 10%, #1e1e1e 40%, #ec4899 100%)
+          `,
+          backgroundSize: "100% 100%",
+        }}
+      />
       <section className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-6">
         {/* Content Container with max-width for larger screens */}
-        <div className="w-full mx-auto relative pt-40 pb-[440px] sm:pt-52 md:pt-64 lg:py-72">
+        <div className="w-full mx-auto relative pt-40 pb-[440px] sm:pb-72 md:pb-62 sm:pt-52 md:pt-64 lg:py-72">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

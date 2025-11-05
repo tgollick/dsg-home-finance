@@ -4,6 +4,13 @@ import { ModeToggle } from "@/components/theme-toggle";
 import { auth } from "@/auth";
 import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
+import { buildMetadata } from "@/lib/metadata";
+import { Metadata } from "next";
+
+export const metadata:Metadata = buildMetadata({
+  title: "Admin Dashboard | DSG Home Finance",
+  noIndex: true,          
+});
 
 export default async function Layout({
   children,

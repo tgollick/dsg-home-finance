@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { trpc } from "../../../../../../utils/providers/TrpcProviders";
 import { useForm } from "react-hook-form";
@@ -21,7 +21,6 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
-import { env } from "@/lib/env"
 import TiptapEditor from "@/components/TiptapEditor";
 
 const formSchema = z.object({

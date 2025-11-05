@@ -76,7 +76,6 @@ export default function MortgageCalculator() {
       multiplier1 -= dependents > 0 ? 0.1 : 0;
       multiplier2 -= dependents > 1 ? 0.1 : 0;
 
-      const annualExpenses = monthlyExpenses * 12;
       const stressRate = 0.065;
       const stressedMonthlyRate = stressRate / 12;
 
@@ -149,7 +148,7 @@ export default function MortgageCalculator() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="absolute shadow-lg right-50 lg:bottom-[-50px] md:bottom-[-75px] sm:bottom-[-100px] bottom-[-175px] z-[100] w-full max-w-[90%] lg:max-w-4xl mx-auto bg-white rounded-lg border p-4 font-sans"
+      className="absolute shadow-lg right-50 md:bottom-[-75px] sm:bottom-[-100px] bottom-[-175px] z-[100] w-full max-w-[90%] lg:max-w-4xl mx-auto bg-white rounded-lg border p-4 font-sans"
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
         <div className="mb-4 sm:mb-2">

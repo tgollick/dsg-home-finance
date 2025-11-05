@@ -16,7 +16,17 @@ const Privacy = () => {
   return (
     <div className="relative w-full h-full bg-[#1e1e1e] text-white font-sans">
       <NavBar />
-      <div className="absolute w-full h-full bg-gradient-to-t from-[#F49FB7]/10 to-[#1e1e1e]/60" />
+
+      <div
+        className="absolute inset-0 z-0 opacity-40"
+        style={{
+          backgroundImage: `
+            radial-gradient(125% 125% at 50% 10%, #1e1e1e 40%, #ec4899 100%)
+          `,
+          backgroundSize: "100% 100%",
+        }}
+      />
+
       <div className="absolute w-full h-full grid-background opacity-10" />
       <section className="relative mx-auto w-full h-fit max-w-[1400px] pt-32 md:pt-52 pb-20 px-4 z-10">
         <div className="space-y-4">

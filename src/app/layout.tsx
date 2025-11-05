@@ -36,9 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="no-scrollbar" suppressHydrationWarning>
       <body
-        className={`h-full w-full ${dmSans.variable} ${dmSerifDisplay.variable}`}
+        className={`no-scrollbar h-full w-full ${dmSans.variable} ${dmSerifDisplay.variable}`}
       >
         <TRPCProvider>
           <main className="flex-1 overflow-auto">

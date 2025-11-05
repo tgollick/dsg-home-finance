@@ -110,18 +110,18 @@ export function ContactForm() {
       if (Date.now() > end) return;
 
       confetti({
-        particleCount: 2,
-        angle: 60,
-        spread: 55,
+        particleCount: 5,
+        angle: 50,
+        spread: 70,
         startVelocity: 60,
         origin: { x: 0, y: 0.5 },
         colors: colors,
       });
       confetti({
-        particleCount: 2,
+        particleCount: 5,
         angle: 120,
-        spread: 55,
-        startVelocity: 60,
+        spread: 70,
+        startVelocity: 80,
         origin: { x: 1, y: 0.5 },
         colors: colors,
       });

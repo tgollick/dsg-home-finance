@@ -15,7 +15,7 @@ const Dashboard = async () => {
   const data = await ssrTrpc.contactRouter.getContacts();
   const applications = data.map(app => ({
     ...app,
-    createdAtFormatted: new Date(app.createdAt).toLocaleDateString('en-GB', {
+    createdAt: new Date(app.createdAt).toLocaleDateString('en-GB', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',

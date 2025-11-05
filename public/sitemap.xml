@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://dsgmortgages.com/</loc>
+    <lastmod>2025-11-05</lastmod>  <!-- Update with last modified date -->
+    <changefreq>daily</changefreq>  <!-- How often it changes: always, hourly, daily, weekly, monthly, yearly, never -->
+    <priority>1.0</priority>  <!-- 0.0 to 1.0; homepage is highest -->
+  </url>
+  <url>
+    <loc>https://dsgmortgages.com/mortgages</loc>
+    <lastmod>2025-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dsgmortgages.com/protection</loc>
+    <lastmod>2025-11-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dsgmortgages.com/about</loc>
+    <lastmod>2025-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dsgmortgages.com/contact</loc>
+    <lastmod>2025-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

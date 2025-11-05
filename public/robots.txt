@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/  # Block admin pages from crawling
+Disallow: /login/  # Block login pages
+
+Sitemap: https://dsgmortgages.com/sitemap.xml  # Reference your sitemap (optional but recommended)

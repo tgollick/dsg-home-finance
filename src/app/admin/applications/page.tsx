@@ -12,6 +12,16 @@ import {
 
 const Applications = async () => {
   const initialData = await ssrTrpc.contactRouter.getContacts();
+  const applications = initialData.map(app => ({
+    ...app,
+    createdAtFormatted: new Date(app.createdAt).toLocaleDateString('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+  }));
+
   const totalApplications = initialData.length;
   const recentApplications = initialData.slice(0, 5);
   const processedApplications = initialData.filter(
@@ -73,7 +83,7 @@ const Applications = async () => {
         </div>
 
         <Suspense fallback={<LoadingFallback />}>
-          <ApplicationsTable initialData={initialData} />
+          <ApplicationsTable initialData={applications} />
         </Suspense>
       </Card>
     </div>

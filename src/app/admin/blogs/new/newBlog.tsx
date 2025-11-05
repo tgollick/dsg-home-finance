@@ -1,4 +1,3 @@
-// src/app/admin/blogs/new/newBlog.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -96,8 +95,8 @@ export default function NewBlog() {
         image: values.image,
         metaTitle: values.metaTitle,
         metaDescription: values.metaDescription,
-        content: values.content, // ← sanitized HTML from Tiptap
-      });
+        content: values.content, 
+    });
       setEditLoading(false);
       router.push("/admin/blogs");
     };

@@ -26,7 +26,7 @@ export type Contact = {
   date: string;
   time: string;
   contacted: boolean;
-  createdAt: Date;
+  createdAtFormatted: string;
   updatedAt: Date;
 };
 
@@ -44,19 +44,8 @@ export const columns: ColumnDef<Contact>[] = [
     header: "Contact Number",
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "createdAtFormatted",
     header: "Date Contacted",
-    cell: ({ row }) => {
-      const createdAt = new Date(row.original.createdAt);
-      const options: Intl.DateTimeFormatOptions = {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      };
-      const formattedDate = createdAt.toLocaleDateString("en-GB", options);
-      return formattedDate;
-    },
   },
   {
     accessorKey: "contacted",

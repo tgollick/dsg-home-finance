@@ -34,6 +34,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
       const clean = DOMPurify.sanitize(dirty);
       onChange(clean);
     },
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         class:

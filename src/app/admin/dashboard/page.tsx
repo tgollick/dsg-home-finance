@@ -13,6 +13,15 @@ import { UpcomingAppointments } from "./upcoming-appointments";
 
 const Dashboard = async () => {
   const data = await ssrTrpc.contactRouter.getContacts();
+  const applications = data.map(app => ({
+    ...app,
+    createdAtFormatted: new Date(app.createdAt).toLocaleDateString('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+  }));
 
   return (
     <div className="w-full h-full pt-20 p-6 flex flex-col gap-10">
@@ -29,7 +38,7 @@ const Dashboard = async () => {
         <AnalyticsComponent />
         <UpcomingAppointments contacts={data} />
         <Suspense fallback={<LoadingFallback />}>
-          <ApplicationsTable initialData={data} />
+          <ApplicationsTable initialData={applications} />
         </Suspense>
       </Card>
     </div>

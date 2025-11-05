@@ -11,19 +11,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
+import { MoreHorizontal, Pencil } from "lucide-react";
 import { redirect } from "next/navigation";
 import DeleteContactColumn from "./deleteContactColumn";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 
 export type BlogPost = {
   id: string;
   title: string;
   content: string;
   author: string;
-  createdAt: Date;
+  createdAtFormatted: string;
   updatedAt: Date;
   slug: string;
 };
@@ -39,17 +36,7 @@ export const columns: ColumnDef<BlogPost>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Posted
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Created At",
   },
   {
     id: "actions",

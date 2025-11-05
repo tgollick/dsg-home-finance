@@ -11,6 +11,15 @@ import {
 
 const Blog = async () => {
   const initialData = await ssrTrpc.blogRouter.getAllBlogs();
+  const blogs = initialData.map(app => ({
+    ...app,
+    createdAtFormatted: new Date(app.createdAt).toLocaleDateString('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+  }));
 
   return (
     <div className="w-full min-h-screen pt-20 p-6 flex flex-col gap-10">
@@ -27,7 +36,7 @@ const Blog = async () => {
         </CardHeader>
 
         <Suspense fallback={<LoadingFallback />}>
-          <BlogsTable initialData={initialData} />{" "}
+          <BlogsTable initialData={blogs} />{" "}
         </Suspense>
       </Card>
     </div>

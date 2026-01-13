@@ -230,8 +230,8 @@ export const contactRouter = createTRPCRouter({
           email: string,
           phone: string,
           date: string,
-          time: string
-          additionalInfo: string,
+          time: string,
+          additionalInfo: string
         ) => {
           return `
             <!DOCTYPE html>

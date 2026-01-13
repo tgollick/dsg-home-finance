@@ -231,7 +231,8 @@ export const contactRouter = createTRPCRouter({
           phone: string,
           date: string,
           time: string,
-          additionalInfo: string
+          situation: string,
+          otherInfo: string,
         ) => {
           return `
             <!DOCTYPE html>
@@ -339,7 +340,8 @@ export const contactRouter = createTRPCRouter({
                     <p><strong>📞 Phone:</strong> ${phone}</p>
                     <p><strong>📅 Requested Appointment Date:</strong> ${date}</p>
                     <p><strong>⏰ Requested Time:</strong> ${time}</p>
-                    <p><strong> Additional Information:</string> ${additionalInfo}</p>
+                    <p><strong> Situation:</string> ${situation}</p>
+                    <p><strong> Additional Information:</string> ${otherInfo}</p>
                   </div>
         
                   <p>Please review the details and get in touch with the client as soon as possible to confirm or reschedule the appointment.</p>
@@ -388,7 +390,8 @@ export const contactRouter = createTRPCRouter({
                 phone,
                 date.toLocaleDateString(),
                 time,
-                situation
+                situation,
+                other
               ),
             },
           ]);

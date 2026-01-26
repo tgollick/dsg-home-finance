@@ -1,4 +1,4 @@
-import whyDavid from "../../../../public/why-david.png";
+import whyDavid from "../../../../public/david3.webp";
 import Image from "next/image";
 import StatBox from "../_components/StatBox";
 import { LucidePhone } from "lucide-react";
@@ -22,7 +22,7 @@ const stats = [
 const WhyDavid = () => {
   return (
     <div className="border-none w-full flex items-center justify-center bg-white text-black">
-      <section className="py-20 px-6 w-full max-w-[1400px] flex flex-col md:flex-row items-center justify-between gap-20">
+      <section className="py-20 px-6 w-full max-w-[1400px] flex flex-col md:flex-row items-center justify-between gap-24">
         <div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif leading-tight mb-4">
             Why DSG?
@@ -46,7 +46,7 @@ const WhyDavid = () => {
             alt="David Gollick owner of DSG Home Finance"
             width="1000"
             height="1000"
-            className="aspect-auto h-full md:hidden mb-10"
+            className="aspect-auto h-full md:hidden mb-10 rounded-lg"
           />
 
           <div className="flex flex-col sm:flex-row items-center gap-8 mb-10">
@@ -70,7 +70,7 @@ const WhyDavid = () => {
           alt="David Gollick owner of DSG Home Finance"
           width="1000"
           height="1000"
-          className="aspect-auto h-full hidden lg:block"
+          className="aspect-auto w-[70%] hidden lg:block rounded-lg"
         />
       </section>
     </div>

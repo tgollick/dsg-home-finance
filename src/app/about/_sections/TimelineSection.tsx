@@ -4,54 +4,47 @@ import type React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import type { StaticImageData } from "next/image";
+import beginningPhoto from "../../../../public/beginning-of-business.png"
+import shopfrontPhoto from "../../../../public/opening-shopfront.png"
+import digitalPhoto from "../../../../public/going-digital.png"
+import stonebridgePhoto from "../../../../public/stonebridge.jpg"
 
 interface Milestone {
   year: number;
   title: string;
   description: string;
-  image: string;
+  image: StaticImageData;
 }
 
 const milestones: Milestone[] = [
   {
-    year: 2010,
+    year: 2003,
     title: "Company Founded",
     description:
-      "Our journey began with a vision to provide comprehensive financial protection for families and businesses. Starting with just a small team of dedicated professionals, we set out to revolutionize how people think about financial security.",
-    image:
-      "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Our journey began with a vision to provide comprehensive financial protection for families and businesses. Starting from my own home, just me and my wife with the dream of providing flexible mortgages so people can purchase their dream homes.",
+    image: beginningPhoto,
   },
   {
-    year: 2015,
-    title: "Expanding Our Protection Solutions",
+    year: 2007,
+    title: "Opening Shopfront",
     description:
-      "As our client base grew, so did our understanding of diverse protection needs. We introduced new products and services, ensuring every client could find the right coverage for their unique situation.",
-    image:
-      "https://images.unsplash.com/photo-1610703415552-d7fca41a8857?q=80&w=2531&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "As our client base grew, so did our understanding of diverse protection needs. We introduced new products and services, ensuring every client could find the right coverage for their unique situation as well as opening our first shopfront in collaboration with Thomas Jackson.",
+    image: shopfrontPhoto,
   },
   {
-    year: 2018,
+    year: 2017,
     title: "Digital Transformation",
     description:
-      "Embracing technology to better serve our clients, we launched our digital platform. This innovation made it easier than ever for clients to understand, choose, and manage their protection products.",
-    image:
-      "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Embracing technology to better serve our clients, DSG moved to a more digital approach, allowing greater flexibility for clients whilst still providing an excellent service.",
+    image: digitalPhoto,
   },
   {
-    year: 2020,
-    title: "Award-Winning Service",
+    year: 2025,
+    title: "Partnership with Stonebridge",
     description:
-      "Our commitment to excellence was recognized with multiple industry awards. But more importantly, we reached a milestone of helping thousands of families secure their financial future.",
-    image:
-      "https://images.unsplash.com/photo-1594122230689-45899d9e6f69?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    year: 2023,
-    title: "Looking to the Future",
-    description:
-      "Today, we continue to innovate and expand our protection solutions. Our focus remains unchanged: ensuring every client has the right protection for what matters most in their lives.",
-    image:
-      "https://images.unsplash.com/photo-1495539406979-bf61750d38ad?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "A new alliance emerged, a new parternship with Stonebridge! This allows DSG to provide a whole of market approach to mortgages with a wide range of products and lenders to chose from.",
+    image: stonebridgePhoto,
   },
 ];
 

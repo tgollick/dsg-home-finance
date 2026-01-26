@@ -18,7 +18,7 @@ const CTAButton = (props: Props) => {
   return (
     <Button
       onClick={() => router.push(props.route)}
-      className={`${props.bgColor} ${props.textColor} ${props.hoverColor} text-sm md:text-base font-sans`}
+      className={`${props.bgColor} ${props.textColor} ${props.hoverColor} text-sm md:text-base w-full md:w-fit font-sans`}
     >
       {props.text}
       {props.icon}

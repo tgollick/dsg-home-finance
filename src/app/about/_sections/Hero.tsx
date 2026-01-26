@@ -5,7 +5,7 @@ import { LucidePhone } from "lucide-react";
 import { motion } from "motion/react";
 import React from "react";
 import Image from "next/image";
-import aboutUsDavid from "../../../../public/about-us-david.png";
+import aboutUsDavid from "../../../../public/david1.webp";
 
 const Hero = () => {
   return (
@@ -48,9 +48,9 @@ const Hero = () => {
             </div>
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, y: 30, rotateY: 180, rotateX: -180 }}
-            animate={{ opacity: 1, y: 0, rotateY: 0, rotateX: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 30}}
+            animate={{ opacity: 1, y: 0}}
+            transition={{ duration: 1, ease: "easeOut" }}
             className="max-w-[400px] h-full relative"
           >
             <div className="w-full h-full max-h-[100px] absolute bottom-0 p-3">
@@ -68,7 +68,7 @@ const Hero = () => {
               width="1000"
               height="1000"
               alt="Image of David Gollick the owner of DSG Home Finance"
-              className="object-cover"
+              className="object-cover rounded-lg"
             />
           </motion.div>
         </div>

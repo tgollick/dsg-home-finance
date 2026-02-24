@@ -58,7 +58,7 @@ const Hero = () => {
                 <div className="flex flex-col">
                   <h4 className="text-3xl font-serif">David Gollick</h4>
                   <p className="font-sans text-gray-600">
-                    DSG&apos;s Principle
+                    DSG&apos;s Principal
                   </p>
                 </div>
               </div>

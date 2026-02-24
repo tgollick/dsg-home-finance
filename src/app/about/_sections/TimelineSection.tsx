@@ -5,8 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import type { StaticImageData } from "next/image";
-import beginningPhoto from "../../../../public/beginning-of-business.png"
-import shopfrontPhoto from "../../../../public/opening-shopfront.png"
+import shopfrontPhoto from "../../../../public/shopfront-photo.jpg"
 import digitalPhoto from "../../../../public/going-digital.png"
 import stonebridgePhoto from "../../../../public/stonebridge.jpg"
 
@@ -19,31 +18,24 @@ interface Milestone {
 
 const milestones: Milestone[] = [
   {
-    year: 2003,
-    title: "Company Founded",
-    description:
-      "Our journey began with a vision to provide comprehensive financial protection for families and businesses. Starting from my own home, just me and my wife with the dream of providing flexible mortgages so people can purchase their dream homes.",
-    image: beginningPhoto,
-  },
-  {
     year: 2007,
-    title: "Opening Shopfront",
+    title: "Expanding Our Reach",
     description:
-      "As our client base grew, so did our understanding of diverse protection needs. We introduced new products and services, ensuring every client could find the right coverage for their unique situation as well as opening our first shopfront in collaboration with Thomas Jackson.",
+      "As our client base continued to grow, so too did our understanding of the diverse protection needs within our community. We broadened our range of products and services to ensure every client could access the right coverage for their individual circumstances — and marked this milestone by opening our first high street presence in partnership with Thomas Jackson.",
     image: shopfrontPhoto,
   },
   {
     year: 2017,
     title: "Digital Transformation",
     description:
-      "Embracing technology to better serve our clients, DSG moved to a more digital approach, allowing greater flexibility for clients whilst still providing an excellent service.",
+      "Recognising the evolving needs of our clients, DSG embraced a fully digital approach to mortgage and protection services. This transition enabled greater flexibility and accessibility, empowering clients to engage with us on their own terms — without compromising on the quality of service we pride ourselves on.",
     image: digitalPhoto,
   },
   {
     year: 2025,
     title: "Partnership with Stonebridge",
     description:
-      "A new alliance emerged, a new parternship with Stonebridge! This allows DSG to provide a whole of market approach to mortgages with a wide range of products and lenders to chose from.",
+      "DSG marked an exciting new chapter with the formation of a strategic partnership with Stonebridge, one of the UK's leading mortgage and protection networks. This alliance enables us to offer a true whole-of-market approach, providing access to an extensive range of mortgage products and lenders to find the most suitable solution for every client.",
     image: stonebridgePhoto,
   },
 ];

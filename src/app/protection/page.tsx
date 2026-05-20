@@ -9,11 +9,12 @@ import CTA from "../mortgages/_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 import { Metadata } from "next";
 
-export const metadata:Metadata = buildMetadata({
-  title: "Protection Insurance | DSG Home Finance",
+export const metadata: Metadata = buildMetadata({
+  title: "Mortgage Protection Insurance in Kent | Life Cover, Critical Illness, Income Protection",
   description:
-    "Life cover, critical illness, income protection – safeguard your family with the right policy.",
-  image: `${process.env.NEXT_PUBLIC_SITE_URL}/og-protection.jpg`,
+    "Protect your mortgage and your family with tailored life insurance, critical illness cover and income protection. Independent advice from DSG Home Finance in Margate, serving Thanet and Kent.",
+  image: "/og-protection.jpg",
+  path: "/protection",
 });
 
 export default function Protection() {

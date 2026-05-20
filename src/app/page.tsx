@@ -10,17 +10,20 @@ import { BlogSection } from "./_sections/Blogs";
 import { Footer } from "./_sections/components/Footer";
 import CTA from "./mortgages/_sections/CTA";
 import { Metadata } from "next";
+import { MortgageBrokerSchema } from "@/components/StructuredData";
 
 export const metadata: Metadata = buildMetadata({
-  title: "DSG Home Finance | Expert Mortgage & Protection Advice",
+  title: "Mortgage Broker in Margate, Kent | DSG Home Finance",
   description:
-    "Independent mortgage broker helping you find the best deals. 5-star rated, 20+ years experience, whole-of-market access.",
-  image: `${process.env.NEXT_PUBLIC_SITE_URL}/og-home.jpg`,
+    "Independent mortgage broker in Margate covering Thanet, Broadstairs and Ramsgate. Whole-of-market access to 50+ lenders, 20+ years' experience, 5★ rated. Book a free chat with David.",
+  image: "/og-home.jpg",
+  path: "/",
 });
 
 export default async function Home() {
   return (
     <main className="w-full flex flex-col items-center border-none">
+      <MortgageBrokerSchema />
       <NavBar />
       <Hero />
       <Products />

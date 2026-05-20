@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { TRPCProvider } from "../../utils/providers/TrpcProviders";
 import { Toaster } from "@/components/ui/toaster";
-import dsgGrey from "../../public/dsg-logo-white.png";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { buildMetadata } from "@/lib/metadata";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -21,14 +21,13 @@ const dmSerifDisplay = DM_Serif_Display({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "DSG Home Finance | Expert Mortgage Solutions & Home Loan Services",
+export const metadata: Metadata = buildMetadata({
+  title: "Mortgage Broker in Margate, Kent | DSG Home Finance",
   description:
-    "Discover competitive mortgage rates and personalized home loan solutions. Fast approvals, expert guidance, and secure online management. Start your application today!",
-  icons: {
-    icon: dsgGrey.src,
-  },
-};
+    "Independent mortgage broker in Margate serving Thanet and Kent. Whole-of-market access, 5-star rated, 20+ years experience. Book a free chat with David.",
+  image: "/og-home.jpg",
+  path: "/",
+});
 
 export default function RootLayout({
   children,

@@ -48,15 +48,14 @@ const Hero = () => {
             className="flex flex-col items-center md:items-start gap-8 md:gap-10 text-white text-center md:text-left max-w-2xl"
           >
             <div className="flex flex-col text-center items-center sm:items-start sm:text-start w-full">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif leading-tight">
-                Over
+              <h1 className="sr-only">
+                Over 4000 mortgages completed by David Gollick — DSG Home Finance, Margate
               </h1>
-              <h1 className="text-[120px] sm:text-[140px] md:text-[160px] lg:text-[180px] xl:text-[200px] font-serif leading-tight mt-[-30px] text-[#F49FB7]">
-                4000+
-              </h1>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif leading-tight mt-[-10px]">
-                Mortgages Completed by David
-              </h1>
+              <div aria-hidden="true" className="flex flex-col text-center items-center sm:items-start sm:text-start w-full">
+                <span className="text-3xl sm:text-4xl md:text-5xl font-serif leading-tight">Over</span>
+                <span className="text-[120px] sm:text-[140px] md:text-[160px] lg:text-[180px] xl:text-[200px] font-serif leading-tight mt-[-30px] text-[#F49FB7]">4000+</span>
+                <span className="text-3xl sm:text-4xl md:text-5xl font-serif leading-tight mt-[-10px]">Mortgages Completed by David</span>
+              </div>
             </div>
             <div className="font-sans flex sm:flex-row flex-col items-center gap-3 w-full">
               <Button

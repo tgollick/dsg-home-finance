@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
 import Image from "next/image";
 import { ssrTrpc } from "@/backend/trpc/ssr-caller";
+import Link from "next/link";
 
 export async function BlogSection() {
   const blogs = await ssrTrpc.blogRouter.getAllBlogs();
@@ -28,11 +29,11 @@ export async function BlogSection() {
                 key={post.title}
                 className="overflow-hidden transition-shadow hover:shadow-md"
               >
-                <a href={"/" + post.slug} className="flex flex-col md:flex-row">
+                <Link href={"/" + post.slug} className="flex flex-col md:flex-row">
                   <div className="relative w-full md:w-[240px] h-48 shrink-0">
                     <Image
-                      src={post.image || "placeholder.svg"}
-                      alt=""
+                      src={post.image || "/placeholder.svg"}
+                      alt={post.metaTitle || post.title}
                       className="object-cover h-full"
                       width="500"
                       height="500"
@@ -57,7 +58,7 @@ export async function BlogSection() {
                       <span>4 minute read</span>
                     </div>
                   </div>
-                </a>
+                </Link>
               </Card>
             ))}
           </div>

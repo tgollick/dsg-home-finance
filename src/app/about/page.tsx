@@ -6,11 +6,12 @@ import CTA from "../mortgages/_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 import { Metadata } from "next";
 
-export const metadata:Metadata = buildMetadata({
-  title: "About David Gollick | DSG Home Finance",
+export const metadata: Metadata = buildMetadata({
+  title: "About David Gollick | Mortgage Broker in Margate | DSG Home Finance",
   description:
-    "20+ years of mortgage & protection expertise. Independent, client-first advice you can trust.",
-  image: `${process.env.NEXT_PUBLIC_SITE_URL}/og-about.jpg`,
+    "Meet David Gollick, founder of DSG Home Finance. 20+ years arranging mortgages and protection for families across Margate, Broadstairs and Ramsgate. FCA-regulated, 5★ rated independent advice.",
+  image: "/og-about.jpg",
+  path: "/about",
 });
 
 export default function About() {

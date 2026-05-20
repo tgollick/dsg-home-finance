@@ -10,6 +10,7 @@ export const metadata:Metadata = buildMetadata({
   description:
     "Book a free consultation, ask a question, or request a call-back. We’re here to help.",
   image: `${process.env.NEXT_PUBLIC_SITE_URL}/og-contact.jpg`,
+  path: "/contact",
 });
 
 export default function Contact() {

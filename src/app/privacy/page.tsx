@@ -9,8 +9,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { buildMetadata } from "@/lib/metadata";
+import { Metadata } from "next";
 
-// type Props = {}
+export const metadata: Metadata = buildMetadata({
+  title: "Contact David | Book a Free Mortgage Consultation | DSG Home Finance Margate",
+  description:
+    "Book a free, no-obligation mortgage consultation with David in Margate. Independent, whole-of-market advice for first-time buyers, remortgages, buy-to-let and protection.",
+  image: "/og-contact.jpg",
+  path: "/contact",
+});
 
 const Privacy = () => {
   return (

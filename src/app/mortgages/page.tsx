@@ -10,11 +10,12 @@ import CTA from "./_sections/CTA";
 import { Footer } from "../_sections/components/Footer";
 import { Metadata } from "next";
 
-export const metadata:Metadata = buildMetadata({
-  title: "Mortgages | DSG Home Finance",
+export const metadata: Metadata = buildMetadata({
+  title: "Mortgage Advice in Margate & Thanet | First-Time Buyer, Remortgage, Buy-to-Let",
   description:
-    "First-time buyer, remortgage, buy-to-let or equity release – get a personalised quote in minutes.",
-  image: `${process.env.NEXT_PUBLIC_SITE_URL}/og-mortgages.jpg`,
+    "Expert mortgage advice in Margate from David Gollick. First-time buyer mortgages, remortgages, buy-to-let and equity release. Access to 10,000+ products across 50+ lenders.",
+  image: "/og-mortgages.jpg",
+  path: "/mortgages",
 });
 
 export default function Mortgages() {

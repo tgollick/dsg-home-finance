@@ -1,58 +1,32 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-const getRequestOrigin = (req?: Request) => {
-  if (!req) return undefined;
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  providers: [Google],
+  trustHost: true,
+  callbacks: {
+    redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      }
 
-  const forwardedProto = req.headers.get("x-forwarded-proto") ?? "https";
-  const forwardedHost = req.headers.get("x-forwarded-host");
-  const host = forwardedHost ?? req.headers.get("host");
+      try {
+        const redirectUrl = new URL(url);
+        const isAllowedHost =
+          redirectUrl.origin === baseUrl ||
+          redirectUrl.hostname === "localhost" ||
+          redirectUrl.hostname.endsWith(".vercel.app") ||
+          redirectUrl.hostname.endsWith("dsgmortgages.com") ||
+          redirectUrl.hostname.endsWith("dsgmortgage.com");
 
-  return host ? `${forwardedProto}://${host}` : new URL(req.url).origin;
-};
-
-const isKnownAppHost = (origin: string) => {
-  try {
-    const hostname = new URL(origin).hostname;
-
-    return (
-      hostname === "localhost" ||
-      hostname.endsWith(".localhost") ||
-      hostname.endsWith(".vercel.app") ||
-      hostname.endsWith("dsgmortgages.com") ||
-      hostname.endsWith("dsgmortgage.com")
-    );
-  } catch {
-    return false;
-  }
-};
-
-export const { handlers, signIn, signOut, auth } = NextAuth((req) => {
-  const requestOrigin = getRequestOrigin(req);
-
-  return {
-    providers: [Google],
-    trustHost: true,
-    callbacks: {
-      redirect({ url, baseUrl }) {
-        const origin = requestOrigin ?? baseUrl;
-
-        if (url.startsWith("/")) {
-          return `${origin}${url}`;
+        if (isAllowedHost) {
+          return `${baseUrl}${redirectUrl.pathname}${redirectUrl.search}${redirectUrl.hash}`;
         }
-
-        try {
-          const redirectUrl = new URL(url);
-
-          if (redirectUrl.origin === baseUrl || isKnownAppHost(redirectUrl.origin)) {
-            return `${origin}${redirectUrl.pathname}${redirectUrl.search}${redirectUrl.hash}`;
-          }
-        } catch {
-          return origin;
-        }
-
+      } catch {
         return baseUrl;
-      },
+      }
+
+      return baseUrl;
     },
-  };
+  },
 });

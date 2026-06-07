@@ -96,7 +96,7 @@ const Dashboard = async () => {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-sm lg:col-span-2">
+        <div className="min-w-0 rounded-2xl border border-border/60 bg-card p-5 shadow-sm lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h2 className="text-base font-semibold">Enquiries over time</h2>
@@ -109,17 +109,17 @@ const Dashboard = async () => {
           <EnquiriesChart data={monthlySeries} />
         </div>
 
-        <div className="lg:col-span-1">
+        <div className="min-w-0 lg:col-span-1">
           <UpcomingAppointments contacts={contacts} />
         </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+        <div className="min-w-0 lg:col-span-2">
           <RecentActivity contacts={contacts} />
         </div>
 
-        <div className="flex flex-col justify-between gap-4 rounded-2xl border border-border/60 bg-card p-5 shadow-sm">
+        <div className="flex min-w-0 flex-col justify-between gap-4 rounded-2xl border border-border/60 bg-card p-5 shadow-sm">
           <div className="space-y-1">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <CheckCircle2 className="h-5 w-5" />

@@ -33,7 +33,7 @@ const Dashboard = async () => {
   const latestApplicant = data[0]?.fullname ?? "No recent enquiries";
 
   return (
-    <div className="w-full space-y-8 p-4 pt-20 md:p-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 p-4 md:p-8">
       <AdminPageHeader
         title="Dashboard"
         description="A simple overview of new enquiries, appointments and the latest contact activity."
@@ -51,7 +51,7 @@ const Dashboard = async () => {
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)]">
         <Card className="border-border/70 bg-card shadow-sm">
-          <CardHeader className="flex flex-col gap-4 p-5 pb-2 md:flex-row md:items-start md:justify-between">
+          <CardHeader className="flex flex-col gap-4 p-5 pb-3 md:flex-row md:items-start md:justify-between">
             <div className="space-y-1">
               <CardTitle className="text-lg font-semibold">Recent applications</CardTitle>
               <CardDescription>

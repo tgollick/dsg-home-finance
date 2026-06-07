@@ -35,9 +35,19 @@ export const columns: ColumnDef<BlogPost>[] = [
       const post = row.original;
 
       return (
-        <div className="min-w-[260px] space-y-1">
+        <div className="min-w-[220px] space-y-1">
           <p className="font-medium text-foreground">{post.title}</p>
           <p className="max-w-xl truncate text-sm text-muted-foreground">/{post.slug}</p>
+          <div className="flex flex-col gap-1 pt-1 text-sm text-muted-foreground md:hidden">
+            <span className="inline-flex items-center gap-1.5">
+              <UserRound className="h-3.5 w-3.5 shrink-0" />
+              {post.author}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <CalendarDays className="h-3.5 w-3.5 shrink-0" />
+              {post.createdAtFormatted}
+            </span>
+          </div>
         </div>
       );
     },
@@ -51,6 +61,7 @@ export const columns: ColumnDef<BlogPost>[] = [
         {row.original.author}
       </span>
     ),
+    meta: { className: "hidden md:table-cell" },
   },
   {
     accessorKey: "createdAtFormatted",
@@ -61,6 +72,7 @@ export const columns: ColumnDef<BlogPost>[] = [
         {row.original.createdAtFormatted}
       </span>
     ),
+    meta: { className: "hidden md:table-cell" },
   },
   {
     id: "actions",

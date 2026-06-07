@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AdminPageHeader } from "../_components/admin-page-header";
+import { StatCard } from "../_components/stat-card";
 import { LoadingFallback } from "../Fallback";
 import ApplicationsTable from "./applicationsTable";
 
@@ -51,7 +52,7 @@ const Applications = async () => {
   ];
 
   return (
-    <div className="w-full space-y-8 p-4 pt-20 md:p-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 p-4 md:p-8">
       <AdminPageHeader
         title="Applications"
         description="Review the people who have submitted the contact form and keep track of who has been followed up."
@@ -59,20 +60,13 @@ const Applications = async () => {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {stats.map((stat) => (
-          <Card key={stat.title} className="border-border/70 bg-card shadow-sm">
-            <CardHeader className="flex flex-row items-start justify-between space-y-0 p-5 pb-3">
-              <div className="space-y-1">
-                <CardDescription>{stat.title}</CardDescription>
-                <CardTitle className="text-3xl font-bold tracking-tight">{stat.value}</CardTitle>
-              </div>
-              <div className="rounded-xl bg-primary/10 p-2 text-primary">
-                <stat.icon className="h-5 w-5" />
-              </div>
-            </CardHeader>
-            <CardContent className="p-5 pt-0">
-              <p className="text-sm text-muted-foreground">{stat.description}</p>
-            </CardContent>
-          </Card>
+          <StatCard
+            key={stat.title}
+            title={stat.title}
+            value={stat.value}
+            description={stat.description}
+            icon={stat.icon}
+          />
         ))}
       </div>
 

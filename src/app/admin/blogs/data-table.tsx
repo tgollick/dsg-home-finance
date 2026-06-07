@@ -13,6 +13,7 @@ import {
 import { Search } from "lucide-react";
 import { useState } from "react";
 
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -70,7 +71,13 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id} className="bg-muted/40 hover:bg-muted/40">
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id} className="h-11 whitespace-nowrap px-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        "h-11 whitespace-nowrap px-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground",
+                        (header.column.columnDef.meta as { className?: string } | undefined)?.className,
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -84,7 +91,13 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="hover:bg-muted/30">
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="px-4 py-4 align-middle">
+                      <TableCell
+                        key={cell.id}
+                        className={cn(
+                          "px-4 py-4 align-middle",
+                          (cell.column.columnDef.meta as { className?: string } | undefined)?.className,
+                        )}
+                      >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}

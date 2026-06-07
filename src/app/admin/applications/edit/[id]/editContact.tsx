@@ -152,21 +152,16 @@ const EditForm = ({ userId }: { userId: string }) => {
   }
 
   return (
-    <div className="w-full space-y-6 p-4 pt-20 md:p-8">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <Button variant="ghost" className="mb-3 -ml-3" onClick={() => router.push("/admin/applications")}>
-            <ArrowLeft className="h-4 w-4" />
-            Back to applications
-          </Button>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-            Applicant file
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">{data.fullname}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
-            Review and update the contact details submitted through the website.
-          </p>
-        </div>
+    <div className="mx-auto w-full max-w-6xl space-y-6 p-4 md:p-8">
+      <div>
+        <Button variant="ghost" size="sm" className="mb-3 -ml-3" onClick={() => router.push("/admin/applications")}>
+          <ArrowLeft className="h-4 w-4" />
+          Back to applications
+        </Button>
+        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{data.fullname}</h1>
+        <p className="mt-1.5 max-w-2xl text-sm leading-6 text-muted-foreground">
+          Review and update the contact details submitted through the website.
+        </p>
       </div>
 
       <Form {...form}>

@@ -6,21 +6,26 @@ import { trpc } from "../../../../../../utils/providers/TrpcProviders";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Loader2, LucideTrash2, LucideSave } from "lucide-react";
-
+import { ArrowLeft, Loader2, LucideSave, LucideTrash2 } from "lucide-react";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import TiptapEditor from "@/components/TiptapEditor";
 
 const formSchema = z.object({
@@ -124,7 +129,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex min-h-[60vh] w-full items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -132,148 +137,195 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
 
   if (!data) {
     return (
-      <div className="flex items-center justify-center w-full full">
-        <div className="text-center text-destructive">
-          <h2 className="text-lg font-semibold mb-4">Error Loading Blog</h2>
-          <p className="mb-4">Please contact you system administrator</p>
-          <p>{error?.message || "Failed to load blog information"}</p>
-        </div>
+      <div className="flex min-h-[60vh] w-full items-center justify-center p-6">
+        <Card className="max-w-md border-destructive/30">
+          <CardHeader>
+            <CardTitle className="text-destructive">Error loading blog</CardTitle>
+            <CardDescription>{error?.message || "Failed to load blog information"}</CardDescription>
+          </CardHeader>
+        </Card>
       </div>
     );
   }
 
   return (
-    <Card className="p-6 flex flex-col items-start gap-2 w-full max-w-[900px]">
-      <h1 className="text-4xl font-bold mb-6">Edit Blog</h1>
+    <div className="w-full space-y-6 p-4 pt-20 md:p-8">
+      <div>
+        <Button variant="ghost" className="mb-3 -ml-3" onClick={() => router.push("/admin/blogs")}>
+          <ArrowLeft className="h-4 w-4" />
+          Back to blogs
+        </Button>
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+          Content editor
+        </p>
+        <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Edit blog</h1>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
+          Update the article content, publishing details and search metadata.
+        </p>
+      </div>
+
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 w-full"
-        >
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="author"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Author</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="metaTitle"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Meta Title (optional)</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="metaDescription"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Meta Description (optional)</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Cover Image</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+          <Card className="border-border/70 bg-card shadow-sm">
+            <CardHeader>
+              <CardTitle>Blog content</CardTitle>
+              <CardDescription>The title and article body shown on the public website.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
-                <FormControl>
-                  <TiptapEditor value={field.value} onChange={field.onChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div>
-            <Button
-              type="submit"
-              disabled={editLoading}
-              className="w-full mb-2"
-            >
-              {editLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving contact...
-                </>
-              ) : (
-                <>
-                  <LucideSave className="h-4 w-4" />
-                  Save Changes
-                </>
-              )}
-            </Button>
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Content</FormLabel>
+                    <FormControl>
+                      <TiptapEditor value={field.value} onChange={field.onChange} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
 
-            <Button
-              className="text-destructive w-full"
-              onClick={() => {
-                setDeleteLoading(true);
-                router.push("/admin/applications");
-                deleteBlog.mutate({
-                  slug: blogSlug,
-                });
-              }}
-              disabled={deleteLoading}
-            >
-              {deleteLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Deleting blog...
-                </>
-              ) : (
-                <>
-                  <LucideTrash2 className="h-4 w-4" />
-                  Delete Blog
-                </>
-              )}
-            </Button>
+          <div className="space-y-6">
+            <Card className="border-border/70 bg-card shadow-sm">
+              <CardHeader>
+                <CardTitle>Publishing details</CardTitle>
+                <CardDescription>Basic information attached to the post.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <FormField
+                  control={form.control}
+                  name="author"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Author</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="image"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cover image URL</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormDescription>Used as the card image on the public website.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/70 bg-card shadow-sm">
+              <CardHeader>
+                <CardTitle>SEO</CardTitle>
+                <CardDescription>Optional search metadata for the article.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <FormField
+                  control={form.control}
+                  name="metaTitle"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Meta title</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="metaDescription"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Meta description</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/70 bg-card shadow-sm">
+              <CardHeader>
+                <CardTitle>Actions</CardTitle>
+                <CardDescription>Save changes or delete this blog post.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button type="submit" disabled={editLoading} className="w-full">
+                  {editLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Saving blog...
+                    </>
+                  ) : (
+                    <>
+                      <LucideSave className="h-4 w-4" />
+                      Save changes
+                    </>
+                  )}
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full border-destructive/30 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  onClick={() => {
+                    setDeleteLoading(true);
+                    deleteBlog.mutate({
+                      slug: blogSlug,
+                    });
+                  }}
+                  disabled={deleteLoading}
+                >
+                  {deleteLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Deleting blog...
+                    </>
+                  ) : (
+                    <>
+                      <LucideTrash2 className="h-4 w-4" />
+                      Delete blog
+                    </>
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </form>
       </Form>
-    </Card>
+    </div>
   );
 };
 

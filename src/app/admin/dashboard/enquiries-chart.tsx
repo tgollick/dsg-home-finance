@@ -23,7 +23,7 @@ export type EnquiryPoint = {
 
 export function EnquiriesChart({ data }: { data: EnquiryPoint[] }) {
   return (
-    <ChartContainer config={chartConfig} className="h-[260px] w-full">
+    <ChartContainer config={chartConfig} className="h-[260px] w-full min-w-0">
       <AreaChart accessibilityLayer data={data} margin={{ left: -16, right: 8, top: 8 }}>
         <defs>
           <linearGradient id="fillEnquiries" x1="0" y1="0" x2="0" y2="1">

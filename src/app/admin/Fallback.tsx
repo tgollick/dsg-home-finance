@@ -4,11 +4,11 @@ import { AlertCircle } from "lucide-react";
 
 export const LoadingFallback = () => {
   return (
-    <Card className="w-full p-6">
+    <Card className="w-full border-border/70 p-6 shadow-sm">
       <div className="space-y-4">
-        <div className="h-4 bg-gray-200 rounded-md animate-pulse w-3/4" />
-        <div className="h-4 bg-gray-200 rounded-md animate-pulse w-1/2" />
-        <div className="h-4 bg-gray-200 rounded-md animate-pulse w-2/3" />
+        <div className="h-4 w-3/4 animate-pulse rounded-md bg-muted" />
+        <div className="h-4 w-1/2 animate-pulse rounded-md bg-muted" />
+        <div className="h-4 w-2/3 animate-pulse rounded-md bg-muted" />
       </div>
     </Card>
   );

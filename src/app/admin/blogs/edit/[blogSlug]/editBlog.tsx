@@ -149,17 +149,14 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
   }
 
   return (
-    <div className="w-full space-y-6 p-4 pt-20 md:p-8">
+    <div className="mx-auto w-full max-w-6xl space-y-6 p-4 md:p-8">
       <div>
-        <Button variant="ghost" className="mb-3 -ml-3" onClick={() => router.push("/admin/blogs")}>
+        <Button variant="ghost" size="sm" className="mb-3 -ml-3" onClick={() => router.push("/admin/blogs")}>
           <ArrowLeft className="h-4 w-4" />
           Back to blogs
         </Button>
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-          Content editor
-        </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Edit blog</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
+        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Edit blog</h1>
+        <p className="mt-1.5 max-w-2xl text-sm leading-6 text-muted-foreground">
           Update the article content, publishing details and search metadata.
         </p>
       </div>

@@ -1,4 +1,9 @@
+"use client";
+
 import { House, Inbox, LucideBookOpen } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   Sidebar,
@@ -7,13 +12,13 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Logout from "../Logout";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import Image from "next/image";
 import dsgGrey from "../../../public/dsg-logo-grey.png";
 
 // Menu items.
@@ -42,65 +47,78 @@ type Props = {
 };
 
 export function AppSidebar(props: Props) {
+  const pathname = usePathname();
+
+  const initials = props.fullname
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <Sidebar>
+      <SidebarHeader className="border-b border-sidebar-border/60 p-4">
+        <div className="flex items-center gap-3">
+          <Image src={dsgGrey} alt="DSG Home Finance logo" width={36} priority />
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold leading-tight">DSG Home Finance</span>
+            <span className="text-xs text-muted-foreground">Admin Panel</span>
+          </div>
+        </div>
+      </SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-bold">
-            DSG Admin Panel
+          <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Menu
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) => {
+                const isActive =
+                  pathname === item.url || pathname?.startsWith(`${item.url}/`);
+
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <div className="flex flex-col items-start justify-center h-fit w-full gap-4  p-3">
-          <Image src={dsgGrey} alt={"DSG Grey Logo"} width="50" priority />
-          <p className="text-xs text-muted-foreground text-left">
-            © 2023 DSG Home Finance. All rights reserved.
-          </p>
-        </div>
 
-        <div className="p-3 space-y-3 border-t">
-          <div className="flex items-center gap-3 group data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-            <Avatar className="h-9 w-9 rounded-lg border">
-              <AvatarImage
-                src={props.photo}
-                alt={props.fullname}
-                className="object-cover rounded-lg"
-              />
-              <AvatarFallback className="rounded-lg bg-primary/10 text-primary flex items-center justify-center h-full">
-                {props.fullname
-                  ?.split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </AvatarFallback>
-            </Avatar>
+      <SidebarFooter className="gap-3 border-t border-sidebar-border/60 p-3">
+        <div className="flex items-center gap-3 rounded-lg px-1 py-1">
+          <Avatar className="h-9 w-9 rounded-lg border">
+            <AvatarImage
+              src={props.photo}
+              alt={props.fullname}
+              className="object-cover"
+            />
+            <AvatarFallback className="rounded-lg bg-primary/10 text-xs font-medium text-primary">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
 
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium leading-none truncate">
-                {props.fullname}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1 truncate">
-                {props.email}
-              </p>
-            </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-medium leading-none">{props.fullname}</p>
+            <p className="mt-1 truncate text-xs text-muted-foreground">{props.email}</p>
           </div>
-
-          <Logout />
         </div>
+
+        <Logout />
+
+        <p className="px-1 text-[11px] leading-tight text-muted-foreground">
+          © {new Date().getFullYear()} DSG Home Finance. All rights reserved.
+        </p>
       </SidebarFooter>
     </Sidebar>
   );

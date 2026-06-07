@@ -28,7 +28,7 @@ const Blog = async () => {
   }));
 
   return (
-    <div className="w-full space-y-8 p-4 pt-20 md:p-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 p-4 md:p-8">
       <AdminPageHeader
         title="Blog Posts"
         description="Create and manage the articles that are published on the DSG Home Finance website."

@@ -37,15 +37,15 @@ export const columns: ColumnDef<Contact>[] = [
       const contact = row.original;
 
       return (
-        <div className="min-w-[220px] space-y-1">
+        <div className="min-w-[180px] space-y-1">
           <p className="font-medium text-foreground">{contact.fullname}</p>
-          <div className="flex flex-col gap-1 text-sm text-muted-foreground sm:hidden">
-            <span className="inline-flex items-center gap-1.5">
-              <Mail className="h-3.5 w-3.5" />
-              {contact.email}
+          <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 md:hidden">
+              <Mail className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">{contact.email}</span>
             </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Phone className="h-3.5 w-3.5" />
+            <span className="inline-flex items-center gap-1.5 lg:hidden">
+              <Phone className="h-3.5 w-3.5 shrink-0" />
               {contact.phone}
             </span>
           </div>
@@ -57,16 +57,19 @@ export const columns: ColumnDef<Contact>[] = [
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => <span className="text-muted-foreground">{row.original.email}</span>,
+    meta: { className: "hidden md:table-cell" },
   },
   {
     accessorKey: "phone",
     header: "Phone",
     cell: ({ row }) => <span className="whitespace-nowrap text-muted-foreground">{row.original.phone}</span>,
+    meta: { className: "hidden lg:table-cell" },
   },
   {
     accessorKey: "createdAt",
     header: "Submitted",
     cell: ({ row }) => <span className="whitespace-nowrap text-muted-foreground">{row.original.createdAt}</span>,
+    meta: { className: "hidden md:table-cell" },
   },
   {
     accessorKey: "contacted",

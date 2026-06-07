@@ -14,13 +14,21 @@ import dsgGrey from "../../../public/dsg-logo-grey.png";
 import { ModeToggle } from "@/components/theme-toggle";
 
 const Login = () => {
+  const handleGoogleSignIn = () => {
+    const redirectTo =
+      typeof window === "undefined"
+        ? "/admin/dashboard"
+        : `${window.location.origin}/admin/dashboard`;
+
+    signIn("google", { redirectTo });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-background p-4 relative">
       <ModeToggle />
       <div className="w-full max-w-2xl">
         <Card className="shadow-xl rounded-xl overflow-hidden">
           <div className="relative flex flex-col md:flex-row">
-            {/* Left Panel */}
             <div className="bg-primary/90 p-8 md:w-1/2 flex flex-col items-center justify-center space-y-6 text-center">
               <Image
                 src={dsgGrey}
@@ -38,7 +46,6 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Right Panel */}
             <div className="p-8 md:w-1/2">
               <CardContent className="space-y-6">
                 <div className="text-center space-y-3">
@@ -51,9 +58,7 @@ const Login = () => {
                 </div>
 
                 <Button
-                  onClick={() =>
-                    signIn("google", { redirectTo: "/admin/dashboard" })
-                  }
+                  onClick={handleGoogleSignIn}
                   className="w-full h-12 text-base font-semibold gap-3"
                   variant="outline"
                 >
@@ -61,7 +66,6 @@ const Login = () => {
                   Continue with Google
                 </Button>
 
-                {/* Improved Feature Cards */}
                 <div className="grid grid-cols-3 gap-6 pt-6">
                   <div className="flex flex-col items-center text-center">
                     <div className="mb-2 p-2 rounded-full bg-primary/10">

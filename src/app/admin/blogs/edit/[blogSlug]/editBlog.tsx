@@ -162,8 +162,8 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
-          <Card className="border-border/70 bg-card shadow-sm">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <Card className="rounded-2xl border-border/60 bg-card shadow-sm">
             <CardHeader>
               <CardTitle>Blog content</CardTitle>
               <CardDescription>The title and article body shown on the public website.</CardDescription>
@@ -200,7 +200,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
           </Card>
 
           <div className="space-y-6">
-            <Card className="border-border/70 bg-card shadow-sm">
+            <Card className="rounded-2xl border-border/60 bg-card shadow-sm">
               <CardHeader>
                 <CardTitle>Publishing details</CardTitle>
                 <CardDescription>Basic information attached to the post.</CardDescription>
@@ -237,7 +237,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
               </CardContent>
             </Card>
 
-            <Card className="border-border/70 bg-card shadow-sm">
+            <Card className="rounded-2xl border-border/60 bg-card shadow-sm">
               <CardHeader>
                 <CardTitle>SEO</CardTitle>
                 <CardDescription>Optional search metadata for the article.</CardDescription>
@@ -273,7 +273,7 @@ const EditBlog = ({ blogSlug }: { blogSlug: string }) => {
               </CardContent>
             </Card>
 
-            <Card className="border-border/70 bg-card shadow-sm">
+            <Card className="rounded-2xl border-border/60 bg-card shadow-sm">
               <CardHeader>
                 <CardTitle>Actions</CardTitle>
                 <CardDescription>Save changes or delete this blog post.</CardDescription>

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { trpc } from "../../../../../../utils/providers/TrpcProviders";
@@ -14,9 +15,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2, LucideTrash2, LucideSave } from "lucide-react";
+import { ArrowLeft, Loader2, LucideSave, LucideTrash2, Mail, Phone, UserRound } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -93,7 +100,6 @@ const EditForm = ({ userId }: { userId: string }) => {
     },
   });
 
-  // Update form when data is loaded
   useEffect(() => {
     if (data) {
       form.reset({
@@ -109,8 +115,6 @@ const EditForm = ({ userId }: { userId: string }) => {
   const onSubmit = (values: FormValues) => {
     setEditLoading(true);
 
-    router.push("/admin/applications");
-
     const now = new Date().toISOString();
 
     editContact.mutate({
@@ -121,11 +125,12 @@ const EditForm = ({ userId }: { userId: string }) => {
     });
 
     setEditLoading(false);
+    router.push("/admin/applications");
   };
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex min-h-[60vh] w-full items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -133,136 +138,195 @@ const EditForm = ({ userId }: { userId: string }) => {
 
   if (!data) {
     return (
-      <div className="flex items-center justify-center w-full full">
-        <div className="text-center text-destructive">
-          <h2 className="text-lg font-semibold mb-4">Error Loading Contact</h2>
-          <p className="mb-4">Please contact you system administrator</p>
-          <p>{error?.message || "Failed to load contact information"}</p>
-        </div>
+      <div className="flex min-h-[60vh] w-full items-center justify-center p-6">
+        <Card className="max-w-md border-destructive/30">
+          <CardHeader>
+            <CardTitle className="text-destructive">Error loading contact</CardTitle>
+            <CardDescription>
+              {error?.message || "Failed to load contact information"}
+            </CardDescription>
+          </CardHeader>
+        </Card>
       </div>
     );
   }
 
   return (
-    <Card className="p-6 flex flex-col items-start gap-2 max-w-[600px]">
-      <h1 className="text-4xl font-bold mb-6">{data?.fullname}&apos;s File</h1>
+    <div className="w-full space-y-6 p-4 pt-20 md:p-8">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <Button variant="ghost" className="mb-3 -ml-3" onClick={() => router.push("/admin/applications")}>
+            <ArrowLeft className="h-4 w-4" />
+            Back to applications
+          </Button>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+            Applicant file
+          </p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">{data.fullname}</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
+            Review and update the contact details submitted through the website.
+          </p>
+        </div>
+      </div>
+
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 w-full"
-        >
-          <FormField
-            control={form.control}
-            name="fullname"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="situation"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Situation</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="other"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Other Information</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+          <Card className="border-border/70 bg-card shadow-sm">
+            <CardHeader>
+              <CardTitle>Contact details</CardTitle>
+              <CardDescription>Core information for this applicant.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <div className="grid gap-5 md:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="fullname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full name</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <div>
-            <Button
-              type="submit"
-              disabled={editLoading}
-              className="w-full mb-2"
-            >
-              {editLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving contact...
-                </>
-              ) : (
-                <>
-                  <LucideSave className="h-4 w-4" />
-                  Save Changes
-                </>
-              )}
-            </Button>
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone number</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-            <Button
-              className="text-destructive w-full"
-              onClick={() => {
-                setDeleteLoading(true);
-                router.push("/admin/applications");
-                deleteContact.mutate({
-                  contactId: data.id,
-                });
-              }}
-              disabled={deleteLoading}
-            >
-              {deleteLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Deleting contact...
-                </>
-              ) : (
-                <>
-                  <LucideTrash2 className="h-4 w-4" />
-                  Delete Contact
-                </>
-              )}
-            </Button>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email address</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="situation"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Situation</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="other"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Other information</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+
+          <div className="space-y-6">
+            <Card className="border-border/70 bg-card shadow-sm">
+              <CardHeader>
+                <CardTitle>Applicant summary</CardTitle>
+                <CardDescription>Quick reference details.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 text-sm">
+                <div className="flex gap-3 rounded-xl border bg-background p-3">
+                  <UserRound className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p className="font-medium">{data.fullname}</p>
+                    <p className="text-muted-foreground">{data.situation}</p>
+                  </div>
+                </div>
+                <div className="flex gap-3 rounded-xl border bg-background p-3">
+                  <Mail className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                  <p className="break-all text-muted-foreground">{data.email}</p>
+                </div>
+                <div className="flex gap-3 rounded-xl border bg-background p-3">
+                  <Phone className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                  <p className="text-muted-foreground">{data.phone}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/70 bg-card shadow-sm">
+              <CardHeader>
+                <CardTitle>Actions</CardTitle>
+                <CardDescription>Save updates or remove this contact.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button type="submit" disabled={editLoading} className="w-full">
+                  {editLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Saving contact...
+                    </>
+                  ) : (
+                    <>
+                      <LucideSave className="h-4 w-4" />
+                      Save changes
+                    </>
+                  )}
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full border-destructive/30 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  onClick={() => {
+                    setDeleteLoading(true);
+                    deleteContact.mutate({
+                      contactId: data.id,
+                    });
+                    router.push("/admin/applications");
+                  }}
+                  disabled={deleteLoading}
+                >
+                  {deleteLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Deleting contact...
+                    </>
+                  ) : (
+                    <>
+                      <LucideTrash2 className="h-4 w-4" />
+                      Delete contact
+                    </>
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </form>
       </Form>
-    </Card>
+    </div>
   );
 };
 

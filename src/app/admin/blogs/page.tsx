@@ -1,39 +1,22 @@
-import React, { Suspense } from "react";
 import Link from "next/link";
-import { FileText, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 
 import { ssrTrpc } from "@/backend/trpc/ssr-caller";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { AdminPageHeader } from "../_components/admin-page-header";
-import { LoadingFallback } from "../Fallback";
-import BlogsTable from "./BlogTable";
+import { PageHero } from "../_components/page-hero";
+import { BlogsManager, type BlogPost } from "./blogs-manager";
 
 const Blog = async () => {
-  const initialData = await ssrTrpc.blogRouter.getAllBlogs();
-  const blogs = initialData.map((app) => ({
-    ...app,
-    createdAtFormatted: new Date(app.createdAt).toLocaleDateString("en-GB", {
-      weekday: "short",
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }),
-  }));
+  const data = await ssrTrpc.blogRouter.getAllBlogs();
+  const posts = data as unknown as BlogPost[];
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-8 p-4 md:p-8">
-      <AdminPageHeader
+    <div className="mx-auto w-full max-w-7xl space-y-6 p-4 md:space-y-8 md:p-8">
+      <PageHero
         title="Blog Posts"
-        description="Create and manage the articles that are published on the DSG Home Finance website."
+        description="Create and manage the articles published on the DSG Home Finance website."
         action={
-          <Button asChild className="w-full md:w-auto">
+          <Button asChild className="bg-white text-primary hover:bg-white/90">
             <Link href="/admin/blogs/new">
               <PlusCircle className="h-4 w-4" />
               New blog post
@@ -42,22 +25,7 @@ const Blog = async () => {
         }
       />
 
-      <Card className="border-border/70 bg-card shadow-sm">
-        <CardHeader className="flex flex-row items-start gap-3 p-5 pb-3">
-          <div className="rounded-xl bg-primary/10 p-2 text-primary">
-            <FileText className="h-5 w-5" />
-          </div>
-          <div className="space-y-1">
-            <CardTitle className="text-lg font-semibold">Published content</CardTitle>
-            <CardDescription>Search, edit or remove existing blog posts.</CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent className="p-5 pt-2">
-          <Suspense fallback={<LoadingFallback />}>
-            <BlogsTable initialData={blogs} />
-          </Suspense>
-        </CardContent>
-      </Card>
+      <BlogsManager initialData={posts} />
     </div>
   );
 };
